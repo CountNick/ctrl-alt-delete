@@ -1,0 +1,21 @@
+{
+  "name": "ctrl-alt-delete",
+  "version": "1.0.0",
+  "description": "A visualisation about ethnic profiling in Amsterdam",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StefanGerrits2/ctrl-alt-delete.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StefanGerrits2/ctrl-alt-delete/issues"
+  },
+  "homepage": "https://github.com/StefanGerrits2/ctrl-alt-delete#readme"
+}
