@@ -94,28 +94,31 @@ function organiseData(data){
     console.log('Nietwesters', originNietWesters.length / answerYes.length * 100)
     console.log('Nederlandsz', originNederlands.length / answerYes.length * 100)
     
+    complete.push(checkInitiatedContact(originNietWesters, answerYes))
     complete.push(checkInitiatedContact(originNederlands, answerYes))
     complete.push(checkInitiatedContact(originWesters, answerYes))
-    complete.push(checkInitiatedContact(originNietWesters, answerYes))
+    
 
-    const target = {}
-    const target2 = {}
+    console.log(complete)
 
-    let flattened = complete.flat()
+    // const target = {}
+    // const target2 = {}
 
-    flattened.map(d => {
+    // let flattened = complete.flat()
+
+    // flattened.map(d => {
         
-        if(d.contactZoeker == "De politie kwam naar mij toe") Object.assign(target, d)
-        else if(d.contactZoeker == "Ik ging naar de politie toe") Object.assign(target2, d)
+    //     if(d.contactZoeker == "De politie kwam naar mij toe") Object.assign(target, d)
+    //     else if(d.contactZoeker == "Ik ging naar de politie toe") Object.assign(target2, d)
         
-    })
+    // })
 
-    arrayForStack.push(target)
-    arrayForStack.push(target2)
+    // arrayForStack.push(target)
+    // arrayForStack.push(target2)
 
-    console.log('stackdata: ', arrayForStack)
+    // console.log('stackdata: ', arrayForStack)
 
-    return arrayForStack
+    return complete
 
 }
 
@@ -144,11 +147,11 @@ function checkInitiatedContact(data, answerYes){
     // complete.push(iContacted.length)
 
     
-    
-    complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
-    complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
+    let cleaned = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100}
+    // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
+    // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
 
-    return complete
+    return cleaned
 }
 
 function renderStackedBars(data){
@@ -156,9 +159,9 @@ function renderStackedBars(data){
     console.log('data: ', data);
 
     let stack = d3.stack()
-    .keys(["Nederlands", "Westers", "niet-Westers"])
+    .keys(["iContactedPolice", "policeContactedMe"])
     .order(d3.stackOrderAscending)
-    .offset(d3.stackOffsetNone);
+    .offset(d3.stackOffsetExpand);
 
     let series = stack(data)
 
@@ -169,7 +172,7 @@ function renderStackedBars(data){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
 
-    const yValue = d => d.contactZoeker;
+    const yValue = d => d.origin;
 
     const margin = { top: 40, right: 30, bottom: 150, left: 120 };
     const innerWidth = width - margin.left - margin.right;
@@ -200,18 +203,18 @@ function renderStackedBars(data){
         //append a new group for the x axis and set it at as the bottom axis
         g.append('g')
         .call(d3.axisBottom(xScale)
-            .tickSize(-innerHeight))
+            .tickSize(-innerHeight)
+            .tickFormat(d3.format('.0%')))
               .attr('transform', `translate(0, ${innerHeight})`)
-            .append('text')
-              .attr('y', 60)
-              .attr('x', innerWidth / 2)
-              .attr('fill', 'black')
-              .text('Aantal pijpen');
+            // .append('text')
+            //   .attr('y', 60)
+            //   .attr('x', innerWidth / 2)
+            //   .attr('fill', 'black')
+            //   .text('Aantal pijpen');
 
     //makes an ordinal color scale for each type
     const color = d3.scaleOrdinal()
-            //.domain(["hasjpijpen", "tabakspijpen", "waterpijpen", "pijpen (rookgerei)", "opiumpijpen" ])
-        .range([ '#FFFFFF', '#0048FF', '#FFF33D', ]);
+        .range([ '#FFF33D', '#0048FF', ]);
         
         g.append("g")
         .selectAll("g")
@@ -222,7 +225,7 @@ function renderStackedBars(data){
         .data(d => d)
         .join("rect")
           //.attr("x", (d, i) => x(d.data.name))
-          .attr("y", d => yScale(d.data.contactZoeker))
+          .attr("y", d => yScale(d.data.origin))
           .attr("x", d => xScale(d[0]))
           .attr("height", yScale.bandwidth())
           .attr("width", d => xScale(d[1]) - xScale(d[0]))
