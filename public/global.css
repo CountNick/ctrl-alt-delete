@@ -69,7 +69,7 @@ button:focus {
 }
 
 .navigation-button {
-    border-radius: 20px;
+    border-radius: .3rem;
     background-color: #FFF33D;
     color: black;
     border: none;
@@ -79,12 +79,17 @@ button:focus {
     cursor: pointer;
 }
 
+
 .active {
-    background-color: #0048FF;
+    background-color: #ffffff;
+    outline: .15rem solid #FFFFFF;
+    outline-offset: .2rem;
 }
 
 .inactive {
     background-color: #FFF33D;
+    outline: .15rem solid #FFF33D;
+    outline-offset: .2rem;
 }
 
 #step1 p {
@@ -99,3 +104,13 @@ button:focus {
 .hidden {
    display: none;
 }
+
+.d3-tip {
+    line-height: 1;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
