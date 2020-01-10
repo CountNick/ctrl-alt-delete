@@ -1,6 +1,15 @@
+/* Yellow: #FFF33D */
+/* Blue: #0048FF */
+/* Red: #FC3E46 */
+
 body {
-    background-color: #000000;
-    margin-left: 10em;
+    background-color: black;
+    background: url('./images/background.png') fixed;
+    background-size: 100%;
+    object-fit: cover;
+    width: 100%;
+    overflow: hidden;
+    background-size: contain;
 }
 
 @font-face {
@@ -27,11 +36,66 @@ body {
     height: 7em;
 }
 
-header {
-    margin-bottom: 4em;;
+h1, h2 {
+    color: #FFF33D;
+    font-family: Rubik;
+    text-align: center;
 }
 
-h1 {
+h2 {
+    max-width: 30em;
+    margin: 1em auto 1em auto;
+}
+
+#introduction {
+   max-width: 60em;
+   margin: 0em auto;
+}
+
+#main__container {
+    margin: 0em 5em;
+    text-align: center;
     color: white;
+}
+
+/* Buttons */
+button:focus {
+    outline :0;
+}
+
+#button__container {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.navigation-button {
+    border-radius: 20px;
+    background-color: #FFF33D;
+    color: black;
+    border: none;
+    padding: 1em;
+    margin-right: 2em;
     font-family: Rubik;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #0048FF;
+}
+
+.inactive {
+    background-color: #FFF33D;
+}
+
+#step1 p {
+    font-family: Roboto-light
+}
+
+/* Hide and show content */
+.visible {
+    display: block;
+}
+
+.hidden {
+   display: none;
 }

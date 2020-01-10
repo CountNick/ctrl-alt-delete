@@ -92,7 +92,8 @@ function organiseData(data){
     })
 
     console.log('Nietwesters', originNietWesters.length / answerYes.length * 100)
-
+    console.log('Nederlandsz', originNederlands.length / answerYes.length * 100)
+    
     complete.push(checkInitiatedContact(originNederlands, answerYes))
     complete.push(checkInitiatedContact(originWesters, answerYes))
     complete.push(checkInitiatedContact(originNietWesters, answerYes))
@@ -152,6 +153,140 @@ function checkInitiatedContact(data, answerYes){
 
 function renderStackedBars(data){
 
-    console.log('data: ', data)
+    console.log('data: ', data);
 
+    let stack = d3.stack()
+    .keys(["Nederlands", "Westers", "niet-Westers"])
+    .order(d3.stackOrderAscending)
+    .offset(d3.stackOffsetNone);
+
+    let series = stack(data)
+
+    console.log('series: ', series)
+
+    const svg = d3.select('.stack');
+
+    const width = +svg.attr('width');
+    const height = +svg.attr('height');
+
+    const yValue = d => d.contactZoeker;
+
+    const margin = { top: 40, right: 30, bottom: 150, left: 120 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const xScale = d3.scaleLinear()
+    .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
+    .range([0, innerWidth])
+    .nice();
+
+    const yScale = d3.scaleBand()
+    .domain(data.map(yValue))
+    .range([0, innerHeight])
+    .padding(0.3);
+
+    const g = svg.append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+        //append a new group for the y axis and set it on the left side
+    g.append('g')
+        .call(d3.axisLeft(yScale)
+            .tickSize('0'))
+            .append('text')
+            .attr('fill', 'black');
+
+
+
+        //append a new group for the x axis and set it at as the bottom axis
+        g.append('g')
+        .call(d3.axisBottom(xScale)
+            .tickSize(-innerHeight))
+              .attr('transform', `translate(0, ${innerHeight})`)
+            .append('text')
+              .attr('y', 60)
+              .attr('x', innerWidth / 2)
+              .attr('fill', 'black')
+              .text('Aantal pijpen');
+
+    //makes an ordinal color scale for each type
+    const color = d3.scaleOrdinal()
+            //.domain(["hasjpijpen", "tabakspijpen", "waterpijpen", "pijpen (rookgerei)", "opiumpijpen" ])
+        .range([ '#FFFFFF', '#0048FF', '#FFF33D', ]);
+        
+        g.append("g")
+        .selectAll("g")
+        .data(series)
+        .join("g")
+          .attr("fill", d => color(d.key))
+        .selectAll("rect")
+        .data(d => d)
+        .join("rect")
+          //.attr("x", (d, i) => x(d.data.name))
+          .attr("y", d => yScale(d.data.contactZoeker))
+          .attr("x", d => xScale(d[0]))
+          .attr("height", yScale.bandwidth())
+          .attr("width", d => xScale(d[1]) - xScale(d[0]))
 }
+
+
+        
+
+
+
+const button1 = document.getElementById('button-step1');
+const button2 = document.getElementById('button-step2');
+const button3 = document.getElementById('button-step3');
+const button4 = document.getElementById('button-step4');
+
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
+const step4 = document.getElementById('step4');
+
+button1.addEventListener('click', function() {
+    step1.classList.replace('hidden', 'visible');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+
+    button1.classList.replace('inactive', 'active');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+});
+
+button2.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('hidden', 'visible');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('inactive', 'active');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+});
+
+button3.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('hidden', 'visible');
+    step4.classList.replace('visible', 'hidden');
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('inactive', 'active');
+    button4.classList.replace('active', 'inactive');
+});
+
+button4.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('hidden', 'visible');
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('inactive', 'active');
+});
