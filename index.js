@@ -174,6 +174,14 @@ function renderStackedBars(data){
 
     const yValue = d => d.origin;
 
+    const tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(d => {
+      console.log(d)
+    return "<h4> Nederlander met "  + d.data.origin + " achtergrond</h4><strong></strong> <span style='color:red'>" + d + "</span>";
+  })
+
     const margin = { top: 40, right: 30, bottom: 150, left: 120 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -216,6 +224,8 @@ function renderStackedBars(data){
     const color = d3.scaleOrdinal()
         .range([ '#FFF33D', '#0048FF', ]);
         
+        g.call(tip)
+
         g.append("g")
         .selectAll("g")
         .data(series)
@@ -229,6 +239,9 @@ function renderStackedBars(data){
           .attr("x", d => xScale(d[0]))
           .attr("height", yScale.bandwidth())
           .attr("width", d => xScale(d[1]) - xScale(d[0]))
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+          
 }
 
 
