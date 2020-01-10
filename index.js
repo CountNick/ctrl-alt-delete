@@ -5,7 +5,7 @@ d3.tsv('./rawData2.txt')
     })
     .then(data => transformData(data))
     .then(transformData => organiseData(transformData))
-    //.then(organiseData => counter(organiseData))
+    .then(organiseData => renderStackedBars(organiseData))
 
 //function for data transformation
 function transformData(data){
@@ -150,16 +150,8 @@ function checkInitiatedContact(data, answerYes){
     return complete
 }
 
-//https://medium.com/@Dragonza/four-ways-to-chunk-an-array-e19c889eac4
-function chunk(array, size) {
-    const chunked_arr = [];
-    for (let i = 0; i < array.length; i++) {
-      const last = chunked_arr[chunked_arr.length - 1];
-      if (!last || last.length === size) {
-        chunked_arr.push([array[i]]);
-      } else {
-        last.push(array[i]);
-      }
-    }
-    return chunked_arr;
+function renderStackedBars(data){
+
+    console.log('data: ', data)
+
 }
