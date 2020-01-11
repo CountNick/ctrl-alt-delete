@@ -165,6 +165,8 @@ function renderStackedBars(data){
 
     let series = stack(data)
 
+    let transformToPercent = d3.format('.0%')
+
     console.log('series: ', series)
 
     const svg = d3.select('.stack');
@@ -178,8 +180,8 @@ function renderStackedBars(data){
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(d => {
-      console.log(d)
-    return "<h4> Nederlander met "  + d.data.origin + " achtergrond</h4><strong></strong> <span style='color:red'>" + d + "</span>";
+      console.log(d[1] - d[0])
+    return "<h4> Nederlander met "  + d.data.origin + " achtergrond</h4><strong>Percentage</strong> <span style='color:red'>"+ transformToPercent((d[1] - d[0])) +"</span>";
   })
 
     const margin = { top: 40, right: 30, bottom: 150, left: 120 };
@@ -212,7 +214,7 @@ function renderStackedBars(data){
         g.append('g')
         .call(d3.axisBottom(xScale)
             .tickSize(-innerHeight)
-            .tickFormat(d3.format('.0%')))
+            .tickFormat(transformToPercent))
               .attr('transform', `translate(0, ${innerHeight})`)
             // .append('text')
             //   .attr('y', 60)
@@ -234,6 +236,7 @@ function renderStackedBars(data){
         .selectAll("rect")
         .data(d => d)
         .join("rect")
+        .attr("class", "bar")
           //.attr("x", (d, i) => x(d.data.name))
           .attr("y", d => yScale(d.data.origin))
           .attr("x", d => xScale(d[0]))
@@ -241,6 +244,18 @@ function renderStackedBars(data){
           .attr("width", d => xScale(d[1]) - xScale(d[0]))
           .on('mouseover', tip.show)
           .on('mouseout', tip.hide)
+
+        g.selectAll("rect")
+        
+        .append("text")
+        .attr("height", yScale.bandwidth())
+        .attr("class", "up")
+        .attr("x", 12)
+        //.attr("dy", "1.3em")
+        .attr("text-anchor", "left")
+        .text( d => transformToPercent(d[1] - d[0]))
+        .style("fill", "#FFFFFF")
+            
           
 }
 
