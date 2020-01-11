@@ -1,5 +1,11 @@
 # Ethnic profiling in Amsterdam
 
+# Introduction
+
+[Controle Alt Delete](https://controlealtdelete.nl/) Gave us the opportunity to make a data visualisation about a survey they did on ethnic profiling in Amsterdam.
+
+![ControleAltDelete](https://www.ocan.nl/images/Uitnodigingen_extern_overige/Logo_Control_Alt_Delete.jpeg)
+
 ## Concept
 
 Screenshots here
