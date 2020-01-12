@@ -147,11 +147,11 @@ function checkInitiatedContact(data, answerYes){
     // complete.push(iContacted.length)
 
     
-    let cleaned = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100}
+    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100}
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
 
-    return cleaned
+    return cleanedObject
 }
 
 function renderStackedBars(data){
@@ -180,11 +180,14 @@ function renderStackedBars(data){
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(d => {
-      console.log(d[1] - d[0])
-    return "<h4> Nederlander met "  + d.data.origin + " achtergrond</h4><strong>Percentage</strong> <span style='color:red'>"+ transformToPercent((d[1] - d[0])) +"</span>";
+      //console.log(d[1] - d[0] == d.data.iContactedPolice)
+
+    // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
+
+    return "<h4> Nederlander met "  + d.data.origin + "e" + " migratieachtergrond</h4><strong>Percentage</strong> <span style='color:red'>"+ transformToPercent((d[1] - d[0])) +"</span>";
   })
 
-    const margin = { top: 40, right: 30, bottom: 150, left: 120 };
+    const margin = { top: 40, right: 30, bottom: 150, left: 100 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -203,24 +206,34 @@ function renderStackedBars(data){
 
         //append a new group for the y axis and set it on the left side
     g.append('g')
+    .style("font-size", "1rem")
         .call(d3.axisLeft(yScale)
             .tickSize('0'))
-            .append('text')
-            .attr('fill', 'black');
+            // .append('text')
+            // .style('font-size', '1rem')
+            // .style('transform', 'rotate(-90deg)')
+            // .attr('y', innerHeight / 2)
+            // // .attr('x', 500)
+            // .attr('fill', 'white')
+            
+            // .text('Nederlanders');
 
 
 
         //append a new group for the x axis and set it at as the bottom axis
         g.append('g')
+        .style("font-size", "1rem")
         .call(d3.axisBottom(xScale)
             .tickSize(-innerHeight)
             .tickFormat(transformToPercent))
+            .style("stroke-dasharray", ("3, 3"))
               .attr('transform', `translate(0, ${innerHeight})`)
-            // .append('text')
-            //   .attr('y', 60)
-            //   .attr('x', innerWidth / 2)
-            //   .attr('fill', 'black')
-            //   .text('Aantal pijpen');
+            .append('text')
+            .style('font-size', '1rem')
+              .attr('y', 40)
+              .attr('x', innerWidth / 2)
+              .attr('fill', 'white')
+              .text('Percentage');
 
     //makes an ordinal color scale for each type
     const color = d3.scaleOrdinal()
@@ -245,16 +258,38 @@ function renderStackedBars(data){
           .on('mouseover', tip.show)
           .on('mouseout', tip.hide)
 
-        g.selectAll("rect")
+        //g.selectAll("rect")
         
         .append("text")
         .attr("height", yScale.bandwidth())
         .attr("class", "up")
-        .attr("x", 12)
-        //.attr("dy", "1.3em")
+        .attr("y", d => yScale(d.data.origin))
+        .attr("x", d => xScale(d[0]))
         .attr("text-anchor", "left")
         .text( d => transformToPercent(d[1] - d[0]))
         .style("fill", "#FFFFFF")
+
+        const legend = svg.selectAll(".legend")
+        .data(color.domain())
+        .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
+        .on("mouseenter", d => {
+            console.log(d)
+        });
+        legend.append("rect")
+        .attr("x", 630 + innerWidth /3)
+        .attr('y', innerHeight / 2 +70)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", color)
+        legend.append("text")
+        .attr("x", 630 + innerWidth / 3)
+        .attr("y", innerHeight / 2 + 79)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text( d => { if (d == 'iContactedPolice'){return "Ik ging naar de politie toe"} else if(d == 'policeContactedMe'){ return "De politie kwam naar mij toe"} })
+        .attr('fill', 'white')
             
           
 }
