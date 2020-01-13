@@ -1,4 +1,4 @@
-d3.tsv('./rawData2.txt')
+d3.tsv('./rawData3.txt')
     .then(data => {
         //return the data
         return data
@@ -10,28 +10,28 @@ d3.tsv('./rawData2.txt')
 //function for data transformation
 function transformData(data){
     
-    //console.log('original data: ', data)
+    console.log('original data: ', data)
     
     //make new array with modified objects
     const cleanedObjects = data.map(object => {
         //only return neccessary pairs 
         return{
             //rename keys for easier usage
-            herkomst: object.Herkomst_def,
-            vertrouwen: +object.rapportcijfer,
-            contact: object.Contact_gehad,
-            stadsDeel: object.Stadsdeel,
-            totStand: object.Totstand,
+            herkomst: object["Definitieve herkomst"],
+            vertrouwen: +object["Q12 -   12. Wat voor rapportcijfer tussen de 1 en 10 geeft u uw vertrouwen in de politie?"],
+            contact: object["Q2 -   2. Heeft u de afgelopen 12 MAANDEN wel eens contact gehad met de politie? (bijvoorbeeld: u praatte met een politi"],
+            stadsDeel: object["Q1 -   1. In welk stadsdeel van Amsterdam woont u? (Let op: wanneer de respondent heeft aangekruisd 'Ik woon niet in Ams"],
+            totStand: object["Q4 -   4.    Hoe kwam uw LAATSTE contact met de politie tot stand?"],
             gevolgen: [
-                object.polben_gevolg_anders,
-                object.polben_gevolg_bekeuring,
-                object.polben_gevolg_niets,
-                object.Polben_arrestatie,
-                object.polben_gevolg_waarschuwing
+                object["Q9-  9. Wat gebeurde er bij dit LAATSTE contact met de politie?    Let op: u mag meerdere antwoorden geven.   - Anders,"],
+                object["Q9-  9. Wat gebeurde er bij dit LAATSTE contact met de politie?    Let op: u mag meerdere antwoorden geven.   - Bekeurin"],
+                object["Q9-  9. Wat gebeurde er bij dit LAATSTE contact met de politie?    Let op: u mag meerdere antwoorden geven.   - Niets"],
+                object["Q9- 9. Wat gebeurde er bij dit LAATSTE contact met de politie? Let op: u mag meerdere antwoorden geven.  -  Arrestatie"],
+                object["Q9-  9. Wat gebeurde er bij dit LAATSTE contact met de politie?    Let op: u mag meerdere antwoorden geven.   - Waarschu"]
             ],
-            beleefd: object.stel_beleefd,
-            luister: object.stel_luisteren,
-            rechtvaardig: object.stel_rechtvaardig
+            beleefd: object["Q11 - 1. De politie was beleefd"],
+            luister: object["Q11 - 2. De politie luisterde goed naar mijn verhaal"],
+            rechtvaardig: object["Q11 - 3. De politie handelde rechtvaardig"]
         }
     })
 
@@ -41,6 +41,8 @@ function transformData(data){
 }
 
 function organiseData(data){
+
+    console.log('trans: ', data)
 
     const originTotal = []
 
@@ -147,7 +149,7 @@ function checkInitiatedContact(data, answerYes){
     // complete.push(iContacted.length)
 
     
-    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100}
+    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100, amountIContactedPolice: iContacted.length ,amountPoliceContactedMe: policeContacted.length}
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
 
@@ -163,11 +165,20 @@ function renderStackedBars(data){
     .order(d3.stackOrderAscending)
     .offset(d3.stackOffsetExpand);
 
+    let stack2 = d3.stack()
+    .keys(["amountIContactedPolice", "amountPoliceContactedMe"])
+    .order(d3.stackOrderAscending)
+    .offset(d3.stackOffsetNone);
+
     let series = stack(data)
+
+    let series2 = stack2(data)
 
     let transformToPercent = d3.format('.0%')
 
     console.log('series: ', series)
+
+    console.log('series 2: ', series2)
 
     const svg = d3.select('.stack');
 
@@ -290,6 +301,13 @@ function renderStackedBars(data){
         .style("text-anchor", "end")
         .text( d => { if (d == 'iContactedPolice'){return "Ik ging naar de politie toe"} else if(d == 'policeContactedMe'){ return "De politie kwam naar mij toe"} })
         .attr('fill', 'white')
+
+        function selectionChanged(){
+            //change by click on radio button
+            //chenge the normalised bars to stacked bars
+            //stacked bars should have numbers 
+            //x axis should have these numbers on axis
+        }
             
           
 }
