@@ -249,8 +249,6 @@ function renderStackedBars(data){
             
     // .text('Nederlanders');
 
-
-
     //append a new group for the x axis and set it at as the bottom axis
     g.append('g')
         .style('font-size', '1rem')
@@ -290,7 +288,6 @@ function renderStackedBars(data){
         .on('mouseout', tip.hide)
 
     //g.selectAll("rect")
-        
         .append('text')
         .attr('height', yScale.bandwidth())
         .attr('class', 'up')

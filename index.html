@@ -10,34 +10,40 @@
     <title>Ctrl-Alt-Delete</title>
 </head>
 <body>
-    <header>
-        <!-- <img id="logo" src="./public/images/logo.svg" alt=""> -->
-        <h1>Etnisch profileren in Amsterdam</h1>
-    </header>
-    <div id="button__container">
-        <button class="navigation-button active" id="button-step1">Profielschets</button>
-        <button class="navigation-button inactive" id="button-step2">Het contact</button>
-        <button class="navigation-button inactive" id="button-step3">Gevolgen contact</button>
-        <button class="navigation-button inactive" id="button-step4">Hoe verliep het contact</button>
-    </div>
-    <div id="main__container">
-        <div id="step1" class="visible">
+    <div id="top">
+        <header>
+            <!-- <img id="logo" src="./public/images/logo.svg" alt=""> -->
+            <h1>Etnisch profileren in Amsterdam</h1>
+        </header>
+        <div id="introduction__container">
             <h2>Inleiding</h2>
             <p id="introduction">In dit onderzoek zijn 1200 respondenten geënquêteerd om vragen te beantwoorden dat gaat over hun ervaring met de politie. Hier zult u de resultaten vinden per groep. Hierin is onderscheid gemaakt tussen de volgende groepen; Nederlandse Nederlanders, Nederlanders met een Westerse migratieachtergrond en Nederlanders met een niet-Westerse migratieachtergrond.</p>
-            <h2>39,2% van de respondenten heeft in de afgelopen 12 MAANDEN contact gehad met de politie, waaronder</h2>
-            <svg width="960" height="600" class = "pie"></svg>
         </div>
-        <div id="step2" class="hidden">
-            <h2>Wie initieerde het laatste contact?</h2>
-            <svg width="960" height="600" class = "stack"></svg>
+        <div id="button__container">
+            <button class="navigation-button active" id="button-step1">Profielschets</button>
+            <button class="navigation-button inactive" id="button-step2">Het contact</button>
+            <button class="navigation-button inactive" id="button-step3">Gevolgen contact</button>
+            <button class="navigation-button inactive" id="button-step4">Hoe verliep het contact</button>
         </div>
-        <div id="step3" class="hidden">
-            <h2>Gevolgen laatste contact</h2>
-            <svg></svg>
-        </div>
-        <div id="step4" class="hidden">
-            <h2>Hoe verliep het laatste contact met de politie?</h2>
-            <svg width="960" height="600" class = "groupedBars"></svg>
+    </div>
+    <div id="bottom">
+        <div id="visualisations__container">
+            <div id="step1" class="visible">
+                <h2 class="title">39,2% van de respondenten heeft in de afgelopen 12 MAANDEN contact gehad met de politie, waaronder</h2>
+                <svg width="960" height="600" class = "pie"></svg>
+            </div>
+            <div id="step2" class="hidden">
+                <h2 class="title">Soorten contact met de politie per groep</h2>
+                <svg width="900" height="400" class = "stack" id="stacked-bar"></svg>
+            </div>
+            <div id="step3" class="hidden">
+                <h2 class="title">Gevolgen laatste contact</h2>
+                <svg></svg>
+            </div>
+            <div id="step4" class="hidden">
+                <h2 class="title">Hoe verliep het laatste contact met de politie?</h2>
+                <svg width="960" height="600" class = "groupedBars"></svg>
+            </div>
         </div>
     </div>
     <script type="module" src="./index.js"></script>
