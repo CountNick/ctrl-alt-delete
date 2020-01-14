@@ -88,8 +88,6 @@ function organiseData(data){
         }
     });
 
-    
-
     // console.log('westers', originWesters.length / answerYes.length * 100);
     
     //make a new array for respondents with a dutch / non-western origin
@@ -112,6 +110,7 @@ function organiseData(data){
     complete.push(checkInitiatedContact(originNederlands, answerYes));
     complete.push(checkInitiatedContact(originWesters, answerYes));
 
+    //fill the pieData array with each origin and it's corresponding value in percentage
     pieData.push(preparePieData(originNederlands, answerYes));
     pieData.push(preparePieData(originNietWesters, answerYes));
     pieData.push(preparePieData(originWesters, answerYes));
@@ -196,19 +195,21 @@ function checkInitiatedContact(data, answerYes){
     return cleanedObject;
 }
 
+//function that prepares data for a piechart, data still needs to be pushed in one array where this function gets called
 function preparePieData(data, answerYes){
-
+    //empty variable to store the newly made object in
     let pieObject;
+    //empty variable to store object.herkomst in, this makes the function reusable
     let origin;
 
     data.forEach(element => {
+        //give origin the value of object.herkomst
         origin = element.herkomst;
     });
-
+    //give pieObject a new object with values for origin and percentage
     pieObject = {origin: origin, percentage: data.length / answerYes.length * 100};
-
+    //return the newly made pieObject
     return pieObject;
-
 }
 
 function renderStackedBars(data){
