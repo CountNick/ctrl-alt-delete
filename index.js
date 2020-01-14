@@ -16,7 +16,6 @@ d3.tsv('./rawData4.txt')
     .then(transformData => organiseData(transformData))
     .then(finalData => renderPieChart(finalData));
    
-
 //function for data transformation
 function transformData(data){
     
