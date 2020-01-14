@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="public/global.css">
     <script type = "text/javascript" src = "https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
-    <title>Controle Alt Delete</title>
+    <title>Ctrl-Alt-Delete</title>
 </head>
 <body>
     <div id="top">
@@ -18,6 +18,23 @@
         <div id="introduction__container">
             <h2>Inleiding</h2>
             <p id="introduction">In dit onderzoek zijn 1200 respondenten geënquêteerd om vragen te beantwoorden dat gaat over hun ervaring met de politie. Hier zult u de resultaten vinden per groep. Hierin is onderscheid gemaakt tussen de volgende groepen; Nederlandse Nederlanders, Nederlanders met een Westerse migratieachtergrond en Nederlanders met een niet-Westerse migratieachtergrond.</p>
+        </div>
+        <div id="trust__container">
+            <h2>Gemiddeld vertrouwen in de politie</h2>
+            <div id="trust-grades__container">
+                <div class="trust-grade__container">
+                    <h3 class="NL">Nederlandse Nederlander</h3>
+                    <p class="NL">7,3</p>
+                </div>
+                <div class="trust-grade__container">
+                    <h3 class="WM">Nederlanders met een Westerse migratieachtergrond</h3>
+                    <p class="WM">6,9</p>
+                </div>
+                <div class="trust-grade__container">
+                    <h3 class="NWM">Nederlanders met een niet-Westerse migratieachtergrond</h3>
+                    <p class="NWM">6,4</p>
+                </div>
+            </div>
         </div>
         <div id="button__container">
             <button class="navigation-button active" id="button-step1">Profielschets</button>
@@ -30,7 +47,14 @@
         <div id="visualisations__container">
             <div id="step1" class="visible">
                 <h2 class="title">39,2% van de respondenten heeft in de afgelopen 12 MAANDEN contact gehad met de politie, waaronder</h2>
-                <svg width="960" height="600" class = "pie"></svg>
+                <div class="pie__container">
+                    <svg width="400" height="400" class = "pie"></svg>
+                    <ul class="legend">
+                        <li class="NL">Nederlandse Nederlander</li>
+                        <li class="WM">Nederlanders met een Westerse migratieachtergrond</li>
+                        <li class="NWM">Nederlanders met een niet-Westerse migratieachtergrond</li>
+                    </ul>
+                </div>
             </div>
             <div id="step2" class="hidden">
                 <h2 class="title">Soorten contact met de politie per groep</h2>
