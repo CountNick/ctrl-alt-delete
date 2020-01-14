@@ -23,6 +23,10 @@
     src: url(./fonts/Roboto/Roboto-Light.ttf);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 html,
 body {
     margin: 0;
@@ -54,8 +58,8 @@ h1 {
 }
 
 h2 {
-    color: #FFF33D;
-    font-family: Rubik;
+    color: white;
+    font-family: Roboto-medium;
     padding: 0em;
 }
 
@@ -63,6 +67,7 @@ h2 {
     text-align: left;
     margin-left: 2em;
     width: 30em;
+    font-family: Roboto-medium;
 }
 
 #introduction__container {
@@ -87,8 +92,12 @@ h2 {
     padding-top: 1em;
 }
 
-#step2 {
-    text-align: center;
+.yellow {
+    color: #FFF33D;
+}
+
+.blue {
+    color: #0048FF;
 }
 
 /* Pie chart */
@@ -96,12 +105,27 @@ h2 {
     margin-left: 10em;
 }
 
-.pie path:hover {
-    opacity: 0.9;
-}
-
 .pie__container {
     display: flex;
+}
+
+.pie__container p {
+    font-family: Roboto-light;
+    margin-left: 3em;
+    width: 15em;
+}
+
+/* Bar chart */
+#stacked-bar {
+    margin-left: 3em;
+}
+
+#bar__container {
+    display: flex;
+}
+
+.stack g g rect:hover {
+    cursor: pointer;
 }
 
 /* Trust grades */
@@ -146,7 +170,7 @@ h2 {
 }
 
 .NL {
-    color: #FF3333;
+    color: #F45905;
 }
 
 .WM {
@@ -170,7 +194,6 @@ button:focus {
 }
 
 .navigation-button {
-    border-radius: .3rem;
     background-color: #FFF33D;
     color: black;
     border: none;

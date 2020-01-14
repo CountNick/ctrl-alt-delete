@@ -46,8 +46,9 @@
     <div id="bottom">
         <div id="visualisations__container">
             <div id="step1" class="visible">
-                <h2 class="title">39,2% van de respondenten heeft in de afgelopen 12 MAANDEN contact gehad met de politie, waaronder</h2>
+                <h2 class="title">Onderverdeling respondenten contact met politie</h2>
                 <div class="pie__container">
+                    <p><span class="yellow">39,2%</span> van de respondenten heeft in de afgelopen<span class="yellow">12 MAANDEN </span> contact gehad met de politie, waaronder</p>
                     <svg width="350" height="350" class = "pie"></svg>
                     <ul class="legend">
                         <li class="NL">Nederlandse Nederlander</li>
@@ -58,7 +59,13 @@
             </div>
             <div id="step2" class="hidden">
                 <h2 class="title">Soorten contact met de politie per groep</h2>
-                <svg width="900" height="400" class = "stack" id="stacked-bar"></svg>
+                <div id="bar__container">
+                    <svg width="700" height="400" class = "stack" id="stacked-bar"></svg>
+                    <ul class="legend">
+                        <li class="yellow">Ik ging naar de politie toe</li>
+                        <li class="blue">De politie kwam naar mij toe</li>
+                    </ul>
+                </div>
             </div>
             <div id="step3" class="hidden">
                 <h2 class="title">Gevolgen laatste contact</h2>

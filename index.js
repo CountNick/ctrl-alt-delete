@@ -253,7 +253,7 @@ function renderStackedBars(data){
 
             // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
 
-            return '<h4> Nederlander met '  + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage</strong> <span style=\'color:red\'>'+ transformToPercent((d[1] - d[0])) +'</span>';
+            return '<h4> Nederlander met '  + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>'+ transformToPercent((d[1] - d[0])) +'</span>';
         });
 
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
@@ -349,13 +349,6 @@ function renderStackedBars(data){
         .attr('width', 18)
         .attr('height', 18)
         .style('fill', color);
-    legend.append('text')
-        .attr('x', 630 + innerWidth / 3)
-        .attr('y', innerHeight / 2 + 79)
-        .attr('dy', '.35em')
-        .style('text-anchor', 'end')
-        .text( d => { if (d == 'iContactedPolice'){return 'Ik ging naar de politie toe';} else if(d == 'policeContactedMe'){ return 'De politie kwam naar mij toe';} })
-        .attr('fill', 'white');
 
     function selectionChanged(){
         //change by click on radio button
@@ -385,7 +378,7 @@ function renderPieChart(data) {
         .attr('viewBox', [-width / 2, -height / 2, width, height]);
 
     const color = d3.scaleOrdinal()
-        .range([ '#FF3333', '#FF9933', '#FFCC99' ]);
+        .range([ '#F45905', '#FF9933', '#FFCC99' ]);
 
     svg.append('g')
         .attr('stroke', 'white')
@@ -394,8 +387,7 @@ function renderPieChart(data) {
         .join('path')
         .attr('fill', d => color(d.data.origin))
         .attr('d', arc)
-        .append('title')
-        .text(d => `${d.data.origin}: ${d.data.percentage.toLocaleString()}`);
+        .append('title');
 
     svg.append('g')
         .attr('font-family', 'sans-serif')
