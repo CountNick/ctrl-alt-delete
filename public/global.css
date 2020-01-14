@@ -1,22 +1,8 @@
 /* Yellow: #FFF33D */
 /* Blue: #0048FF */
 /* Red: #FC3E46 */
-html,
-body{
-    margin: 0;
-    padding: 0;
-}
 
-body {
-    background-color: black;
-    background: url('./images/background.png') fixed;
-    background-size: 100%;
-    object-fit: cover;
-    width: 100%;
-    overflow: hidden;
-    background-size: contain;
-}
-
+/* Fonts */
 @font-face {
     font-family: Rubik;
     src: url(./fonts/Rubik/Rubik-Bold.ttf);
@@ -37,30 +23,72 @@ body {
     src: url(./fonts/Roboto/Roboto-Light.ttf);
 }
 
-#logo {
-    height: 7em;
+html,
+body {
+    margin: 0;
+    padding: 0;
 }
 
-h1, h2 {
+body {
+    background-color: black;
+    background: url('./images/background.png') fixed;
+    background-size: 100%;
+    object-fit: cover;
+    width: 100%;
+    background-size: contain;
+}
+
+#top {
+    height: 100vh;
+}
+
+#bottom {
+    height: 100vh;
+}
+
+h1 {
     color: #FFF33D;
     font-family: Rubik;
     text-align: center;
+    padding: 0em;
 }
 
 h2 {
-    max-width: 30em;
-    margin: 1em auto 1em auto;
+    color: #FFF33D;
+    font-family: Rubik;
+    padding: 0em;
+}
+
+.title {
+    text-align: left;
+    margin-left: 5em;
+    width: 30em;
+}
+
+#introduction__container {
+    background-color: black;
+    width: 65%;
+    padding: .5em 1.5em;
+    margin: 0em auto;
 }
 
 #introduction {
-   max-width: 60em;
-   margin: 0em auto;
+   color: white;
+   font-family: Roboto-light;
+   line-height: 1.5em;
 }
 
-#main__container {
-    margin: 0em 5em;
-    text-align: center;
+#visualisations__container {
     color: white;
+    background-color: black;
+    width: 80%;
+    height: 80%;
+    margin: 0em auto;
+    padding-top: 1em;
+}
+
+#step2 {
+    text-align: center;
 }
 
 /* Buttons */
@@ -72,7 +100,7 @@ button:focus {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-bottom: 3rem;
+    margin-top: 25em;
 }
 
 .navigation-button {
@@ -99,10 +127,6 @@ button:focus {
     outline-offset: .2rem;
 }
 
-#step1 p {
-    font-family: Roboto-light
-}
-
 /* Hide and show content */
 .visible {
     display: block;
@@ -123,13 +147,13 @@ button:focus {
     border-radius: 4px;
     font-size: .8rem;
     font-family: Roboto-light;
-  }
+}
 
-  .d3-tip h4{
-      font-family: Rubik;
-  }
+.d3-tip h4{
+    font-family: Rubik;
+}
   
-  /* Creates a small triangle extender for the tooltip */
+/* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
     box-sizing: border-box;
     display: inline;
@@ -142,8 +166,9 @@ button:focus {
     text-align: center;
   }
   
-  /* Style northward tooltips differently */
-  .d3-tip.n:after {
+/* Style northward tooltips differently */
+.d3-tip.n:after {
     margin: -1px 0 0 0;
     top: 100%;
-    left: 0;}
+    left: 0;
+}

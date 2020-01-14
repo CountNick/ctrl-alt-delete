@@ -131,6 +131,29 @@ function organiseData(data){
 
     // console.log('stackdata: ', arrayForStack)
 
+
+
+    // // average trust grade per group
+    // const averageGrade = [];
+    // const total = [];
+    // data.map(object => {
+    //     if(object.vertrouwen === 99999) {
+    //         //nothing
+    //     }
+    //     else {
+    //         total.push(object.vertrouwen);
+    //     }
+    // });
+
+    // const totalSum = function(arr){
+    //     return arr.reduce(function(a, b){
+    //         return a + b;
+    //     }, 0);
+    // };
+
+    // averageGrade.push(totalSum(total) / (+total.length));
+    // console.log('Gemiddeld totaal iedereen:' + averageGrade);
+
     return complete;
 
 }
@@ -241,8 +264,6 @@ function renderStackedBars(data){
             
     // .text('Nederlanders');
 
-
-
     //append a new group for the x axis and set it at as the bottom axis
     g.append('g')
         .style('font-size', '1rem')
@@ -282,7 +303,6 @@ function renderStackedBars(data){
         .on('mouseout', tip.hide)
 
     //g.selectAll("rect")
-        
         .append('text')
         .attr('height', yScale.bandwidth())
         .attr('class', 'up')
@@ -319,15 +339,8 @@ function renderStackedBars(data){
         //chenge the normalised bars to stacked bars
         //stacked bars should have numbers 
         //x axis should have these numbers on axis
-    }
-            
-          
+    }     
 }
-
-
-        
-
-
 
 const button1 = document.getElementById('button-step1');
 const button2 = document.getElementById('button-step2');
