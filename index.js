@@ -47,8 +47,10 @@ function transformData(data){
 }
 
 function organiseData(data){
-
+    //array to store the data for the normalised stacked bar chart
     const complete = [];
+    //array to store the data for the piechart
+    const pieData = [];
     console.log('trans: ', data);
 
     //empty array for respondents with the three different origin groups
@@ -73,8 +75,7 @@ function organiseData(data){
         }      
     });
 
-    // console.log('cest la vie', originNederlands);
-
+    
     
     //make a new array for respondents with a dutch / western origin
     const originWesters = answerYes.filter(object => {
@@ -110,9 +111,13 @@ function organiseData(data){
     complete.push(checkInitiatedContact(originNietWesters, answerYes));
     complete.push(checkInitiatedContact(originNederlands, answerYes));
     complete.push(checkInitiatedContact(originWesters, answerYes));
+
+    pieData.push(preparePieData(originNederlands, answerYes));
+    pieData.push(preparePieData(originNietWesters, answerYes));
+    pieData.push(preparePieData(originWesters, answerYes));
     
 
-    console.log(complete);
+    console.log(pieData);
 
     // const target = {}
     // const target2 = {}
@@ -189,6 +194,21 @@ function checkInitiatedContact(data, answerYes){
 
     //return the cleanedObject
     return cleanedObject;
+}
+
+function preparePieData(data, answerYes){
+
+    let pieObject;
+    let origin;
+
+    data.forEach(element => {
+        origin = element.herkomst;
+    });
+
+    pieObject = {origin: origin, percentage: data.length / answerYes.length * 100};
+
+    return pieObject;
+
 }
 
 function renderStackedBars(data){
