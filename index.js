@@ -343,6 +343,8 @@ button1.addEventListener('click', function() {
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
 
+    window.scrollTo(0, 1000);
+
     button1.classList.replace('inactive', 'active');
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('active', 'inactive');
@@ -354,6 +356,8 @@ button2.addEventListener('click', function() {
     step2.classList.replace('hidden', 'visible');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
+
+    window.scrollTo(0, 1000);
 
     button1.classList.replace('active', 'inactive');
     button2.classList.replace('inactive', 'active');
@@ -367,6 +371,8 @@ button3.addEventListener('click', function() {
     step3.classList.replace('hidden', 'visible');
     step4.classList.replace('visible', 'hidden');
 
+    window.scrollTo(0, 1000);
+
     button1.classList.replace('active', 'inactive');
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('inactive', 'active');
@@ -378,6 +384,8 @@ button4.addEventListener('click', function() {
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('hidden', 'visible');
+
+    window.scrollTo(0, 1000);
 
     button1.classList.replace('active', 'inactive');
     button2.classList.replace('active', 'inactive');
