@@ -4,17 +4,8 @@ d3.tsv('./rawData4.txt')
         return data;
     })
     .then(data => transformData(data))
-    .then(transformData => organiseData(transformData))
-    .then(organiseData => renderStackedBars(organiseData));
-
-d3.tsv('./rawData4.txt')
-    .then(data => {
-        //return the data
-        return data;
-    })
-    .then(data => transformData(data))
-    .then(transformData => organiseData(transformData))
-    .then(finalData => renderPieChart(finalData));
+    .then(transformData => organiseData(transformData));
+    // .then(organiseData => renderStackedBars(organiseData));
    
 
 //function for data transformation
@@ -126,6 +117,8 @@ function organiseData(data){
     pieData.push(preparePieData(originWesters, answerYes));
     
 
+    renderStackedBars(complete);
+    renderPieChart(pieData);
     console.log(pieData);
 
     // const target = {}
