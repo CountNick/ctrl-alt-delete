@@ -31,7 +31,13 @@ function transformData(data){
             ],
             beleefd: object.stel_beleefd,
             luister: object.stel_luisteren,
-            rechtvaardig: object.stel_rechtvaardig
+            rechtvaardig: object.stel_rechtvaardig,
+            controleStraat: object.polben_Controlestraat,
+            controleVerkeer: object.polben_Controleverkeer,
+            controleVerkeerdStraat: object.polben_Verkeerdstraat,
+            controleVerkeerdVerkeer: object.polben_Verkeerdverkeer,
+            controlePraatjeMaken: object.polben_Praatje,
+            controleAnders: object.polben_Anders
         };
     });
 
@@ -41,64 +47,77 @@ function transformData(data){
 }
 
 function organiseData(data){
-
+    //array to store the data for the normalised stacked bar chart
+    const complete = [];
+    //array to store the data for the piechart
+    const pieData = [];
     console.log('trans: ', data);
 
+    //empty array for respondents with the three different origin groups
     const originTotal = [];
 
+    //make a new array for the respondents that had contact with the police
     const answerYes = data.filter( object => {
 
+        //if answer is yes, the respondent answered the wuestion and respondents origin is not unkown return the object to the answerYes array
         if(object.contact == 'Ja' && object.totStand != 'De respondent heeft deze vraag niet beantwoord' && object.herkomst != 'Onbekend') return object; 
 
     });
 
-    
+    //make a new array for respondents with a dutch origin
     const originNederlands = answerYes.filter( object => {
 
         if (object.herkomst == 'Nederlands'){
-
+            //push each object with this origin to originTotal
             originTotal.push(object);
-
+            //return objects that match cryteria
             return object;
         }      
     });
 
-
-    const complete = [];
     
+    
+    //make a new array for respondents with a dutch / western origin
     const originWesters = answerYes.filter(object => {
 
         if (object.herkomst == 'Westers'){
-
+            //push each object with this origin to originTotal
             originTotal.push(object);
-
+            //return objects that match cryteria
             return object;
         }
     });
 
-    console.log('westers', originWesters.length / answerYes.length * 100);
+    
 
+    // console.log('westers', originWesters.length / answerYes.length * 100);
+    
+    //make a new array for respondents with a dutch / non-western origin
     const originNietWesters = answerYes.filter(object => {
 
         if(object.herkomst != 'Nederlands' && object.herkomst != 'Westers' && object.herkomst != 'Onbekend'){
-
+            //push each object with this origin to originTotal
             object.herkomst = 'niet-Westers';
-
+            //push each object with this origin to originTotal
             originTotal.push(object);
-
+            //return objects that match cryteria
             return object;
         }
     });
 
-    console.log('Nietwesters', originNietWesters.length / answerYes.length * 100);
-    console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
+    // console.log('Nietwesters', originNietWesters.length / answerYes.length * 100);
+    // console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
     
     complete.push(checkInitiatedContact(originNietWesters, answerYes));
     complete.push(checkInitiatedContact(originNederlands, answerYes));
     complete.push(checkInitiatedContact(originWesters, answerYes));
+
+    pieData.push(preparePieData(originNederlands, answerYes));
+    pieData.push(preparePieData(originNietWesters, answerYes));
+    pieData.push(preparePieData(originWesters, answerYes));
     
 
-    console.log(complete);
+    console.log(pieData);
 
     // const target = {}
     // const target2 = {}
@@ -144,36 +163,52 @@ function organiseData(data){
 
 }
 
+//function that checks who initiated contact and returns a modified object containg: percentage and amount
 function checkInitiatedContact(data, answerYes){
-
+    //empty array to store objects where the police initated contact
     const policeContacted = [];
+    //empty array to store objects where the respondent initated contact
     const iContacted = [];
-    const complete = [];
+    //empty variable to store object.herkomst in, this makes the function reusable
+    let origin;
+    
+    data.forEach(element => {
+        //give origin the value of object.herkomst
+        origin = element.herkomst;
+    });
+    //map over the data given as a parameter to this function
+    data.map(object => {
+        //if police initiated contact push to policeContacted
+        if(object.totStand == 'De politie kwam naar mij toe'){
+            policeContacted.push(object.totStand);
+        }//if respondent initiated contact push to iContacted 
+        else if(object.totStand == 'Ik ging naar de politie toe'){
+            iContacted.push(object.totStand);
+        }
+    });
 
+    //
+    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100, amountIContactedPolice: iContacted.length, amountPoliceContactedMe: policeContacted.length};
+    // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
+    // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
+
+    //return the cleanedObject
+    return cleanedObject;
+}
+
+function preparePieData(data, answerYes){
+
+    let pieObject;
     let origin;
 
     data.forEach(element => {
         origin = element.herkomst;
     });
 
-    data.map(object => {
+    pieObject = {origin: origin, percentage: data.length / answerYes.length * 100};
 
-        if(object.totStand == 'De politie kwam naar mij toe'){
-            policeContacted.push(object.totStand);
-        } else if(object.totStand == 'Ik ging naar de politie toe'){
-            iContacted.push(object.totStand);
-        }
-    });
+    return pieObject;
 
-    // complete.push(policeContacted.length)
-    // complete.push(iContacted.length)
-
-    
-    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100, amountIContactedPolice: iContacted.length , amountPoliceContactedMe: policeContacted.length};
-    // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
-    // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
-
-    return cleanedObject;
 }
 
 function renderStackedBars(data){
