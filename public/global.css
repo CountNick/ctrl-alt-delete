@@ -91,6 +91,37 @@ h2 {
     text-align: center;
 }
 
+/* Pie chart */
+.pie {
+    margin-left: 10em;
+}
+
+.pie path:hover {
+    opacity: 0.9;
+}
+
+.pie__container {
+    display: flex;
+}
+
+/* Legend */
+.legend {
+    list-style: none;
+    font-family: Roboto-light;
+}
+
+.NL {
+    color: #FF3333;
+}
+
+.WM {
+    color: #FF9933;
+}
+
+.NWM {
+    color: #FFCC99;
+}
+
 /* Buttons */
 button:focus {
     outline :0;
