@@ -7,6 +7,16 @@ d3.tsv('./rawData4.txt')
     .then(transformData => organiseData(transformData))
     .then(organiseData => renderStackedBars(organiseData));
 
+d3.tsv('./rawData4.txt')
+    .then(data => {
+        //return the data
+        return data;
+    })
+    .then(data => transformData(data))
+    .then(transformData => organiseData(transformData))
+    .then(finalData => renderPieChart(finalData));
+   
+
 //function for data transformation
 function transformData(data){
     
@@ -158,8 +168,7 @@ function organiseData(data){
     // averageGrade.push(totalSum(total) / (+total.length));
     // console.log('Gemiddeld totaal iedereen:' + averageGrade);
 
-    return complete;
-
+    return pieData;
 }
 
 //function that checks who initiated contact and returns a modified object containg: percentage and amount
@@ -363,6 +372,55 @@ function renderStackedBars(data){
     }     
 }
 
+function renderPieChart(data) {
+    let transformToPercent = d3.format('.0%');
+    const pie = d3.pie()
+        .sort(null)
+        .value(d => d.percentage);
+    const width = 200;
+    const height = 200;
+    function test() {
+        const radius = Math.min(width, height) / 2 * 0.8;
+        return d3.arc().innerRadius(radius).outerRadius(radius);
+    };
+    const arcLabel = test();
+    const arc = d3.arc()
+        .innerRadius(0)
+        .outerRadius(Math.min(width, height) / 2 - 1);
+    const arcs = pie(data);
+    const svg = d3.select('.pie')
+        .attr('viewBox', [-width / 2, -height / 2, width, height]);
+
+    const color = d3.scaleOrdinal()
+        .range([ '#FF3333', '#FF9933', '#FFCC99' ]);
+
+    svg.append('g')
+        .attr('stroke', 'white')
+        .selectAll('path')
+        .data(arcs)
+        .join('path')
+        .attr('fill', d => color(d.data.origin))
+        .attr('d', arc)
+        .append('title')
+        .text(d => `${d.data.origin}: ${d.data.percentage.toLocaleString()}`);
+
+    svg.append('g')
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', 12)
+        .attr('text-anchor', 'middle')
+        .selectAll('text')
+        .data(arcs)
+        .join('text')
+        .attr('transform', d => `translate(${arcLabel.centroid(d)})`)
+        .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
+            .attr('x', 0)
+            .attr('y', '0.7em')
+            .attr('fill-opacity', 0.7)
+            .text(d => d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%'));
+
+    return svg.node();
+}
+
 const button1 = document.getElementById('button-step1');
 const button2 = document.getElementById('button-step2');
 const button3 = document.getElementById('button-step3');
@@ -379,6 +437,8 @@ button1.addEventListener('click', function() {
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
 
+    window.scrollTo(0, 1000);
+
     button1.classList.replace('inactive', 'active');
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('active', 'inactive');
@@ -390,6 +450,8 @@ button2.addEventListener('click', function() {
     step2.classList.replace('hidden', 'visible');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
+
+    window.scrollTo(0, 1000);
 
     button1.classList.replace('active', 'inactive');
     button2.classList.replace('inactive', 'active');
@@ -403,6 +465,8 @@ button3.addEventListener('click', function() {
     step3.classList.replace('hidden', 'visible');
     step4.classList.replace('visible', 'hidden');
 
+    window.scrollTo(0, 1000);
+
     button1.classList.replace('active', 'inactive');
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('inactive', 'active');
@@ -414,6 +478,8 @@ button4.addEventListener('click', function() {
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('hidden', 'visible');
+
+    window.scrollTo(0, 1000);
 
     button1.classList.replace('active', 'inactive');
     button2.classList.replace('active', 'inactive');

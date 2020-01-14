@@ -61,7 +61,7 @@ h2 {
 
 .title {
     text-align: left;
-    margin-left: 5em;
+    margin-left: 2em;
     width: 30em;
 }
 
@@ -69,7 +69,7 @@ h2 {
     background-color: black;
     width: 65%;
     padding: .5em 1.5em;
-    margin: 0em auto;
+    margin: 0em auto 2em auto;
 }
 
 #introduction {
@@ -91,6 +91,68 @@ h2 {
     text-align: center;
 }
 
+/* Pie chart */
+.pie {
+    margin-left: 10em;
+}
+
+.pie path:hover {
+    opacity: 0.9;
+}
+
+.pie__container {
+    display: flex;
+}
+
+/* Trust grades */
+#trust__container {
+    margin: 0em auto;
+    width: 65%;
+    font-family: Roboto-regular;
+    background-color: black;
+    padding: .5em 1.5em;
+}
+
+#trust-grades__container {
+    display: flex;
+    justify-content: space-between
+}
+
+.trust-grade__container {
+    color: white;
+    max-width: 25%;
+    text-align: center;
+}
+
+.trust-grade__container h3 {
+    height: 2em;
+    margin-bottom: 3em;
+    margin-top: 0.2em;
+}
+
+.trust-grade__container p {
+    font-size: 3em;
+    margin: 0em 0em .3em 0em;
+}
+
+/* Legend */
+.legend {
+    list-style: none;
+    font-family: Roboto-light;
+}
+
+.NL {
+    color: #FF3333;
+}
+
+.WM {
+    color: #FF9933;
+}
+
+.NWM {
+    color: #FFCC99;
+}
+
 /* Buttons */
 button:focus {
     outline :0;
@@ -100,7 +162,7 @@ button:focus {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 25em;
+    margin-top: 5em;
 }
 
 .navigation-button {
@@ -113,7 +175,6 @@ button:focus {
     font-family: Rubik;
     cursor: pointer;
 }
-
 
 .active {
     background-color: #ffffff;
