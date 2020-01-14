@@ -127,10 +127,12 @@ h2 {
 .trust-grade__container h3 {
     height: 2em;
     margin-bottom: 3em;
+    margin-top: 0.2em;
 }
 
 .trust-grade__container p {
     font-size: 3em;
+    margin: 0em 0em .3em 0em;
 }
 
 /* Legend */
@@ -160,7 +162,7 @@ button:focus {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 3em;
+    margin-top: 5em;
 }
 
 .navigation-button {
