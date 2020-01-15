@@ -52,10 +52,13 @@ function organiseData(data){
     const complete = [];
     //array to store the data for the piechart
     const pieData = [];
+    const answerNo = [];
     console.log('trans: ', data);
+
 
     //empty array for respondents with the three different origin groups
     const originTotal = [];
+    const originTotalAnswerNo = [];
 
     //make a new array for the respondents that had contact with the police
     const answerYes = data.filter( object => {
@@ -63,10 +66,20 @@ function organiseData(data){
         //if answer is yes, the respondent answered the wuestion and respondents origin is not unkown return the object to the answerYes array
         if(object.contact == 'Ja' && object.totStand != 'De respondent heeft deze vraag niet beantwoord' && object.herkomst != 'Onbekend') return object; 
 
+        if(object.contact == 'Nee') answerNo.push(object);
+
     });
 
+    for (let object in answerNo){
+         console.log(answerNo[object].herkomst = 'geenContact')
+    }
+
+    
+
+    console.log('nooo', answerNo);
+    
     //make a new array for respondents with a dutch origin
-    const originNederlands = answerYes.filter( object => {
+    const originNederlandsAnswerYes = answerYes.filter( object => {
 
         if (object.herkomst == 'Nederlands'){
             //push each object with this origin to originTotal
@@ -75,11 +88,10 @@ function organiseData(data){
             return object;
         }      
     });
+    
 
-    
-    
     //make a new array for respondents with a dutch / western origin
-    const originWesters = answerYes.filter(object => {
+    const originWestersAnswerYes = answerYes.filter(object => {
 
         if (object.herkomst == 'Westers'){
             //push each object with this origin to originTotal
@@ -87,12 +99,9 @@ function organiseData(data){
             //return objects that match cryteria
             return object;
         }
-    });
-
-    // console.log('westers', originWesters.length / answerYes.length * 100);
-    
+    });    
     //make a new array for respondents with a dutch / non-western origin
-    const originNietWesters = answerYes.filter(object => {
+    const originNietWestersAnswerYes = answerYes.filter(object => {
 
         if(object.herkomst != 'Nederlands' && object.herkomst != 'Westers' && object.herkomst != 'Onbekend'){
             //push each object with this origin to originTotal
@@ -106,15 +115,17 @@ function organiseData(data){
 
     // console.log('Nietwesters', originNietWesters.length / answerYes.length * 100);
     // console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
+    const total = answerNo.length + answerYes.length;
     
-    complete.push(checkInitiatedContact(originNietWesters, answerYes));
-    complete.push(checkInitiatedContact(originNederlands, answerYes));
-    complete.push(checkInitiatedContact(originWesters, answerYes));
+    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originNederlandsAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originWestersAnswerYes, answerYes));
 
     //fill the pieData array with each origin and it's corresponding value in percentage
-    pieData.push(preparePieData(originNederlands, answerYes));
-    pieData.push(preparePieData(originNietWesters, answerYes));
-    pieData.push(preparePieData(originWesters, answerYes));
+    pieData.push(preparePieData(originNederlandsAnswerYes, total));
+    pieData.push(preparePieData(originNietWestersAnswerYes, total));
+    pieData.push(preparePieData(originWestersAnswerYes, total));
+    pieData.push(preparePieData(answerNo, total));
     
 
     renderStackedBars(complete);
@@ -161,11 +172,18 @@ function organiseData(data){
     // averageGrade.push(totalSum(total) / (+total.length));
     // console.log('Gemiddeld totaal iedereen:' + averageGrade);
 
+    
+
+    // console.log('no: ', answerNo.length / total * 100);
+    // console.log('yes: ', originNederlandsAnswerYes.length / total * 100);
+    // console.log('yes: ', originNietWestersAnswerYes.length / total * 100);
+    // console.log('no: ', originWestersAnswerYes.length / total * 100);
+
     return pieData;
 }
 
 //function that checks who initiated contact and returns a modified object containg: percentage and amount
-function checkInitiatedContact(data, answerYes){
+function prepareNormalisedStackData(data, answerYes){
     //empty array to store objects where the police initated contact
     const policeContacted = [];
     //empty array to store objects where the respondent initated contact
@@ -198,7 +216,7 @@ function checkInitiatedContact(data, answerYes){
 }
 
 //function that prepares data for a piechart, data still needs to be pushed in one array where this function gets called
-function preparePieData(data, answerYes){
+function preparePieData(data, total){
     //empty variable to store the newly made object in
     let pieObject;
     //empty variable to store object.herkomst in, this makes the function reusable
@@ -209,7 +227,10 @@ function preparePieData(data, answerYes){
         origin = element.herkomst;
     });
     //give pieObject a new object with values for origin and percentage
-    pieObject = {origin: origin, percentage: data.length / answerYes.length * 100};
+    pieObject = {origin: origin, percentage: data.length / total * 100};
+    
+    console.log('Aantal: ', data.length)
+    
     //return the newly made pieObject
     return pieObject;
 }
@@ -243,18 +264,26 @@ function renderStackedBars(data){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
 
+
+    
     const yValue = d => d.origin;
 
     const tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-10, 0])
+        .offset([-55, 0])
         .html(d => {
+            
             //console.log(d[1] - d[0] == d.data.iContactedPolice)
-
+            //console.log(data);
             // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
 
-            return '<h4> Nederlander met '  + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>'+ transformToPercent((d[1] - d[0])) +'</span>';
+            return '<h4> Nederlander met '  + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>'+ transformToPercent((d[1] - d[0])) +'</span> <div id="tipDiv"></div>';
+            //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
+            // return renderPieChart(d);
+
         });
+        // .append('svg')
+        // .attr('width', 350);
 
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
     const innerWidth = width - margin.left - margin.right;
@@ -322,7 +351,36 @@ function renderStackedBars(data){
         .attr('x', d => xScale(d[0]))
         .attr('height', yScale.bandwidth())
         .attr('width', d => xScale(d[1]) - xScale(d[0]))
-        .on('mouseover', tip.show)
+        .on('mouseover', function(d) {
+            //chart in tooltip 
+            
+            //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
+            //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
+            tip.show(d, this);
+
+            console.log('rararara: ', d.data);
+
+            let tipSVG = d3.select('#tipDiv')
+                .append('svg')
+                .attr('width', 200)
+                .attr('height', 50);
+      
+            tipSVG.append('rect')
+                .attr('fill', 'steelblue')
+                .attr('y', 10)
+                .attr('width', 0)
+                .attr('height', 30)
+                .transition()
+                .duration(1000)
+                .attr('width', d.data.amountPoliceContactedMe);
+
+            tipSVG.append('text')
+                .text(d.data.amountPoliceContactedMe)
+                .attr('x', 10)
+                .attr('y', 30)
+                .transition()
+                .duration(1000);
+        })
         .on('mouseout', tip.hide)
 
     //g.selectAll("rect")
@@ -377,11 +435,14 @@ function renderPieChart(data) {
     const svg = d3.select('.pie')
         .attr('viewBox', [-width / 2, -height / 2, width, height]);
 
+    // console.log('arcs: ', arcs);
+    
     const color = d3.scaleOrdinal()
-        .range([ '#F45905', '#FF9933', '#FFCC99' ]);
+        .range(['#F45905', '#FF9933', '#FFCC99', 'grey' ]);
 
     svg.append('g')
         .attr('stroke', 'white')
+        .attr('class', 'pie')
         .selectAll('path')
         .data(arcs)
         .join('path')
