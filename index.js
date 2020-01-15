@@ -52,10 +52,13 @@ function organiseData(data){
     const complete = [];
     //array to store the data for the piechart
     const pieData = [];
+    const answerNo = [];
     console.log('trans: ', data);
+
 
     //empty array for respondents with the three different origin groups
     const originTotal = [];
+    const originTotalAnswerNo = [];
 
     //make a new array for the respondents that had contact with the police
     const answerYes = data.filter( object => {
@@ -63,10 +66,20 @@ function organiseData(data){
         //if answer is yes, the respondent answered the wuestion and respondents origin is not unkown return the object to the answerYes array
         if(object.contact == 'Ja' && object.totStand != 'De respondent heeft deze vraag niet beantwoord' && object.herkomst != 'Onbekend') return object; 
 
+        if(object.contact == 'Nee') answerNo.push(object);
+
     });
 
+    for (let object in answerNo){
+         console.log(answerNo[object].herkomst = 'geenContact')
+    }
+
+    
+
+    console.log('nooo', answerNo);
+    
     //make a new array for respondents with a dutch origin
-    const originNederlands = answerYes.filter( object => {
+    const originNederlandsAnswerYes = answerYes.filter( object => {
 
         if (object.herkomst == 'Nederlands'){
             //push each object with this origin to originTotal
@@ -75,11 +88,10 @@ function organiseData(data){
             return object;
         }      
     });
+    
 
-    
-    
     //make a new array for respondents with a dutch / western origin
-    const originWesters = answerYes.filter(object => {
+    const originWestersAnswerYes = answerYes.filter(object => {
 
         if (object.herkomst == 'Westers'){
             //push each object with this origin to originTotal
@@ -87,12 +99,9 @@ function organiseData(data){
             //return objects that match cryteria
             return object;
         }
-    });
-
-    // console.log('westers', originWesters.length / answerYes.length * 100);
-    
+    });    
     //make a new array for respondents with a dutch / non-western origin
-    const originNietWesters = answerYes.filter(object => {
+    const originNietWestersAnswerYes = answerYes.filter(object => {
 
         if(object.herkomst != 'Nederlands' && object.herkomst != 'Westers' && object.herkomst != 'Onbekend'){
             //push each object with this origin to originTotal
@@ -106,15 +115,17 @@ function organiseData(data){
 
     // console.log('Nietwesters', originNietWesters.length / answerYes.length * 100);
     // console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
+    const total = answerNo.length + answerYes.length;
     
-    complete.push(prepareNormalisedStackData(originNietWesters, answerYes));
-    complete.push(prepareNormalisedStackData(originNederlands, answerYes));
-    complete.push(prepareNormalisedStackData(originWesters, answerYes));
+    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originNederlandsAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originWestersAnswerYes, answerYes));
 
     //fill the pieData array with each origin and it's corresponding value in percentage
-    pieData.push(preparePieData(originNederlands, answerYes));
-    pieData.push(preparePieData(originNietWesters, answerYes));
-    pieData.push(preparePieData(originWesters, answerYes));
+    pieData.push(preparePieData(originNederlandsAnswerYes, total));
+    pieData.push(preparePieData(originNietWestersAnswerYes, total));
+    pieData.push(preparePieData(originWestersAnswerYes, total));
+    pieData.push(preparePieData(answerNo, total));
     
 
     renderStackedBars(complete);
@@ -161,6 +172,13 @@ function organiseData(data){
     // averageGrade.push(totalSum(total) / (+total.length));
     // console.log('Gemiddeld totaal iedereen:' + averageGrade);
 
+    
+
+    // console.log('no: ', answerNo.length / total * 100);
+    // console.log('yes: ', originNederlandsAnswerYes.length / total * 100);
+    // console.log('yes: ', originNietWestersAnswerYes.length / total * 100);
+    // console.log('no: ', originWestersAnswerYes.length / total * 100);
+
     return pieData;
 }
 
@@ -198,7 +216,7 @@ function prepareNormalisedStackData(data, answerYes){
 }
 
 //function that prepares data for a piechart, data still needs to be pushed in one array where this function gets called
-function preparePieData(data, answerYes){
+function preparePieData(data, total){
     //empty variable to store the newly made object in
     let pieObject;
     //empty variable to store object.herkomst in, this makes the function reusable
@@ -209,7 +227,10 @@ function preparePieData(data, answerYes){
         origin = element.herkomst;
     });
     //give pieObject a new object with values for origin and percentage
-    pieObject = {origin: origin, percentage: data.length / answerYes.length * 100};
+    pieObject = {origin: origin, percentage: data.length / total * 100};
+    
+    console.log('Aantal: ', data.length)
+    
     //return the newly made pieObject
     return pieObject;
 }
@@ -417,7 +438,7 @@ function renderPieChart(data) {
     // console.log('arcs: ', arcs);
     
     const color = d3.scaleOrdinal()
-        .range([ '#F45905', '#FF9933', '#FFCC99' ]);
+        .range(['#F45905', '#FF9933', '#FFCC99', 'grey' ]);
 
     svg.append('g')
         .attr('stroke', 'white')
