@@ -101,6 +101,19 @@ h2 {
     color: #0048FF;
 }
 
+.step-1-numbers {
+    display: flex;
+    align-items: center;
+}
+
+.big-number {
+    font-size: 3em;
+}
+
+.big-text {
+    font-size: 2em;
+}
+
 /* Pie chart */
 .pie {
     margin-left: 10em;
@@ -113,7 +126,24 @@ h2 {
 .pie__container p {
     font-family: Roboto-light;
     margin-left: 3em;
-    width: 15em;
+    width: 9em;
+}
+
+.first-sentence {
+    margin-left: 3em;
+    font-family: Roboto-light;
+}
+
+.pie g path:hover {
+    opacity: 0.9
+}
+
+.orange {
+    color: #FF9933;
+}
+
+.grey {
+    color: grey;
 }
 
 /* Bar chart */
