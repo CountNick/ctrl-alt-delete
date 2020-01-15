@@ -107,9 +107,9 @@ function organiseData(data){
     // console.log('Nietwesters', originNietWesters.length / answerYes.length * 100);
     // console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
     
-    complete.push(checkInitiatedContact(originNietWesters, answerYes));
-    complete.push(checkInitiatedContact(originNederlands, answerYes));
-    complete.push(checkInitiatedContact(originWesters, answerYes));
+    complete.push(prepareNormalisedStackData(originNietWesters, answerYes));
+    complete.push(prepareNormalisedStackData(originNederlands, answerYes));
+    complete.push(prepareNormalisedStackData(originWesters, answerYes));
 
     //fill the pieData array with each origin and it's corresponding value in percentage
     pieData.push(preparePieData(originNederlands, answerYes));
@@ -165,7 +165,7 @@ function organiseData(data){
 }
 
 //function that checks who initiated contact and returns a modified object containg: percentage and amount
-function checkInitiatedContact(data, answerYes){
+function prepareNormalisedStackData(data, answerYes){
     //empty array to store objects where the police initated contact
     const policeContacted = [];
     //empty array to store objects where the respondent initated contact
@@ -249,7 +249,7 @@ function renderStackedBars(data){
 
     const tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-50, 0])
+        .offset([-55, 0])
         .html(d => {
             
             //console.log(d[1] - d[0] == d.data.iContactedPolice)
@@ -353,13 +353,12 @@ function renderStackedBars(data){
                 .duration(1000)
                 .attr('width', d.data.amountPoliceContactedMe);
 
-                tipSVG.append("text")
-      .text(d.data.amountPoliceContactedMe)
-      .attr("x", 10)
-      .attr("y", 30)
-      .transition()
-      .duration(1000)
-      .attr("x", 6 + d * 6)
+            tipSVG.append('text')
+                .text(d.data.amountPoliceContactedMe)
+                .attr('x', 10)
+                .attr('y', 30)
+                .transition()
+                .duration(1000);
         })
         .on('mouseout', tip.hide)
 
@@ -415,6 +414,8 @@ function renderPieChart(data) {
     const svg = d3.select('.pie')
         .attr('viewBox', [-width / 2, -height / 2, width, height]);
 
+    // console.log('arcs: ', arcs);
+    
     const color = d3.scaleOrdinal()
         .range([ '#F45905', '#FF9933', '#FFCC99' ]);
 
