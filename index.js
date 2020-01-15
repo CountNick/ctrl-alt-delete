@@ -19,7 +19,7 @@ function transformData(data){
     //make new array with modified objects
     const cleanedObjects = data.map(object => {
         //only return neccessary pairs 
-        return{
+        return {
             //rename keys for easier usage
             herkomst: object.Herkomst_def,
             vertrouwen: +object.rapportcijfer,
