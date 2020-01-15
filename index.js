@@ -5,7 +5,7 @@ d3.tsv('./rawData4.txt')
     })
     .then(data => transformData(data))
     .then(transformData => organiseData(transformData));
-    // .then(organiseData => renderStackedBars(organiseData));
+// .then(organiseData => renderStackedBars(organiseData));
    
 
 //function for data transformation
@@ -243,18 +243,26 @@ function renderStackedBars(data){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
 
+
+    
     const yValue = d => d.origin;
 
     const tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-10, 0])
+        .offset([-50, 0])
         .html(d => {
+            
             //console.log(d[1] - d[0] == d.data.iContactedPolice)
-
+            //console.log(data);
             // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
 
-            return '<h4> Nederlander met '  + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>'+ transformToPercent((d[1] - d[0])) +'</span>';
+            return '<h4> Nederlander met '  + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>'+ transformToPercent((d[1] - d[0])) +'</span> <div id="tipDiv"></div>';
+            //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
+            // return renderPieChart(d);
+
         });
+        // .append('svg')
+        // .attr('width', 350);
 
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
     const innerWidth = width - margin.left - margin.right;
@@ -322,7 +330,37 @@ function renderStackedBars(data){
         .attr('x', d => xScale(d[0]))
         .attr('height', yScale.bandwidth())
         .attr('width', d => xScale(d[1]) - xScale(d[0]))
-        .on('mouseover', tip.show)
+        .on('mouseover', function(d) {
+            //chart in tooltip 
+            
+            //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
+            //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
+            tip.show(d, this);
+
+            console.log('rararara: ', d.data);
+
+            let tipSVG = d3.select('#tipDiv')
+                .append('svg')
+                .attr('width', 200)
+                .attr('height', 50);
+      
+            tipSVG.append('rect')
+                .attr('fill', 'steelblue')
+                .attr('y', 10)
+                .attr('width', 0)
+                .attr('height', 30)
+                .transition()
+                .duration(1000)
+                .attr('width', d.data.amountPoliceContactedMe);
+
+                tipSVG.append("text")
+      .text(d.data.amountPoliceContactedMe)
+      .attr("x", 10)
+      .attr("y", 30)
+      .transition()
+      .duration(1000)
+      .attr("x", 6 + d * 6)
+        })
         .on('mouseout', tip.hide)
 
     //g.selectAll("rect")
@@ -382,6 +420,7 @@ function renderPieChart(data) {
 
     svg.append('g')
         .attr('stroke', 'white')
+        .attr('class', 'pie')
         .selectAll('path')
         .data(arcs)
         .join('path')
