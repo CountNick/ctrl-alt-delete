@@ -5,7 +5,7 @@ d3.tsv('./rawData4.txt')
     })
     .then(data => transformData(data))
     .then(transformData => organiseData(transformData));
-    // .then(organiseData => renderStackedBars(organiseData));
+// .then(organiseData => renderStackedBars(organiseData));
    
 
 //function for data transformation
@@ -16,7 +16,7 @@ function transformData(data){
     //make new array with modified objects
     const cleanedObjects = data.map(object => {
         //only return neccessary pairs 
-        return{
+        return {
             //rename keys for easier usage
             herkomst: object.Herkomst_def,
             vertrouwen: +object.rapportcijfer,
