@@ -313,3 +313,7 @@ button:focus {
 rect:hover{
     opacity: 1;
 }
+
+circle{
+    fill: steelblue;
+}

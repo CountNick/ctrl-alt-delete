@@ -127,8 +127,8 @@ function splitIntoArrays(data){
 
     renderStackedBars(complete);
     renderPieChart(pieData);
-
-    renderConsequenceChart()
+    
+    renderConsequenceChart();
 
     console.log(transformStringToNumber(originNederlandsAnswerYes));
     console.log(transformStringToNumber(originNietWestersAnswerYes));
@@ -205,7 +205,7 @@ function preparePieData(data, total){
     //give pieObject a new object with values for origin and percentage
     pieObject = {origin: origin, percentage: data.length / total * 100};
     
-    console.log('Aantal: ', data.length)
+    console.log('Aantal: ', data.length);
     
     //return the newly made pieObject
     return pieObject;
@@ -213,65 +213,142 @@ function preparePieData(data, total){
 
 function renderConsequenceChart(){
 
-    const svg = d3.select('.people');
+    const data = [
+        {
+            day: 1,
+            apples: 3
+        },
+        {
+            day: 2,
+            apples: 10
+        },
+        {
+            day: 3,
+            apples: 15
+        },
+        {
+            day: 4,
+            apples: 2
+        },
+        {
+            day: 5,
+            apples: 10
+        },
+        {
+            day: 6,
+            apples: 19
+        },
+        {
+            day: 7,
+            apples: 20
+        }
+    ];
 
+    //select the svg element in index.html
+    const svg = d3.select('.people');
+    //sets height and width to height and width of svg element
     const width = +svg.attr('width');
     const height = +svg.attr('height');
-
-    const margin = { top: 40, right: 30, bottom: 150, left: 100 };
+    //sets x and y values to the values of amount and origin
+    const xValue = d => d.apples;
+    const yValue = d => d.day;
+    const margin = { top: 40, right: 30, bottom: 150, left: 120 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
+    //makes an ordinal color scale for each type
+    // const color = d3.scaleOrdinal()
+    //     .domain(['hasjpijpen', 'tabakspijpen', 'waterpijpen', 'pijpen (rookgerei)', 'opiumpijpen' ])
+    //     .range([ '#FF0047', '#FF8600', '#6663D5', '#FFF800', '#29FF3E']);
+    const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
+        
+    //sets the xScale with the values from d.amount
+    const xScale = d3.scaleLinear()
+        .domain([0, d3.max(data, xValue)])
+        .range([0, innerWidth])
+        .nice();
 
-    let path = {
-        fill: "rgba(102,140,77,.8)",
-        stroke: "rgba(0,0,0,.4)",
-        d: "M.08,318.24c0,17.46.16,34.93-.06,52.39a143.72,143.72,0,0,0,4,34.21,111.31,111.31,0,0,0,20.88,44c1.2,1.54,3,2.61,4.45,4,1.08,1,2.45,2.05,3,3.36a78.39,78.39,0,0,1,4.38,12.75c2.38,11.38,4.47,22.82,6.4,34.28,5.59,33.23,11,66.48,16.59,99.7a37.25,37.25,0,0,0,14.69,24.4,20.29,20.29,0,0,0,12.59,4.18c14.48-.09,29-.13,43.45,0a21.67,21.67,0,0,0,14.13-4.9c7.6-6,11.84-14.09,13.65-23.48,1.17-6.05,2-12.17,3-18.26q8.87-53,17.76-106A94.13,94.13,0,0,1,184.65,458c.71-1.7,1.64-3.84,3.08-4.6,3.8-2,6-5.31,8.33-8.58,15.29-21.6,21.59-46.09,21.9-72.12.42-36.11,0-72.23.16-108.34a65.31,65.31,0,0,0-8.05-32.42c-5.12-9.33-11.81-17.15-21.2-22.48a109.07,109.07,0,0,0-19.12-8.54A101.7,101.7,0,0,0,135.59,195c-19.35.26-38.7.07-58,.08-1.54,0-3.08,0-4.61.19-11.8,1.11-23,4.48-33.88,9-12.48,5.2-22.81,13-29.71,24.87C3.47,239.33-.17,250,0,261.93.29,280.69.08,299.47.08,318.24ZM195.27,88.56C195.83,40.61,156.88,1.43,109.75,0,58.8-1.46,19.1,39.58,18.52,87.23A88.71,88.71,0,0,0,105.76,177C155.71,177.64,195.87,136.74,195.27,88.56Z"
-    };
+    //for plotting the dots on the yaxis
+    const yScale = d3.scaleBand()
+        .domain(data.map(yValue))
+        .range([innerHeight, 0])
+        .padding(0.7);
+            
+    const g = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    let dataset = [1, 7, 26, 11, 8, 18.5, 19.8, 30, 16, 4.5];
-    
-         	//create a scale, which we'll use to draw our axes
-             let xScale = d3.scaleLinear()
-             .domain([0, d3.max(dataset, function(d) { return d; })])
-             .range([0, innerWidth]);
-
-             console.log(xScale)
-             		// piece of code that joins our complex svg data to the first dataset--d3 is amazing!!
-      	var svgPaths = svg.selectAll(".bigtrees")
-          .data(dataset)
-          .enter()
-          .append('path')
-          .attr("class", ".bigtrees")
-          .attr("d", path.d)
-          .style("stroke", path.stroke)
-          .style("fill", path.fill)
-          //moving the svgs depending on the data--you might have to play around with this depending on the pixel width of your svg
-          .attr("transform", function(d){return 'translate('+ (xScale(d)-48) + ')'});
-
-
-                	//add the xAxis
-      	// var xAxis = d3.svg.axis()
-        //   .scale(xScale)
-        //   .orient("bottom")
-        //   .ticks(10);
-
-        // svg.append("g")
-        // 	.attr("class", "axis")
-        // 	.attr("transform", "translate(0," + height + ")")
-        //       .call(xAxis);
-              
-        svg.append('g')
-        .style('font-size', '1rem')
-        .call(d3.axisBottom(xScale))
-        .attr('transform', `translate(0, ${innerHeight})`)
+    //sets the y axis
+    g.append('g')
+        .call(d3.axisLeft(yScale)
+            .ticks(data.length)
+            .tickSize(-innerWidth))
+        .select('.domain')
+        .remove()
         .append('text')
-        .style('font-size', '1rem')
-        .attr('y', 40)
+        .attr('fill', 'black');
+      
+    //sets the bottom axis
+    g.append('g')
+        .call(d3.axisBottom(xScale)
+            .tickSize(-innerHeight))
+        .attr('transform', `translate(0, ${innerHeight})`)
+              
+        .append('text')
+        .attr('y', 60)
         .attr('x', innerWidth / 2)
         .attr('fill', 'white')
-        .text('Percentage');
+        .text('Aantal pijpen');
+
+    //draw the circles on the chart
+    drawCircles();
+    //draw the legend 
+    // drawLegend();
+        
+    //initialize select button, and fire update function when changed
+    d3.select('#selectButton')
+        .on('change', selectionChanged);
 
 
+    //Resource: https://jsfiddle.net/2xyjf4nu/1/
+    //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
+    function drawCircles(){
+        // g.selectAll('circle')
+        // .data(data)
+        // .enter()
+        //     .append('circle')
+        //         .attr('cy', d => yScale(yValue(d)))
+        //         .attr('cx', d => xScale(d3.range(0, xValue(d))))
+        //         .attr('r', 0)
+        //         .classed('classnaam', true)
+        //         // .style('fill', d => { return color(d.type) } )
+        //         .on('mousemove', function(d){
+        //             tooltip
+        //             .style('left', d3.event.pageX - 50 + 'px')
+        //             .style('top', d3.event.pageY - 80 + 'px')
+        //             .style('display', 'inline-block')
+        //             .html((d.day) + '<br>' +d.apples +': ' + (d.apples));
+        //             })
+        //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
+        //             .attr('r', 15)
+                    
+        g.append('g')
+            .selectAll('g')
+            .data(data)
+            .join('g')
+            .attr('transform', d => `translate(0, ${yScale(yValue(d))})`)
+        // .attr('fill', d => color(d.key))
+        // .attr('stroke', d => color(d.key))
+            .style('opacity', 1)
+            .selectAll('circles')
+            .data(d => d3.range(0, d.apples))
+            .join('circle')
+            .style('opacity', .5)
+            .attr('class', 'cirlce')
+        //.attr("x", (d, i) => x(d.data.name))
+            .attr('cx', d => xScale(d))
+        // .attr('cy', d =>  console.log(yScale(d)))
+            .attr('r', 15);
+                    
+    }
 } 
 
 //transform strings to numbers
