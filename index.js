@@ -286,32 +286,16 @@ function renderConsequenceChart(){
 
     const data = [
         {
-            day: 1,
+            day: 'Nederlands',
             apples: 3
         },
         {
-            day: 2,
+            day: 'Westers',
             apples: 10
         },
         {
-            day: 3,
+            day: 'niet-Westers',
             apples: 15
-        },
-        {
-            day: 4,
-            apples: 2
-        },
-        {
-            day: 5,
-            apples: 10
-        },
-        {
-            day: 6,
-            apples: 19
-        },
-        {
-            day: 7,
-            apples: 20
         }
     ];
 
