@@ -55,6 +55,7 @@ function splitIntoArrays(data){
     const complete = [];
     //array to store the data for the piechart
     const pieData = [];
+    const groupedBarData = [];
     const answerNo = [];
     console.log('trans: ', data);
 
@@ -123,7 +124,6 @@ function splitIntoArrays(data){
     pieData.push(preparePieData(originNietWestersAnswerYes, total));
     pieData.push(preparePieData(originWestersAnswerYes, total));
     pieData.push(preparePieData(answerNo, total));
-    
 
     renderStackedBars(complete);
     renderPieChart(pieData);
@@ -133,6 +133,18 @@ function splitIntoArrays(data){
     console.log(transformStringToNumber(originNederlandsAnswerYes));
     console.log(transformStringToNumber(originNietWestersAnswerYes));
     console.log(transformStringToNumber(originWestersAnswerYes));
+
+    // Save correct data (Zeer Oneens t/m Zeer eens -> 1 t/m 5) in const to use later
+    const groupedbarDataNederlands = transformStringToNumber(originNederlandsAnswerYes);
+    const groupedbarDataNietWesters = transformStringToNumber(originNietWestersAnswerYes);
+    const groupedbarDataWesters = transformStringToNumber(originWestersAnswerYes);
+
+    // Grouped barchart
+    groupedBarData.push(prepareGroupedBarData(groupedbarDataNederlands));
+    groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
+    groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
+
+    console.log('groupedbardata', groupedBarData);
 
     // // average trust grade per group
     // const averageGrade = [];
@@ -156,6 +168,56 @@ function splitIntoArrays(data){
     // console.log('Gemiddeld totaal iedereen:' + averageGrade);
 
     return pieData;
+}
+
+function prepareGroupedBarData(data) {
+    let filteredData = [];
+    data.filter(object => {
+        if(object.beleefd != 'Geen antwoord') {
+            filteredData.push(object);
+        }
+        if(object.luister != 'Geen antwoord') {
+            filteredData.push(object);
+        }
+        if(object.rechtvaardig != 'Geen antwoord') {
+            filteredData.push(object);
+        }; 
+    });
+
+    console.log('tesst', filteredData);
+
+    let origin;
+    
+    filteredData.forEach(element => {
+        //give origin the value of object.herkomst
+        origin = element.herkomst;
+    });
+
+    const beleefdArray= [];
+    const luisterArray = [];
+    const rechtvaardigArray = [];
+
+    filteredData.map(object => {
+        beleefdArray.push(object.beleefd);
+        luisterArray.push(object.luister);
+        rechtvaardigArray.push(object.rechtvaardig);
+    });
+
+    function countTotal(arr) {
+        return arr.reduce(function(a, b){
+            return a + b;
+        }, 0);
+    }
+
+    const totalBeleefd = countTotal(beleefdArray);
+    const totalLuister = countTotal(luisterArray);
+    const totalRechtvaardig = countTotal(rechtvaardigArray);
+    console.log('Gemiddeldes beleefd: ' + totalBeleefd / beleefdArray.length);
+    console.log('Gemiddeldes luister: ' + totalLuister / luisterArray.length);
+    console.log('Gemiddeldes rechtvaardig: ' + totalLuister / luisterArray.length);
+
+    let cleanedObject = {origin: origin, beleefd: totalBeleefd / beleefdArray.length, luister: totalLuister / luisterArray.length, rechtvaardig: totalRechtvaardig / rechtvaardigArray.length};
+    return cleanedObject;
 }
 
 //function that checks who initiated contact and returns a modified object containg: percentage and amount
@@ -270,8 +332,6 @@ function renderConsequenceChart(){
         .attr('x', innerWidth / 2)
         .attr('fill', 'white')
         .text('Percentage');
-
-
 } 
 
 //transform strings to numbers
@@ -289,7 +349,7 @@ function transformStringToNumber(data){
             object.beleefd = 4;
         } else if(object.beleefd == 'Helemaal mee eens'){
             object.beleefd = 5;
-        }
+        } 
 
         if( object.luister == 'Helemaal mee oneens'){
             object.luister = 1;
@@ -317,6 +377,102 @@ function transformStringToNumber(data){
     });
     return data;
 }
+
+// function renderGroupedBarChart(data) {
+//     const svg = d3.select('.groupedBars');
+  
+//     svg.append("g")
+//       .selectAll("g")
+//       .data(data)
+//       .join("g")
+//         .attr("transform", d => `translate(${x0(d[groupKey])},0)`)
+//       .selectAll("rect")
+//       .data(d => keys.map(key => ({key, value: d[key]})))
+//       .join("rect")
+//         .attr("x", d => x1(d.key))
+//         .attr("y", d => y(d.value))
+//         .attr("width", x1.bandwidth())
+//         .attr("height", d => y(0) - y(d.value))
+//         .attr("fill", d => color(d.key));
+  
+//     svg.append("g")
+//         .call(xAxis);
+  
+//     svg.append("g")
+//         .call(yAxis);
+  
+//     svg.append("g")
+//         .call(legend);
+  
+//     return svg.node();
+// }
+
+// function legend(svg) {
+//     const g = svg
+//         .attr("transform", `translate(${width},0)`)
+//         .attr("text-anchor", "end")
+//         .attr("font-family", "sans-serif")
+//         .attr("font-size", 10)
+//       .selectAll("g")
+//       .data(color.domain().slice().reverse())
+//       .join("g")
+//         .attr("transform", (d, i) => `translate(0,${i * 20})`);
+  
+//     g.append("rect")
+//         .attr("x", -19)
+//         .attr("width", 19)
+//         .attr("height", 19)
+//         .attr("fill", color);
+  
+//     g.append("text")
+//         .attr("x", -24)
+//         .attr("y", 9.5)
+//         .attr("dy", "0.35em")
+//         .text(d => d);
+// }
+
+// const legend = legend(svg)
+
+// const x0 = d3.scaleBand()
+//     .domain(data.map(d => d[groupKey]))
+//     .rangeRound([margin.left, width - margin.right])
+//     .paddingInner(0.1)
+
+// const x1 = d3.scaleBand()
+//     .domain(keys)
+//     .rangeRound([0, x0.bandwidth()])
+//     .padding(0.05)
+
+// const y = d3.scaleLinear()
+//     .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
+//     .rangeRound([height - margin.bottom, margin.top])
+
+// const color = d3.scaleOrdinal()
+//     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
+
+// function xaxis(g) {
+//     g.attr("transform", `translate(0,${height - margin.bottom})`)
+//         .call(d3.axisBottom(x0).tickSizeOuter(0))
+//         .call(g => g.select(".domain").remove())
+// }
+
+// const xAxis = xaxis(g)
+
+// function yaxis(g) {
+//     g.attr("transform", `translate(${margin.left},0)`)
+//         .call(d3.axisLeft(y).ticks(null, "s"))
+//         .call(g => g.select(".domain").remove())
+//         .call(g => g.select(".tick:last-of-type text").clone()
+//             .attr("x", 3)
+//             .attr("text-anchor", "start")
+//             .attr("font-weight", "bold")
+//             .text(data.y))
+// }
+
+// const yAxis = yaxis(g)
+
+
+
 
 const button1 = document.getElementById('button-step1');
 const button2 = document.getElementById('button-step2');
