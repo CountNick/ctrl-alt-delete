@@ -14,7 +14,7 @@ d3.tsv('./rawData4.txt')
 //function for data transformation
 function transformData(data){
     
-    console.log('original data: ', data);
+    // console.log('original data: ', data);
     
     //make new array with modified objects
     const cleanedObjects = data.map(object => {
@@ -57,7 +57,7 @@ function splitIntoArrays(data){
     const pieData = [];
     const groupedBarData = [];
     const answerNo = [];
-    console.log('trans: ', data);
+    // console.log('trans: ', data);
 
 
     //empty array for respondents with the three different origin groups
@@ -129,19 +129,19 @@ function splitIntoArrays(data){
     renderPieChart(pieData);
     renderConsequenceChart();
 
-    console.log(transformStringToNumber(originNederlandsAnswerYes));
-    console.log(transformStringToNumber(originNietWestersAnswerYes));
-    console.log(transformStringToNumber(originWestersAnswerYes));
+    // console.log(transformStringToNumber(originNederlandsAnswerYes));
+    // console.log(transformStringToNumber(originNietWestersAnswerYes));
+    // console.log(transformStringToNumber(originWestersAnswerYes));
 
     // Save correct data (Zeer Oneens t/m Zeer eens -> 1 t/m 5) in const to use later
     const groupedbarDataNederlands = transformStringToNumber(originNederlandsAnswerYes);
-    const groupedbarDataNietWesters = transformStringToNumber(originNietWestersAnswerYes);
-    const groupedbarDataWesters = transformStringToNumber(originWestersAnswerYes);
+    // const groupedbarDataNietWesters = transformStringToNumber(originNietWestersAnswerYes);
+    // const groupedbarDataWesters = transformStringToNumber(originWestersAnswerYes);
 
     // Grouped barchart
     groupedBarData.push(prepareGroupedBarData(groupedbarDataNederlands));
-    groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
-    groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
+    // groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
+    // groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
 
     console.log('groupedbardata', groupedBarData);
 
@@ -170,20 +170,32 @@ function splitIntoArrays(data){
 }
 
 function prepareGroupedBarData(data) {
-    let filteredData = [];
-    data.filter(object => {
-        if(object.beleefd != 'Geen antwoord') {
-            filteredData.push(object);
-        }
-        if(object.luister != 'Geen antwoord') {
-            filteredData.push(object);
-        }
-        if(object.rechtvaardig != 'Geen antwoord') {
-            filteredData.push(object);
-        }; 
-    });
+    
+    console.log('aantal obs:', data.length)
+    
+    // let filteredData = [];
+    
+    const filterData = data.filter(d => {if (d.rechtvaardig != 'Geen antwoord') return d;})
+    const filterData2 = filterData.filter(d => {if (d.luister != 'Geen antwoord') return d;})
+    const filterData3 = filterData2.filter(d => {if (d.beleefd != 'Geen antwoord') return d;})
 
-    console.log('tesst', filteredData);
+
+    // data.filter(object => {
+    //     if(object.beleefd == !'Geen antwoord') {
+    //         filteredData.push(object);
+    //     }
+    //     else if(object.luister == !'Geen antwoord') {
+    //         filteredData.push(object);
+    //     }
+    //     else if(object.rechtvaardig == 'Geen antwoord') {
+    //         filteredData.push(object);
+    //     }; 
+    // });
+
+    // console.log(filteredData)
+    console.log('tesst', filterData.length);
+    console.log('tesst', filterData2.length);
+    console.log('tesst', filterData3.length);
 
     let origin;
     
@@ -192,9 +204,7 @@ function prepareGroupedBarData(data) {
         origin = element.herkomst;
     });
 
-    const beleefdArray= [];
-    const luisterArray = [];
-    const rechtvaardigArray = [];
+
 
     filteredData.map(object => {
         beleefdArray.push(object.beleefd);
@@ -266,7 +276,7 @@ function preparePieData(data, total){
     //give pieObject a new object with values for origin and percentage
     pieObject = {origin: origin, percentage: data.length / total * 100};
     
-    console.log('Aantal: ', data.length);
+    // console.log('Aantal: ', data.length);
     
     //return the newly made pieObject
     return pieObject;
@@ -365,8 +375,8 @@ function renderConsequenceChart(){
     // drawLegend();
         
     //initialize select button, and fire update function when changed
-    d3.select('#selectButton')
-        .on('change', selectionChanged);
+    // d3.select('#selectButton')
+    //     .on('change', selectionChanged);
 
 
     //Resource: https://jsfiddle.net/2xyjf4nu/1/
@@ -407,7 +417,7 @@ function renderConsequenceChart(){
         //.attr("x", (d, i) => x(d.data.name))
             .attr('cx', d => xScale(d))
         // .attr('cy', d =>  console.log(yScale(d)))
-            .attr('r', 15);
+            .attr('r', 10);
                     
     }
 } 
