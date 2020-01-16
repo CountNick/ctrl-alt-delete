@@ -143,33 +143,13 @@ function splitIntoArrays(data){
     // groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
     // groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
 
-    console.log('groupedbardata', groupedBarData);
-
-    // // average trust grade per group
-    // const averageGrade = [];
-    // const total = [];
-    // data.map(object => {
-    //     if(object.vertrouwen === 99999) {
-    //         //nothing
-    //     }
-    //     else {
-    //         total.push(object.vertrouwen);
-    //     }
-    // });
-
-    // const totalSum = function(arr){
-    //     return arr.reduce(function(a, b){
-    //         return a + b;
-    //     }, 0);
-    // };
-
-    // averageGrade.push(totalSum(total) / (+total.length));
-    // console.log('Gemiddeld totaal iedereen:' + averageGrade);
+    console.log('groupedBarData', groupedBarData);
 
     return pieData;
 }
 
 function prepareGroupedBarData(data) {
+<<<<<<< HEAD
     
     console.log('aantal obs:', data.length)
     
@@ -196,17 +176,23 @@ function prepareGroupedBarData(data) {
     console.log('tesst', filterData.length);
     console.log('tesst', filterData2.length);
     console.log('tesst', filterData3.length);
+=======
+
+    const filterData = data.filter(d => {if (d.rechtvaardig != 'Geen antwoord') return d;})
+    const filterData2 = filterData.filter(d => {if (d.luister != 'Geen antwoord') return d;})
+    const filterData3 = filterData2.filter(d => {if (d.beleefd != 'Geen antwoord') return d;})
+>>>>>>> a17fb911467110cbb7946bc0375dff80c2d90f8c
 
     let origin;
     
-    filteredData.forEach(element => {
+    filterData3.forEach(element => {
         //give origin the value of object.herkomst
         origin = element.herkomst;
     });
 
 
 
-    filteredData.map(object => {
+    filterData3.map(object => {
         beleefdArray.push(object.beleefd);
         luisterArray.push(object.luister);
         rechtvaardigArray.push(object.rechtvaardig);
@@ -221,9 +207,6 @@ function prepareGroupedBarData(data) {
     const totalBeleefd = countTotal(beleefdArray);
     const totalLuister = countTotal(luisterArray);
     const totalRechtvaardig = countTotal(rechtvaardigArray);
-    console.log('Gemiddeldes beleefd: ' + totalBeleefd / beleefdArray.length);
-    console.log('Gemiddeldes luister: ' + totalLuister / luisterArray.length);
-    console.log('Gemiddeldes rechtvaardig: ' + totalLuister / luisterArray.length);
 
     let cleanedObject = {origin: origin, beleefd: totalBeleefd / beleefdArray.length, luister: totalLuister / luisterArray.length, rechtvaardig: totalRechtvaardig / rechtvaardigArray.length};
     return cleanedObject;
