@@ -305,3 +305,11 @@ button:focus {
     top: 100%;
     left: 0;
 }
+
+/* rect{
+    opacity: .5;
+} */
+
+rect:hover{
+    opacity: 1;
+}
