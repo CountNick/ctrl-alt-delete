@@ -40,7 +40,7 @@ export default function renderStackedBars(data){
             //console.log(data);
             // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
 
-            return '<h4> Nederlander met ', d.data.origin, 'e', ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>', transformToPercent((d[1] - d[0])), '</span> <div id="tipDiv"></div>';
+            return '<h4> Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>' + transformToPercent((d[1] - d[0])) + '</span> <div id="tipDiv"></div>';
             //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
             // return renderPieChart(d);
 
