@@ -226,6 +226,10 @@ h2 {
     color: #FFCC99;
 }
 
+.geenContact{
+    color: grey;
+}
+
 /* Buttons */
 button:focus {
     outline :0;

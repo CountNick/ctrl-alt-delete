@@ -110,7 +110,7 @@ export default function renderStackedBars(data){
         .selectAll('rect')
         .data(d => d)
         .join('rect')
-        .style('opacity', .5)
+        // .style('opacity', .5)
         .attr('class', 'bar')
     //.attr("x", (d, i) => x(d.data.name))
         .attr('y', d => yScale(d.data.origin))

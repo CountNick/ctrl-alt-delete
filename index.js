@@ -135,53 +135,40 @@ function splitIntoArrays(data){
 
     // Save correct data (Zeer Oneens t/m Zeer eens -> 1 t/m 5) in const to use later
     const groupedbarDataNederlands = transformStringToNumber(originNederlandsAnswerYes);
-    // const groupedbarDataNietWesters = transformStringToNumber(originNietWestersAnswerYes);
-    // const groupedbarDataWesters = transformStringToNumber(originWestersAnswerYes);
+    const groupedbarDataNietWesters = transformStringToNumber(originNietWestersAnswerYes);
+    const groupedbarDataWesters = transformStringToNumber(originWestersAnswerYes);
+
+    let nl = prepareGroupedBarData(groupedbarDataNederlands);
+    let w = prepareGroupedBarData(groupedbarDataWesters);
+    let nW = prepareGroupedBarData(groupedbarDataNietWesters);
+
+    const beleefd = {}
+    const luister = {}
+    const rechtvaardig = {}
+
+    groupedBarData.push(Object.assign(beleefd, nl[0], w[0], nW[0]));
+    groupedBarData.push(Object.assign(luister, nl[1], w[1], nW[1]));
+    groupedBarData.push(Object.assign(rechtvaardig, nl[2], w[2], nW[2]));
+
+    //console.log('groupie', groupedBarData)
 
     // Grouped barchart
-    groupedBarData.push(prepareGroupedBarData(groupedbarDataNederlands));
+    // groupedBarData.push(prepareGroupedBarData(groupedbarDataNederlands));
     // groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
     // groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
 
     console.log('groupedBarData', groupedBarData);
 
+    renderGroupedBarChart(groupedBarData);
+
     return pieData;
 }
 
 function prepareGroupedBarData(data) {
-<<<<<<< HEAD
-    
-    console.log('aantal obs:', data.length)
-    
-    // let filteredData = [];
-    
-    const filterData = data.filter(d => {if (d.rechtvaardig != 'Geen antwoord') return d;})
-    const filterData2 = filterData.filter(d => {if (d.luister != 'Geen antwoord') return d;})
-    const filterData3 = filterData2.filter(d => {if (d.beleefd != 'Geen antwoord') return d;})
-
-
-    // data.filter(object => {
-    //     if(object.beleefd == !'Geen antwoord') {
-    //         filteredData.push(object);
-    //     }
-    //     else if(object.luister == !'Geen antwoord') {
-    //         filteredData.push(object);
-    //     }
-    //     else if(object.rechtvaardig == 'Geen antwoord') {
-    //         filteredData.push(object);
-    //     }; 
-    // });
-
-    // console.log(filteredData)
-    console.log('tesst', filterData.length);
-    console.log('tesst', filterData2.length);
-    console.log('tesst', filterData3.length);
-=======
 
     const filterData = data.filter(d => {if (d.rechtvaardig != 'Geen antwoord') return d;})
     const filterData2 = filterData.filter(d => {if (d.luister != 'Geen antwoord') return d;})
     const filterData3 = filterData2.filter(d => {if (d.beleefd != 'Geen antwoord') return d;})
->>>>>>> a17fb911467110cbb7946bc0375dff80c2d90f8c
 
     let origin;
     
@@ -189,6 +176,10 @@ function prepareGroupedBarData(data) {
         //give origin the value of object.herkomst
         origin = element.herkomst;
     });
+
+    const beleefdArray =[];
+    const luisterArray =[];
+    const rechtvaardigArray =[];
 
 
 
@@ -208,8 +199,23 @@ function prepareGroupedBarData(data) {
     const totalLuister = countTotal(luisterArray);
     const totalRechtvaardig = countTotal(rechtvaardigArray);
 
-    let cleanedObject = {origin: origin, beleefd: totalBeleefd / beleefdArray.length, luister: totalLuister / luisterArray.length, rechtvaardig: totalRechtvaardig / rechtvaardigArray.length};
-    return cleanedObject;
+    // let cleanedObject = {origin: origin, beleefd: totalBeleefd / beleefdArray.length, luister: totalLuister / luisterArray.length, rechtvaardig: totalRechtvaardig / rechtvaardigArray.length};
+    
+    let beleefdObject = {stelling: 'beleefd', [origin]: totalBeleefd / beleefdArray.length};
+    let luisterObject = {stelling: 'luister', [origin]: totalLuister / luisterArray.length};
+    let rechtvaardigObject = {stelling: 'rechtvaardig', [origin]: totalRechtvaardig / rechtvaardigArray.length};
+    
+    console.log(beleefdObject);
+    console.log(luisterObject);
+    console.log(rechtvaardigObject);
+    
+    const complete = []
+
+    complete.push(beleefdObject)
+    complete.push(luisterObject)
+    complete.push(rechtvaardigObject)
+
+    return complete;
 }
 
 //function that checks who initiated contact and returns a modified object containg: percentage and amount
@@ -433,98 +439,103 @@ function transformStringToNumber(data){
     return data;
 }
 
-// function renderGroupedBarChart(data) {
-//     const svg = d3.select('.groupedBars');
-  
-//     svg.append("g")
-//       .selectAll("g")
-//       .data(data)
-//       .join("g")
-//         .attr("transform", d => `translate(${x0(d[groupKey])},0)`)
-//       .selectAll("rect")
-//       .data(d => keys.map(key => ({key, value: d[key]})))
-//       .join("rect")
-//         .attr("x", d => x1(d.key))
-//         .attr("y", d => y(d.value))
-//         .attr("width", x1.bandwidth())
-//         .attr("height", d => y(0) - y(d.value))
-//         .attr("fill", d => color(d.key));
-  
-//     svg.append("g")
-//         .call(xAxis);
-  
-//     svg.append("g")
-//         .call(yAxis);
-  
-//     svg.append("g")
-//         .call(legend);
-  
-//     return svg.node();
-// }
+function renderGroupedBarChart(data) {
 
-// function legend(svg) {
-//     const g = svg
-//         .attr("transform", `translate(${width},0)`)
-//         .attr("text-anchor", "end")
-//         .attr("font-family", "sans-serif")
-//         .attr("font-size", 10)
-//       .selectAll("g")
-//       .data(color.domain().slice().reverse())
-//       .join("g")
-//         .attr("transform", (d, i) => `translate(0,${i * 20})`);
-  
-//     g.append("rect")
-//         .attr("x", -19)
-//         .attr("width", 19)
-//         .attr("height", 19)
-//         .attr("fill", color);
-  
-//     g.append("text")
-//         .attr("x", -24)
-//         .attr("y", 9.5)
-//         .attr("dy", "0.35em")
-//         .text(d => d);
-// }
+    console.log('groupie: ', data);
 
-// const legend = legend(svg)
+    const svg = d3.select('.groupedBars');
 
-// const x0 = d3.scaleBand()
-//     .domain(data.map(d => d[groupKey]))
-//     .rangeRound([margin.left, width - margin.right])
-//     .paddingInner(0.1)
+    const width = +svg.attr('width');
+    const height = +svg.attr('height');
+    //const yValue = d => d.origin;
+    const margin = { top: 40, right: 30, bottom: 150, left: 100 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
-// const x1 = d3.scaleBand()
-//     .domain(keys)
-//     .rangeRound([0, x0.bandwidth()])
-//     .padding(0.05)
+    const keys = ['Nederlands', 'Westers', 'niet-Westers'];
+    const groupKey = 'stelling';
 
-// const y = d3.scaleLinear()
-//     .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
-//     .rangeRound([height - margin.bottom, margin.top])
+    const y0 = d3.scaleBand()
+    .domain(data.map(d => d[groupKey]))
+    .rangeRound([0, innerHeight ])
+    .paddingInner(0.1)
 
-// const color = d3.scaleOrdinal()
-//     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
+    const y1 = d3.scaleBand()
+    .domain(keys)
+    .rangeRound([0, y0.bandwidth()])
+    .padding(0.05)
 
-// function xaxis(g) {
-//     g.attr("transform", `translate(0,${height - margin.bottom})`)
-//         .call(d3.axisBottom(x0).tickSizeOuter(0))
-//         .call(g => g.select(".domain").remove())
-// }
+    console.log('yo', y1.domain())
 
-// const xAxis = xaxis(g)
+    const xScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
+    .range([0, innerWidth])
+    .nice();
 
-// function yaxis(g) {
-//     g.attr("transform", `translate(${margin.left},0)`)
-//         .call(d3.axisLeft(y).ticks(null, "s"))
-//         .call(g => g.select(".domain").remove())
-//         .call(g => g.select(".tick:last-of-type text").clone()
-//             .attr("x", 3)
-//             .attr("text-anchor", "start")
-//             .attr("font-weight", "bold")
-//             .text(data.y))
-// }
+    // console.log('schalX', xScale.domain())
 
-// const yAxis = yaxis(g)
+// const yScale = d3.scaleBand()
+//     .domain(data.map(yValue))
+//     .range([0, innerHeight])
+//     .padding(0.3);
+
+const g = svg.append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+//append a new group for the y axis and set it on the left side
+g.append('g')
+    .style('font-size', '1rem')
+    .call(d3.axisLeft(y0)
+        .tickSize('0'));
+// .append('text')
+// .style('font-size', '1rem')
+// .style('transform', 'rotate(-90deg)')
+// .attr('y', innerHeight / 2)
+// // .attr('x', 500)
+// .attr('fill', 'white')
+        
+// .text('Nederlanders');
+
+//append a new group for the x axis and set it at as the bottom axis
+g.append('g')
+    .style('font-size', '1rem')
+    .call(d3.axisBottom(xScale)
+        .tickSize(-innerHeight))
+    .style('stroke-dasharray', ('3, 3'))
+    .attr('transform', `translate(0, ${innerHeight})`)
+    .append('text')
+    .style('font-size', '1rem')
+    .attr('y', 40)
+    .attr('x', innerWidth / 2)
+    .attr('fill', 'white')
+    .text('Percentage');
+
+//makes an ordinal color scale for each type
+const color = d3.scaleOrdinal()
+    .range([ '#FFF33D', '#0048FF', ]);
+    
+// g.call(tip);
+
+g.append('g')
+    .selectAll('g')
+    .data(data)
+    .join('g')
+    .attr('transform', d => `translate(${y0(d[groupKey])},0)`)
+    // .attr('fill', d => color(d.key))
+    // .attr('stroke', d => color(d.key))
+    // .style('opacity', 1)
+    .selectAll('rect')
+    .data(d => keys.map(key => ({key, value: d[key]})))
+    .join('rect')
+    .style('fill', 'purple')
+    // .attr('class', 'bar')
+//.attr("x", (d, i) => x(d.data.name))
+    .attr('y', d => y1(d.key))
+    .attr('x', d => xScale(d.value))
+    .attr('height', y1.bandwidth())
+    .attr('width', d =>  xScale(d.value) - xScale(0))
+
+}
 
 
 
