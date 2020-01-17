@@ -21,7 +21,7 @@ export default function renderPieChart(data) {
     // console.log('arcs: ', arcs);
     
     const color = d3.scaleOrdinal()
-        .range(['#F45905', '#FF9933', '#FFCC99', 'grey' ]);
+        .range(['#F45905', '#FF9933', '#FFCC99', '#a3a3a3' ]);
 
     svg.append('g')
         .attr('stroke', 'white')
@@ -31,7 +31,8 @@ export default function renderPieChart(data) {
         .join('path')
         .attr('fill', d => color(d.data.origin))
         .attr('d', arc)
-        .append('title');
+        .append('title')
+        .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%');
 
     svg.append('g')
         .attr('font-family', 'sans-serif')

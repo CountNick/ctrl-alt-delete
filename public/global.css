@@ -129,6 +129,10 @@ h2 {
     width: 9em;
 }
 
+.pie__container ul li {
+    margin-bottom: .5em;
+}
+
 .first-sentence {
     margin-left: 3em;
     font-family: Roboto-light;
@@ -143,7 +147,7 @@ h2 {
 }
 
 .grey {
-    color: grey;
+    color: #a3a3a3;
 }
 
 /* Bar chart */
@@ -227,7 +231,11 @@ h2 {
 }
 
 .geenContact{
-    color: grey;
+    color: #a3a3a3;
+}
+
+text {
+    cursor: default;
 }
 
 /* Buttons */

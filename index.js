@@ -340,7 +340,7 @@ function renderConsequenceChart(){
         .attr('y', 60)
         .attr('x', innerWidth / 2)
         .attr('fill', 'white')
-        .text('Aantal pijpen');
+        .text('Aantal keer');
 
     //draw the circles on the chart
     drawCircles();
