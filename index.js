@@ -514,11 +514,11 @@ g.append('g')
     .attr('y', 40)
     .attr('x', innerWidth / 2)
     .attr('fill', 'white')
-    .text('Percentage');
+    .text('Gemiddelde score');
 
 //makes an ordinal color scale for each type
 const color = d3.scaleOrdinal()
-    .range([ '#F45905', '#FF9933', '#FFCC99']);
+    .range([ '#494CA2', '#8186d5', '#c6cbef']);
     
     // g.call(tip);
 
