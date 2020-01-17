@@ -1,6 +1,6 @@
 export default function renderPieChart(data) {
     
-    let transformToPercent = d3.format('.0%');
+    // let transformToPercent = d3.format('.0%');
     const pie = d3.pie()
         .sort(null)
         .value(d => d.percentage);
@@ -21,7 +21,7 @@ export default function renderPieChart(data) {
     // console.log('arcs: ', arcs);
     
     const color = d3.scaleOrdinal()
-        .range(['#F45905', '#FF9933', '#FFCC99', '#a3a3a3' ]);
+        .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3' ]);
 
     svg.append('g')
         .attr('stroke', 'white')

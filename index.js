@@ -142,9 +142,9 @@ function splitIntoArrays(data){
     let w = prepareGroupedBarData(groupedbarDataWesters);
     let nW = prepareGroupedBarData(groupedbarDataNietWesters);
 
-    const beleefd = {}
-    const luister = {}
-    const rechtvaardig = {}
+    const beleefd = {};
+    const luister = {};
+    const rechtvaardig = {};
 
     groupedBarData.push(Object.assign(beleefd, nl[0], w[0], nW[0]));
     groupedBarData.push(Object.assign(luister, nl[1], w[1], nW[1]));
@@ -166,9 +166,9 @@ function splitIntoArrays(data){
 
 function prepareGroupedBarData(data) {
 
-    const filterData = data.filter(d => {if (d.rechtvaardig != 'Geen antwoord') return d;})
-    const filterData2 = filterData.filter(d => {if (d.luister != 'Geen antwoord') return d;})
-    const filterData3 = filterData2.filter(d => {if (d.beleefd != 'Geen antwoord') return d;})
+    const filterData = data.filter(d => {if (d.rechtvaardig != 'Geen antwoord') return d;});
+    const filterData2 = filterData.filter(d => {if (d.luister != 'Geen antwoord') return d;});
+    const filterData3 = filterData2.filter(d => {if (d.beleefd != 'Geen antwoord') return d;});
 
     let origin;
     
@@ -209,11 +209,11 @@ function prepareGroupedBarData(data) {
     console.log(luisterObject);
     console.log(rechtvaardigObject);
     
-    const complete = []
+    const complete = [];
 
-    complete.push(beleefdObject)
-    complete.push(luisterObject)
-    complete.push(rechtvaardigObject)
+    complete.push(beleefdObject);
+    complete.push(luisterObject);
+    complete.push(rechtvaardigObject);
 
     return complete;
 }
@@ -303,7 +303,7 @@ function renderConsequenceChart(){
     // const color = d3.scaleOrdinal()
     //     .domain(['hasjpijpen', 'tabakspijpen', 'waterpijpen', 'pijpen (rookgerei)', 'opiumpijpen' ])
     //     .range([ '#FF0047', '#FF8600', '#6663D5', '#FFF800', '#29FF3E']);
-    const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
+    // const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
         
     //sets the xScale with the values from d.amount
     const xScale = d3.scaleLinear()
@@ -456,84 +456,84 @@ function renderGroupedBarChart(data) {
     const groupKey = 'stelling';
 
     const y0 = d3.scaleBand()
-    .domain(data.map(d => d[groupKey]))
-    .rangeRound([0, innerHeight ])
-    .paddingInner(0.1)
+        .domain(data.map(d => d[groupKey]))
+        .rangeRound([0, innerHeight ])
+        .paddingInner(0.1);
 
     const y1 = d3.scaleBand()
-    .domain(keys)
-    .rangeRound([0, y0.bandwidth()])
-    .padding(0.05)
+        .domain(keys)
+        .rangeRound([0, y0.bandwidth()])
+        .padding(0.05);
 
-    console.log('yo', y1.domain())
+    console.log('yo', y1.domain());
 
     const xScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
-    .range([0, innerWidth])
-    .nice();
+        .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
+        .range([0, innerWidth])
+        .nice();
 
     // console.log('schalX', xScale.domain())
 
-// const yScale = d3.scaleBand()
-//     .domain(data.map(yValue))
-//     .range([0, innerHeight])
-//     .padding(0.3);
+    // const yScale = d3.scaleBand()
+    //     .domain(data.map(yValue))
+    //     .range([0, innerHeight])
+    //     .padding(0.3);
 
-const g = svg.append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    const g = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-//append a new group for the y axis and set it on the left side
-g.append('g')
-    .style('font-size', '1rem')
-    .call(d3.axisLeft(y0)
-        .tickSize('0'));
-// .append('text')
-// .style('font-size', '1rem')
-// .style('transform', 'rotate(-90deg)')
-// .attr('y', innerHeight / 2)
-// // .attr('x', 500)
-// .attr('fill', 'white')
+    //append a new group for the y axis and set it on the left side
+    g.append('g')
+        .style('font-size', '1rem')
+        .call(d3.axisLeft(y0)
+            .tickSize('0'));
+    // .append('text')
+    // .style('font-size', '1rem')
+    // .style('transform', 'rotate(-90deg)')
+    // .attr('y', innerHeight / 2)
+    // // .attr('x', 500)
+    // .attr('fill', 'white')
         
-// .text('Nederlanders');
+    // .text('Nederlanders');
 
-//append a new group for the x axis and set it at as the bottom axis
-g.append('g')
-    .style('font-size', '1rem')
-    .call(d3.axisBottom(xScale)
-        .tickSize(-innerHeight))
-    .style('stroke-dasharray', ('3, 3'))
-    .attr('transform', `translate(0, ${innerHeight})`)
-    .append('text')
-    .style('font-size', '1rem')
-    .attr('y', 40)
-    .attr('x', innerWidth / 2)
-    .attr('fill', 'white')
-    .text('Percentage');
+    //append a new group for the x axis and set it at as the bottom axis
+    g.append('g')
+        .style('font-size', '1rem')
+        .call(d3.axisBottom(xScale)
+            .tickSize(-innerHeight))
+        .style('stroke-dasharray', ('3, 3'))
+        .attr('transform', `translate(0, ${innerHeight})`)
+        .append('text')
+        .style('font-size', '1rem')
+        .attr('y', 40)
+        .attr('x', innerWidth / 2)
+        .attr('fill', 'white')
+        .text('Percentage');
 
-//makes an ordinal color scale for each type
-const color = d3.scaleOrdinal()
-    .range([ '#FFF33D', '#0048FF', ]);
+    //makes an ordinal color scale for each type
+    // const color = d3.scaleOrdinal()
+    //     .range([ '#FFF33D', '#0048FF', ]);
     
-// g.call(tip);
+    // g.call(tip);
 
-g.append('g')
-    .selectAll('g')
-    .data(data)
-    .join('g')
-    .attr('transform', d => `translate(${y0(d[groupKey])},0)`)
+    g.append('g')
+        .selectAll('g')
+        .data(data)
+        .join('g')
+        .attr('transform', d => `translate(${y0(d[groupKey])},0)`)
     // .attr('fill', d => color(d.key))
     // .attr('stroke', d => color(d.key))
     // .style('opacity', 1)
-    .selectAll('rect')
-    .data(d => keys.map(key => ({key, value: d[key]})))
-    .join('rect')
-    .style('fill', 'purple')
+        .selectAll('rect')
+        .data(d => keys.map(key => ({key, value: d[key]})))
+        .join('rect')
+        .style('fill', 'purple')
     // .attr('class', 'bar')
-//.attr("x", (d, i) => x(d.data.name))
-    .attr('y', d => y1(d.key))
-    .attr('x', d => xScale(d.value))
-    .attr('height', y1.bandwidth())
-    .attr('width', d =>  xScale(d.value) - xScale(0))
+    //.attr("x", (d, i) => x(d.data.name))
+        .attr('y', d => y1(d.key))
+        .attr('x', d => xScale(d.value))
+        .attr('height', y1.bandwidth())
+        .attr('width', d =>  xScale(d.value) - xScale(0));
 
 }
 
@@ -544,17 +544,20 @@ const button1 = document.getElementById('button-step1');
 const button2 = document.getElementById('button-step2');
 const button3 = document.getElementById('button-step3');
 const button4 = document.getElementById('button-step4');
+const button5 = document.getElementById('button-step5');
 
 const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 const step4 = document.getElementById('step4');
+const step5 = document.getElementById('step5');
 
 button1.addEventListener('click', function() {
     step1.classList.replace('hidden', 'visible');
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -562,6 +565,7 @@ button1.addEventListener('click', function() {
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('active', 'inactive');
     button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
 });
 
 button2.addEventListener('click', function() {
@@ -569,6 +573,7 @@ button2.addEventListener('click', function() {
     step2.classList.replace('hidden', 'visible');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -576,6 +581,7 @@ button2.addEventListener('click', function() {
     button2.classList.replace('inactive', 'active');
     button3.classList.replace('active', 'inactive');
     button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
 });
 
 button3.addEventListener('click', function() {
@@ -583,6 +589,7 @@ button3.addEventListener('click', function() {
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('hidden', 'visible');
     step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -590,6 +597,7 @@ button3.addEventListener('click', function() {
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('inactive', 'active');
     button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
 });
 
 button4.addEventListener('click', function() {
@@ -597,6 +605,7 @@ button4.addEventListener('click', function() {
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('hidden', 'visible');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -604,4 +613,21 @@ button4.addEventListener('click', function() {
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('active', 'inactive');
     button4.classList.replace('inactive', 'active');
+    button5.classList.replace('active', 'inactive');
+});
+
+button5.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('hidden', 'visible');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+    button5.classList.replace('inactive', 'active');
 });

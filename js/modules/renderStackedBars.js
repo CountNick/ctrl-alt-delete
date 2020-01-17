@@ -174,10 +174,10 @@ export default function renderStackedBars(data){
         .attr('height', 18)
         .style('fill', color);
 
-    function selectionChanged(){
-        //change by click on radio button
-        //chenge the normalised bars to stacked bars
-        //stacked bars should have numbers 
-        //x axis should have these numbers on axis
-    }     
+    // function selectionChanged(){
+    //change by click on radio button
+    //chenge the normalised bars to stacked bars
+    //stacked bars should have numbers 
+    //x axis should have these numbers on axis
+    // }     
 }
