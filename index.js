@@ -209,11 +209,11 @@ function prepareGroupedBarData(data) {
     console.log(luisterObject);
     console.log(rechtvaardigObject);
     
-    const complete = []
+    const complete = [];
 
-    complete.push(beleefdObject)
-    complete.push(luisterObject)
-    complete.push(rechtvaardigObject)
+    complete.push(beleefdObject);
+    complete.push(luisterObject);
+    complete.push(rechtvaardigObject);
 
     return complete;
 }
@@ -303,8 +303,8 @@ function renderConsequenceChart(){
     // const color = d3.scaleOrdinal()
     //     .domain(['hasjpijpen', 'tabakspijpen', 'waterpijpen', 'pijpen (rookgerei)', 'opiumpijpen' ])
     //     .range([ '#FF0047', '#FF8600', '#6663D5', '#FFF800', '#29FF3E']);
-    const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
-    
+    // const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
+        
     //sets the xScale with the values from d.amount
     const xScale = d3.scaleLinear()
         .domain([0, d3.max(data, xValue)])
@@ -340,7 +340,7 @@ function renderConsequenceChart(){
         .attr('y', 60)
         .attr('x', innerWidth / 2)
         .attr('fill', 'white')
-        .text('Aantal pijpen');
+        .text('Aantal keer');
 
     //draw the circles on the chart
     drawCircles();
@@ -458,9 +458,9 @@ function renderGroupedBarChart(data) {
     const formatXScale = d3.format(',.0f');
 
     const y0 = d3.scaleBand()
-    .domain(data.map(d => d[groupKey]))
-    .rangeRound([0, innerHeight ])
-    .paddingInner(0.1)
+        .domain(data.map(d => d[groupKey]))
+        .rangeRound([0, innerHeight ])
+        .paddingInner(0.1);
 
     console.log('y0: ', y0.domain())
 
@@ -479,25 +479,25 @@ function renderGroupedBarChart(data) {
 
     // console.log('schalX', xScale.domain())
 
-// const yScale = d3.scaleBand()
-//     .domain(data.map(yValue))
-//     .range([0, innerHeight])
-//     .padding(0.3);
+    // const yScale = d3.scaleBand()
+    //     .domain(data.map(yValue))
+    //     .range([0, innerHeight])
+    //     .padding(0.3);
 
-const g = svg.append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    const g = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-//append a new group for the y axis and set it on the left side
-g.append('g')
-    .style('font-size', '1rem')
-    .call(d3.axisLeft(y0)
-        .tickSize('0'));
-// .append('text')
-// .style('font-size', '1rem')
-// .style('transform', 'rotate(-90deg)')
-// .attr('y', innerHeight / 2)
-// // .attr('x', 500)
-// .attr('fill', 'white')
+    //append a new group for the y axis and set it on the left side
+    g.append('g')
+        .style('font-size', '1rem')
+        .call(d3.axisLeft(y0)
+            .tickSize('0'));
+    // .append('text')
+    // .style('font-size', '1rem')
+    // .style('transform', 'rotate(-90deg)')
+    // .attr('y', innerHeight / 2)
+    // // .attr('x', 500)
+    // .attr('fill', 'white')
         
 // .text('Nederlanders');
 
@@ -520,7 +520,7 @@ g.append('g')
 const color = d3.scaleOrdinal()
     .range([ '#F45905', '#FF9933', '#FFCC99']);
     
-// g.call(tip);
+    // g.call(tip);
 
 g.append('g')
     .selectAll('g')
@@ -551,17 +551,20 @@ const button1 = document.getElementById('button-step1');
 const button2 = document.getElementById('button-step2');
 const button3 = document.getElementById('button-step3');
 const button4 = document.getElementById('button-step4');
+const button5 = document.getElementById('button-step5');
 
 const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 const step4 = document.getElementById('step4');
+const step5 = document.getElementById('step5');
 
 button1.addEventListener('click', function() {
     step1.classList.replace('hidden', 'visible');
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -569,6 +572,7 @@ button1.addEventListener('click', function() {
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('active', 'inactive');
     button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
 });
 
 button2.addEventListener('click', function() {
@@ -576,6 +580,7 @@ button2.addEventListener('click', function() {
     step2.classList.replace('hidden', 'visible');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -583,6 +588,7 @@ button2.addEventListener('click', function() {
     button2.classList.replace('inactive', 'active');
     button3.classList.replace('active', 'inactive');
     button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
 });
 
 button3.addEventListener('click', function() {
@@ -590,6 +596,7 @@ button3.addEventListener('click', function() {
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('hidden', 'visible');
     step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -597,6 +604,7 @@ button3.addEventListener('click', function() {
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('inactive', 'active');
     button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
 });
 
 button4.addEventListener('click', function() {
@@ -604,6 +612,7 @@ button4.addEventListener('click', function() {
     step2.classList.replace('visible', 'hidden');
     step3.classList.replace('visible', 'hidden');
     step4.classList.replace('hidden', 'visible');
+    step5.classList.replace('visible', 'hidden');
 
     window.scrollTo(0, 1000);
 
@@ -611,4 +620,21 @@ button4.addEventListener('click', function() {
     button2.classList.replace('active', 'inactive');
     button3.classList.replace('active', 'inactive');
     button4.classList.replace('inactive', 'active');
+    button5.classList.replace('active', 'inactive');
+});
+
+button5.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('hidden', 'visible');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+    button5.classList.replace('inactive', 'active');
 });
