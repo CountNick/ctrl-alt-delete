@@ -24,7 +24,8 @@ export default function renderPieChart(data) {
         .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3' ]);
 
     svg.append('g')
-        .attr('stroke', 'white')
+        .attr('stroke', 'black')
+        .attr('stroke-width', '2')
         .attr('class', 'pie')
         .selectAll('path')
         .data(arcs)

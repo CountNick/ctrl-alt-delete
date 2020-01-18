@@ -121,8 +121,8 @@ function splitIntoArrays(data){
 
     //fill the pieData array with each origin and it's corresponding value in percentage
     pieData.push(preparePieData(originNederlandsAnswerYes, total));
-    pieData.push(preparePieData(originNietWestersAnswerYes, total));
     pieData.push(preparePieData(originWestersAnswerYes, total));
+    pieData.push(preparePieData(originNietWestersAnswerYes, total));
     pieData.push(preparePieData(answerNo, total));
 
     renderStackedBars(complete);
@@ -462,20 +462,20 @@ function renderGroupedBarChart(data) {
         .rangeRound([0, innerHeight ])
         .paddingInner(0.1);
 
-    console.log('y0: ', y0.domain())
+    console.log('y0: ', y0.domain());
 
     const y1 = d3.scaleBand()
-    .domain(keys)
-    .rangeRound([0, y0.bandwidth()])
-    .padding(0.07)
+        .domain(keys)
+        .rangeRound([0, y0.bandwidth()])
+        .padding(0.07);
 
-    console.log('y1', y1.domain())
+    console.log('y1', y1.domain());
 
     const xScale = d3.scaleLinear()
-    .domain([0, 5]).nice()
+        .domain([0, 5]).nice()
     // .domain([d3.max(data, d => d3.max(keys, key => d[key])), 0]).nice()
-    .range([0, innerWidth])
-    .nice();
+        .range([0, innerWidth])
+        .nice();
 
     // console.log('schalX', xScale.domain())
 
@@ -499,48 +499,48 @@ function renderGroupedBarChart(data) {
     // // .attr('x', 500)
     // .attr('fill', 'white')
         
-// .text('Nederlanders');
+    // .text('Nederlanders');
 
-//append a new group for the x axis and set it at as the bottom axis
-g.append('g')
-    .style('font-size', '1rem')
-    .call(d3.axisBottom(xScale)
-        .tickSize(-innerHeight)
-        .tickValues([0,1,2,3,4,5]))
-    .style('stroke-dasharray', ('3, 3'))
-    .attr('transform', `translate(0, ${innerHeight})`)
-    .append('text')
-    .style('font-size', '1rem')
-    .attr('y', 40)
-    .attr('x', innerWidth / 2)
-    .attr('fill', 'white')
-    .text('Gemiddelde score');
+    //append a new group for the x axis and set it at as the bottom axis
+    g.append('g')
+        .style('font-size', '1rem')
+        .call(d3.axisBottom(xScale)
+            .tickSize(-innerHeight)
+            .tickValues([0, 1, 2, 3, 4, 5]))
+        .style('stroke-dasharray', ('3, 3'))
+        .attr('transform', `translate(0, ${innerHeight})`)
+        .append('text')
+        .style('font-size', '1rem')
+        .attr('y', 40)
+        .attr('x', innerWidth / 2)
+        .attr('fill', 'white')
+        .text('Gemiddelde score');
 
-//makes an ordinal color scale for each type
-const color = d3.scaleOrdinal()
-    .range([ '#494CA2', '#8186d5', '#c6cbef']);
+    //makes an ordinal color scale for each type
+    const color = d3.scaleOrdinal()
+        .range([ '#494CA2', '#8186d5', '#c6cbef']);
     
     // g.call(tip);
 
-g.append('g')
-    .selectAll('g')
-    .data(data)
-    .join('g')
-    .attr('transform', d => `translate(0,${y0(d[groupKey])})`)
+    g.append('g')
+        .selectAll('g')
+        .data(data)
+        .join('g')
+        .attr('transform', d => `translate(0,${y0(d[groupKey])})`)
     // .attr('fill', d => color(d.key))
     // .attr('stroke', d => color(d.key))
     // .style('opacity', 1)
-    .selectAll('rect')
-    .data(d => keys.map(key => ({key, value: d[key]})))
-    .join('rect')
+        .selectAll('rect')
+        .data(d => keys.map(key => ({key, value: d[key]})))
+        .join('rect')
     // .style('fill', 'purple')
     // .attr('class', 'bar')
-//.attr("x", (d, i) => x(d.data.name))
-    .attr('y', d => y1(d.key))
-    .attr('x', d => xScale(d))
-    .attr('height', y1.bandwidth())
-    .attr('width', d => xScale(d.value) - xScale(0))
-    .attr('fill', d => color(d.key))
+    //.attr("x", (d, i) => x(d.data.name))
+        .attr('y', d => y1(d.key))
+        .attr('x', d => xScale(d))
+        .attr('height', y1.bandwidth())
+        .attr('width', d => xScale(d.value) - xScale(0))
+        .attr('fill', d => color(d.key));
 
 }
 

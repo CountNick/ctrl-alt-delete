@@ -127,6 +127,7 @@ export default function renderStackedBars(data){
         // .attr('stroke', d => {if (d[0]) return color(d)})
         .attr('fill', d => {if (d[1] == d[1] - d[0]) return color(d);})
         .attr('stroke', d => {if (d[1]) return color(d);})
+        .attr('stroke-width', '3')
         // .attr('stroke', d => console.log('strook', d))
         // .attr('fill', d => {if (d[1]) return color(d)})
         // .attr('fill', d => console.log('hoooi', d[0]))
