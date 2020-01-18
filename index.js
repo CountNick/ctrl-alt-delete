@@ -455,20 +455,25 @@ function renderGroupedBarChart(data) {
     const keys = ['Nederlands', 'Westers', 'niet-Westers'];
     const groupKey = 'stelling';
 
+    const formatXScale = d3.format(',.0f');
+
     const y0 = d3.scaleBand()
         .domain(data.map(d => d[groupKey]))
         .rangeRound([0, innerHeight ])
         .paddingInner(0.1);
 
+    console.log('y0: ', y0.domain());
+
     const y1 = d3.scaleBand()
         .domain(keys)
         .rangeRound([0, y0.bandwidth()])
-        .padding(0.05);
+        .padding(0.07);
 
-    console.log('yo', y1.domain());
+    console.log('y1', y1.domain());
 
     const xScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
+        .domain([0, 5]).nice()
+    // .domain([d3.max(data, d => d3.max(keys, key => d[key])), 0]).nice()
         .range([0, innerWidth])
         .nice();
 
@@ -500,7 +505,8 @@ function renderGroupedBarChart(data) {
     g.append('g')
         .style('font-size', '1rem')
         .call(d3.axisBottom(xScale)
-            .tickSize(-innerHeight))
+            .tickSize(-innerHeight)
+            .tickValues([0, 1, 2, 3, 4, 5]))
         .style('stroke-dasharray', ('3, 3'))
         .attr('transform', `translate(0, ${innerHeight})`)
         .append('text')
@@ -508,11 +514,11 @@ function renderGroupedBarChart(data) {
         .attr('y', 40)
         .attr('x', innerWidth / 2)
         .attr('fill', 'white')
-        .text('Percentage');
+        .text('Gemiddelde score');
 
     //makes an ordinal color scale for each type
-    // const color = d3.scaleOrdinal()
-    //     .range([ '#FFF33D', '#0048FF', ]);
+    const color = d3.scaleOrdinal()
+        .range([ '#494CA2', '#8186d5', '#c6cbef']);
     
     // g.call(tip);
 
@@ -520,20 +526,21 @@ function renderGroupedBarChart(data) {
         .selectAll('g')
         .data(data)
         .join('g')
-        .attr('transform', d => `translate(${y0(d[groupKey])},0)`)
+        .attr('transform', d => `translate(0,${y0(d[groupKey])})`)
     // .attr('fill', d => color(d.key))
     // .attr('stroke', d => color(d.key))
     // .style('opacity', 1)
         .selectAll('rect')
         .data(d => keys.map(key => ({key, value: d[key]})))
         .join('rect')
-        .style('fill', 'purple')
+    // .style('fill', 'purple')
     // .attr('class', 'bar')
     //.attr("x", (d, i) => x(d.data.name))
         .attr('y', d => y1(d.key))
-        .attr('x', d => xScale(d.value))
+        .attr('x', d => xScale(d))
         .attr('height', y1.bandwidth())
-        .attr('width', d =>  xScale(d.value) - xScale(0));
+        .attr('width', d => xScale(d.value) - xScale(0))
+        .attr('fill', d => color(d.key));
 
 }
 
