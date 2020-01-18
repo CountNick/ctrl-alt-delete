@@ -127,7 +127,7 @@ function splitIntoArrays(data){
 
     renderStackedBars(complete);
     renderPieChart(pieData);
-    renderConsequenceChart();
+    // renderConsequenceChart();
 
     // console.log(transformStringToNumber(originNederlandsAnswerYes));
     // console.log(transformStringToNumber(originNietWestersAnswerYes));
