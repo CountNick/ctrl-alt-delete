@@ -115,8 +115,8 @@ function splitIntoArrays(data){
     // console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
     const total = answerNo.length + answerYes.length;
     
-    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
     complete.push(prepareNormalisedStackData(originNederlandsAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
     complete.push(prepareNormalisedStackData(originWestersAnswerYes, answerYes));
 
     //fill the pieData array with each origin and it's corresponding value in percentage
