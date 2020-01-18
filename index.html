@@ -23,7 +23,7 @@
                 <div id="introduction__container">
                     <h2>Het onderzoek</h2>
                     <p class="introduction">In dit onderzoek zijn <span class="boldyellow">1797</span> Amsterdammers geënquêteerd die hun afkomst hebben ingevuld om vragen te beantwoorden dat gaat over hun ervaring met de politie. Hier zult u de resultaten vinden per groep. Hierin is onderscheid gemaakt tussen de volgende groepen; Nederlandse Nederlanders, Nederlanders met een Westerse migratieachtergrond en Nederlanders met een niet-Westerse migratieachtergrond.</p>
-                    <p class="introduction">Omwille van de leesbaarheid verwijzen wij in alle grafieken naar deze groepen als: <span class="NL">Nederlands</span>, <span class="WM">Westers</span> en <span class="NWM">niet-Westers</span></p>
+                    <p class="introduction">Omwille van de leesbaarheid verwijzen wij in alle grafieken naar deze groepen als: <span class="NL">Nederlandse respondenten</span>, <span class="WM">Westerse respondenten</span> en <span class="NWM">niet-Westerse respondenten</span></p>
                 </div>
             </div>
             
@@ -43,32 +43,37 @@
                         <div>
                             <div class="first-sentence"><span>In de afgelopen<span class="yellow"> 12 MAANDEN </span>heeft</span></div>
                             <div class="step-1-numbers">
-                                <p class="number-2"><span class="big-number grey ">63%</span> van de respondenten <span class="big-text grey">GEEN CONTACT</span> gehad met de politie</p> 
-                                <p class="number-1"><span class="big-number orange ">37%</span> van de respondenten <span class="big-text orange">WEL CONTACT</span> gehad met de politie</p>
+                                <p><span class="big-number grey ">63%<br>
+                                </span> van de respondenten <span class="big-text grey">GEEN CONTACT</span> gehad met de politie</p> 
+                                <p><span class="big-number orange ">37%<br>
+                                </span> van de respondenten <span class="big-text orange">WEL CONTACT</span> gehad met de politie</p>
                             </div>
                         </div>
-                        <svg width="350" height="350" class = "pie"></svg>
-                        <ul class="legend">
-                            <li class="NL">Nederlandse Nederlander</li>
-                            <li class="WM">Nederlanders met een niet-Westerse migratieachtergrond</li>
-                            <li class="NWM">Nederlanders met een Westerse migratieachtergrond</li>
-                            <li class="geenContact">Groep die niet in contact is geweest met de politie</li>
-                        </ul>
+                        <div class="chart-with-legend__container">
+                            <svg width="350" height="350" class = "pie"></svg>
+                            <ul class="legend">
+                                <h2 class="legend-title">Legenda</h2>
+                                <li class="NL">Nederlandse respondenten</li>
+                                <li class="WM">Westerse respondenten</li>
+                                <li class="NWM">niet-Westerse respondenten</li>
+                                <li class="geenContact">Groep die niet in contact is geweest met de politie</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div id="step2" class="hidden">
                     <h2 class="title">Gemiddeld vertrouwen in de politie van mensen die contact hebben gehad</h2>
                     <div id="trust__container">
                         <div class="trust-grade__container">
-                            <h3 class="NL">Nederlandse Nederlander</h3>
+                            <h3 class="NL">Nederlandse respondenten</h3>
                             <p class="NL">7,2</p>
                         </div>
                         <div class="trust-grade__container">
-                            <h3 class="WM">Nederlanders met een Westerse migratieachtergrond</h3>
+                            <h3 class="WM">Westerse respondenten</h3>
                             <p class="WM">7,0</p>
                         </div>
                         <div class="trust-grade__container">
-                            <h3 class="NWM">Nederlanders met een niet-Westerse migratieachtergrond</h3>
+                            <h3 class="NWM">niet-Westerse respondenten</h3>
                             <p class="NWM">5,9</p>
                         </div>
                     </div>
@@ -77,9 +82,9 @@
                     <h2 class="title">Soorten laatste contact met de politie per groep</h2>
                     <div id="bar__container">
                         <svg width="700" height="400" class = "stack" id="stacked-bar"></svg>
-                        <div class="legend step2-legend">
-                            <div class="li-1"><img class="legend-icon" src="./public/images/me_to_police.svg" alt=""><li class="legend-me-to-police">Ik ging naar de politie toe</li></div>
-                            <div class="li-2"><img class="legend-icon" src="./public/images/police_to_me.svg" alt=""><li class="legend-police-to-me">De politie kwam naar mij toe</li></div>
+                        <div class="step2-legend">
+                            <div class="li-1"><img class="legend-icon" src="./public/images/police_to_me.svg" alt=""><li class="legend-police-to-me">De politie kwam naar mij toe</li></div>
+                            <div class="li-2"><img class="legend-icon" src="./public/images/me_to_police.svg" alt=""><li class="legend-me-to-police">Ik ging naar de politie toe</li></div>
                         </div>
                     </div>
                 </div>
@@ -89,12 +94,15 @@
                 </div>
                 <div id="step5" class="hidden">
                     <h2 class="title">Hoe verliep het laatste contact met de politie?</h2>
-                    <svg width="960" height="450" class = "groupedBars"></svg>
-                    <ul class="legend">
-                        <li class="NL">Nederlandse Nederlander</li>
-                        <li class="WM">Nederlanders met een niet-Westerse migratieachtergrond</li>
-                        <li class="NWM">Nederlanders met een Westerse migratieachtergrond</li>
-                    </ul>
+                    <div class="chart-with-legend__container">
+                        <svg width="960" height="450" class = "groupedBars"></svg>
+                        <ul class="legend">
+                            <h2 class="legend-title">Legenda</h2>
+                            <li class="NL">Nederlandse respondenten</li>
+                            <li class="WM">Westerse respondenten</li>
+                            <li class="NWM">niet-Westerse respondenten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

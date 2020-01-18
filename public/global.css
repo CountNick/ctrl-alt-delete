@@ -64,7 +64,7 @@ body {
     background-color: black;
     width: 85%;
     margin: 2em auto;
-    padding-bottom: 10em;
+    padding-bottom: 19em;
 }
 
 .main-title {
@@ -123,7 +123,7 @@ h2 {
 }
 
 #introduction__container {
-    width: 65%;
+    width: 50%;
     padding: .5em 1.5em;
     margin-left: 4%;
 }
@@ -135,6 +135,7 @@ h2 {
 }
 
 #visualisations__container {
+    position: relative;
     color: white;
     background-color: black;
     width: 85%;
@@ -170,6 +171,12 @@ h2 {
     margin-left: 10em;
 }
 
+.chart-with-legend__container {
+    position: absolute;
+    right: 4em;
+    display: flex;
+}
+
 .pie__container {
     display: flex;
 }
@@ -177,11 +184,7 @@ h2 {
 .pie__container p {
     font-family: Roboto-light;
     margin-left: 3em;
-    width: 9em;
-}
-
-.pie__container ul li {
-    margin-bottom: .5em;
+    width: 9.5em;
 }
 
 .first-sentence {
@@ -217,15 +220,15 @@ h2 {
 /* Trust grades */
 #trust__container {
     margin: 0em auto;
-    width: 65%;
+    width: 60%;
     font-family: Roboto-regular;
     padding: .5em 1.5em;
     display: flex;
+    justify-content: space-between
 }
 
 #trust-grades__container {
     display: flex;
-    justify-content: space-between
 }
 
 .trust-grade__container {
@@ -246,19 +249,30 @@ h2 {
 }
 
 /* Legend */
+.legend-title {
+    color: white;
+}
+
 .legend-icon {
     width: 7em;
     margin-right: 1em;
 }
 
+.legend li {
+    margin-bottom: .5em;
+}
+
 .step2-legend {
-    margin-top: 8em;
+    list-style: none;
+    font-family: Roboto-medium;
+    margin-top: 7em;
     margin-left: 2em;
 }
 
 .legend {
     list-style: none;
     font-family: Roboto-medium;
+    margin: 0;
 }
 
 .li-1, .li-2 {
@@ -286,6 +300,20 @@ h2 {
     color: #a3a3a3;
 }
 
+.legend-me-to-police {
+    border: 2px solid grey;
+    padding: 1em;
+    width: 12.75em;
+}
+
+.legend-police-to-me {
+    border: 2px solid transparent;
+    background-color: grey;
+    padding: 1em;
+    width: 12.75em;
+    color: black;
+}
+
 text {
     cursor: default;
 }
@@ -301,7 +329,7 @@ button:focus {
     justify-content: space-between;
     width: 84%;
     margin: 0em auto;
-    margin-top: 3em;
+    margin-top: 4.5em;
 }
 
 .navigation-button {
