@@ -95,8 +95,12 @@ export default function renderStackedBars(data){
         .text('Percentage');
 
     //makes an ordinal color scale for each type
+    // const color = d3.scaleOrdinal()
+    //     .range([ '#FFF33D', '#0048FF', ]);
+    //makes an ordinal color scale for each type
     const color = d3.scaleOrdinal()
-        .range([ '#FFF33D', '#0048FF', ]);
+    .domain('niet-Westers', 'Nederlands', 'Westers')
+        .range([ '#8186d5', '#494CA2', '#c6cbef']);
         
     g.call(tip);
 
@@ -104,8 +108,10 @@ export default function renderStackedBars(data){
         .selectAll('g')
         .data(series)
         .join('g')
-        .attr('fill', d => color(d.key))
-        .attr('stroke', d => color(d.key))
+        // .attr('fill', d => color(d.key))
+        // .attr('stroke', d => color(d.key))
+        // .attr('fill', d => {if (d.index == 0) return color(d)})
+        // .attr('stroke', d => {if (d.index == 1) return color(d)})
         .style('opacity', 1)
         .selectAll('rect')
         .data(d => d)
@@ -117,6 +123,9 @@ export default function renderStackedBars(data){
         .attr('x', d => xScale(d[0]))
         .attr('height', yScale.bandwidth())
         .attr('width', d => xScale(d[1]) - xScale(d[0]))
+        // .attr('fill', d => console.log('fillieee', d))
+        .attr('fill', d => {if (d[0]) return color(d)})
+        .attr('stroke', d => {if (d[1]) return color(d)})
         .on('mouseover', function(d) {
             //chart in tooltip 
             
