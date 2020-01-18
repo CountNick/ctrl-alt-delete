@@ -28,27 +28,42 @@ We focus on the average trust grades in the police on a scale from 1-10 per grou
 
 ## Features
 
-* Pie chart rendered with d3
-* Stacked bar chart rendered with d3 with interaction (in tooltip on hover)
-* Motion design gifs
-* Grouped bar chart rendered with d3 with interaction (when filtering between groups)
+* Pie chart rendered with d3 about the distrubution who had contact with the police in the last 12 months
+* Stacked bar chart rendered with d3 about the type of contact with the police
+    * with interaction in tooltip on hover, a pie chart will be rendered to show the distribution about the causes of the contact wit the police
+* Motion design gifs 
+    * with interaction when filtering between consequences for having contact with the police
+* Grouped bar chart rendered with d3
 
 ## Data we used
 
-The survey consisted of 20 questions, some of them about the personal background of the person and most of the questions about the police. People were approached on the street who live in Amsterdam to fill in the survey.
+The survey contains 20 questions, some of them about the personal background of the person and most of the questions about the police. People were approached on the street who live in Amsterdam to fill in the survey.
 
-We received the data we needed from the respondents from Controle Alt Delete in an Excel sheet. We made this into a tsv so we could change this into JSON with d3.
+We received the data we needed from the respondents from Controle Alt Delete in an Excel sheet. We made this into a `.tsv` so we could change this into `JSON` with d3.
 
 ## Data cleaning and transforming
 
-To be able to use the data in d3, we needed to clean and tranform the data. This includes:
+To be able to use the data in d3, we needed to clean the data first. This includes:
 * Deleting records we can't use
 * Deviding the data into the 3 groups we mentioned earlier
 * Deviding this data into 2 groups (contact or no contact with police in the last 12 months)
-* Calculating percentages and averages
-* Creating objects with transformed data
 
-## d3
+We did this so we have clean groups from the dataset we could re-use when transforming the data.
+
+The next step is to transform the data so we could use it in d3. This includes:
+
+* Change ordinal values to numbers
+* Calculating percentages and averages with these numbers
+* Creating new objects with our transformed data
+
+## Frameworks and libraries
+
+* We didn't use any frameworks because we felt like this wasn't needed for this project. We simply used plain Javascript.
+* We did use some libraries;
+    * d3.v5.min.js
+    * d3-tip.js version 0.9.1
+
+## d3 examples
 
 * Example used for Pie chart:
 [Pie chart](https://observablehq.com/@d3/pie-chart)
