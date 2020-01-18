@@ -559,6 +559,10 @@ const step3 = document.getElementById('step3');
 const step4 = document.getElementById('step4');
 const step5 = document.getElementById('step5');
 
+const filterButton = document.getElementById('selectButton');
+
+console.log(filterButton);
+
 button1.addEventListener('click', function() {
     step1.classList.replace('hidden', 'visible');
     step2.classList.replace('visible', 'hidden');
