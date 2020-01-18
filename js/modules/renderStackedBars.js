@@ -27,7 +27,7 @@ export default function renderStackedBars(data){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
 
-
+    
     
     const yValue = d => d.origin;
 
@@ -51,6 +51,9 @@ export default function renderStackedBars(data){
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
+
+    svg.attr('viewBox', [0, 0, width, height]);
+    
 
     const xScale = d3.scaleLinear()
         .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
