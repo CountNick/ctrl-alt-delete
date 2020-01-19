@@ -218,12 +218,13 @@ function prepareGroupedBarData(data) {
     return complete;
 }
 
+//empty array to store objects where the police initated contact
+const policeContacted = [];
+//empty array to store objects where the respondent initated contact
+const iContacted = [];
+
 //function that checks who initiated contact and returns a modified object containg: percentage and amount
 function prepareNormalisedStackData(data, answerYes){
-    //empty array to store objects where the police initated contact
-    const policeContacted = [];
-    //empty array to store objects where the respondent initated contact
-    const iContacted = [];
     //empty variable to store object.herkomst in, this makes the function reusable
     let origin;
     
@@ -235,10 +236,10 @@ function prepareNormalisedStackData(data, answerYes){
     data.map(object => {
         //if police initiated contact push to policeContacted
         if(object.totStand == 'De politie kwam naar mij toe'){
-            policeContacted.push(object.totStand);
+            policeContacted.push(object);
         }//if respondent initiated contact push to iContacted 
         else if(object.totStand == 'Ik ging naar de politie toe'){
-            iContacted.push(object.totStand);
+            iContacted.push(object);
         }
     });
 
@@ -250,6 +251,22 @@ function prepareNormalisedStackData(data, answerYes){
     //return the cleanedObject
     return cleanedObject;
 }
+
+console.log('policecontacted', policeContacted);
+console.log('icontacted', iContacted);
+
+// function prepareTooltipPieDataPoliceContacted(data){
+//     data.forEach(element => {
+//         origin = element.herkomst;
+//     });
+
+//     pieObject = {origin: origin, percentage: data.length / data * 100};
+// }
+
+// function prepareTooltipPieDataIContacted(data, gevolg){
+
+//     pieObject = {gevolg: gevolg, percentage: data.length / iContacted * 100};
+// }
 
 //function that prepares data for a piechart, data still needs to be pushed in one array where this function gets called
 function preparePieData(data, total){

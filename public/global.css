@@ -301,17 +301,17 @@ h2 {
 }
 
 .legend-me-to-police {
-    border: 2px solid grey;
-    padding: 1em;
-    width: 12.75em;
-}
-
-.legend-police-to-me {
     border: 2px solid transparent;
     background-color: grey;
     padding: 1em;
     width: 12.75em;
     color: black;
+}
+
+.legend-police-to-me {
+    border: 2px solid grey;
+    padding: 1em;
+    width: 12.75em;
 }
 
 text {

@@ -33,7 +33,8 @@ export default function renderPieChart(data) {
         .attr('fill', d => color(d.data.origin))
         .attr('d', arc)
         .append('title')
-        .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%');
+        .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
+        .style('text-anchor', 'middle');
 
     svg.append('g')
         .attr('font-family', 'sans-serif')
