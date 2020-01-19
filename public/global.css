@@ -207,11 +207,12 @@ h2 {
 /* Bar chart */
 #stacked-bar {
     /* margin-left: 3em; */
-    min-width: 420px;
+    min-width: 290px;
 }
 
 #bar__container {
     display: flex;
+    flex-direction: row;
 }
 
 .stack g g rect:hover {
@@ -410,4 +411,16 @@ rect:hover{
 
 circle{
     fill: steelblue;
+}
+
+.gevolg{
+    width: 90%;
+}
+
+@media only screen and (max-width: 320px){
+    
+}
+
+@media only screen and (min-width: 600px){
+
 }
