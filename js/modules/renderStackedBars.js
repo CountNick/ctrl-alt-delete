@@ -1,4 +1,4 @@
-export default function renderStackedBars(data){
+export default function renderStackedBars(data, pieData){
 
     console.log('data: ', data);
 
@@ -27,7 +27,7 @@ export default function renderStackedBars(data){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
 
-
+    
     
     const yValue = d => d.origin;
 
@@ -51,6 +51,9 @@ export default function renderStackedBars(data){
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
+
+    svg.attr('viewBox', [0, 0, width, height]);
+    
 
     const xScale = d3.scaleLinear()
         .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
@@ -161,7 +164,7 @@ export default function renderStackedBars(data){
             //     .duration(1000);
             const pie = d3.pie()
                 .sort(null)
-                .value(d => d.amountPoliceContactedMe);
+                .value(d => d.percentage);
             const width = 200;
             const height = 200;
             function test() {
@@ -172,13 +175,13 @@ export default function renderStackedBars(data){
             const arc = d3.arc()
                 .innerRadius(0)
                 .outerRadius(Math.min(width, height) / 2 - 1);
-            const arcs = pie(data);
+            const arcs = pie(pieData);
             const svg = d3.select('#tipSVG')
                 .append('svg')
                 .attr('viewBox', [-width / 2, -height / 2, width, height]);
         
             // console.log('arcs: ', arcs);
-            
+            console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
                 .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3' ]);
         
@@ -189,10 +192,10 @@ export default function renderStackedBars(data){
                 .selectAll('path')
                 .data(arcs)
                 .join('path')
-                .attr('fill', color(d.data.origin))
+                .attr('fill', d => color(d.data.origin))
                 .attr('d', arc)
                 .append('title')
-                .text(d.data.origin + ': ' + d.data.amountPoliceContactedMe.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
+                .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
                 .style('text-anchor', 'middle');
         
             svg.append('g')
@@ -207,7 +210,7 @@ export default function renderStackedBars(data){
                     .attr('x', 0)
                     .attr('y', '0.7em')
                     .attr('fill-opacity', 0.7)
-                    .text(d.data.amountPoliceContactedMe.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%'));
+                    .text(d => d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%'));
         
             return svg.node();
         })
