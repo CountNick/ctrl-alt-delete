@@ -560,8 +560,35 @@ const step4 = document.getElementById('step4');
 const step5 = document.getElementById('step5');
 
 const filterButton = document.getElementById('selectButton');
+let image = document.getElementById('gevolg');
+let title = document.getElementById('gevolgTitle')
+
+console.log('img', image)
+console.log('title', title)
 
 console.log(filterButton);
+
+filterButton.addEventListener('change', function() {
+    console.log('het werkt!', this.value)
+
+    if (this.value == 'arrest'){
+        title.textContent = 'Gevolg: Arrestatie';
+        image.src = 'public/images/gevolgen/arrestatie.png';
+    }
+    else if (this.value == 'bekeuring'){
+        title.textContent = 'Gevolg: Bekeuring';
+        image.src = 'public/images/gevolgen/bekeuring.png';
+    }
+    else if (this.value == 'anders'){
+        title.textContent = 'Gevolg: Anders';
+        image.src = 'public/images/gevolgen/anders.png';
+    }
+    else if (this.value == 'niets'){
+        title.textContent = 'Gevolg: niets';
+        image.src = 'public/images/gevolgen/niets.png';
+    }
+
+});
 
 button1.addEventListener('click', function() {
     step1.classList.replace('hidden', 'visible');
