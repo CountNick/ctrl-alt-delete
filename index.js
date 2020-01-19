@@ -452,6 +452,8 @@ function renderGroupedBarChart(data) {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
+    svg.attr('viewBox', [0, 0, width, height]);
+
     const keys = ['Nederlands', 'Westers', 'niet-Westers'];
     const groupKey = 'stelling';
 
