@@ -128,7 +128,7 @@ function splitIntoArrays(data){
 
     renderPieChart(pieData);
     renderStackedBars(complete, pieData);
-    // renderConsequenceChart();
+    renderConsequenceChart();
 
     // console.log(transformStringToNumber(originNederlandsAnswerYes));
     // console.log(transformStringToNumber(originNietWestersAnswerYes));
@@ -228,8 +228,6 @@ const iContacted = [];
 function prepareNormalisedStackData(data, answerYes){
     //empty variable to store object.herkomst in, this makes the function reusable
     let origin;
-    console.log('stekettek', data)
-    
     data.forEach(element => {
         //give origin the value of object.herkomst
         origin = element.herkomst;
@@ -245,9 +243,6 @@ function prepareNormalisedStackData(data, answerYes){
     
     const totalControl = controleOnStreet.length + controleInTraffic.length + wrongOnStreet.length + wrongInTraffic.length + smallTalk.length + controleDifferent.length;
 
-    console.log('totaal:', totalControl);
-
-    console.log(data.length);
     let percentControle = (controleOnStreet.length + controleInTraffic.length) / totalControl * 100;
     // let percentControleTraffic = controleInTraffic.length / totalControl * 100;
     // let percentWrongOnStreet = wrongOnStreet.length / totalControl * 100;
@@ -255,6 +250,8 @@ function prepareNormalisedStackData(data, answerYes){
     // let percentWrongInTraffic = wrongInTraffic.length / totalControl * 100;
     let percentSmallTalk = smallTalk.length / totalControl * 100;
     let percentDifferent = controleDifferent.length / totalControl * 100;
+
+
 
     //map over the data given as a parameter to this function
     data.map(object => {
@@ -267,30 +264,62 @@ function prepareNormalisedStackData(data, answerYes){
         }
     });
 
+    let zelfContact = iContacted.filter(d => d.redenZelfContact != 999999 && d.redenZelfContact != 'De respondent heeft deze vraag niet beantwoord' && d.redenZelfContact != 'Ik ging niet naar de politie toe');
+
+    const anders = [];
+    const slachtofferAangifte = [];
+    const vroegHulp = [];
+    const meldingMaken = [];
+    const praatjeMaken = [];
+
+    zelfContact.filter(d => {
+        
+        if(d.redenZelfContact == 'Anders, namelijk…') anders.push(d);
+
+        if(d.redenZelfContact == 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte') slachtofferAangifte.push(d);
+        
+        if(d.redenZelfContact == 'Ik vroeg de politie om hulp, advies of informatie') vroegHulp.push(d);
+        
+        if(d.redenZelfContact == 'Ik had iets gezien dat niet mag en maakte hiervan melding') meldingMaken.push(d);
+        
+        if(d.redenZelfContact == 'Ik maakte een praatje met een agent') praatjeMaken.push(d);
+    
+    });
+
+    
+    let percentAnders = anders.length / zelfContact.length * 100
+    let percentSlacht =  slachtofferAangifte.length / zelfContact.length * 100
+    let percentVroegHulp = vroegHulp.length / zelfContact.length * 100
+    let percentMelding =  meldingMaken.length / zelfContact.length * 100
+    let percentPraatje = praatjeMaken.length / zelfContact.length * 100
+    
+
     //
-    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100, amountIContactedPolice: iContacted.length, amountPoliceContactedMe: policeContacted.length, pieData: [{percentControle}, percentWrong, percentSmallTalk, percentDifferent], pieData2: []};
+    let cleanedObject = {
+        origin: origin,
+        policeContactedMe: policeContacted.length / answerYes.length * 100,
+        iContactedPolice: iContacted.length / answerYes.length * 100,
+        amountIContactedPolice: iContacted.length,
+        amountPoliceContactedMe: policeContacted.length,
+        pieData: [
+            {reden: 'gecontroleerd', percentage: percentControle},
+            {reden: 'deedIetsFout', percentage: percentWrong},
+            {reden: 'praatjeMaken', percentage: percentSmallTalk},
+            {reden: 'anders', percentage: percentDifferent}
+        ],
+        pieData2: [
+            {reden: 'anders', percentage: percentAnders},
+            {reden: 'slachtoffer', percentage: percentSlacht},
+            {reden: 'vroegHulp', percentage: percentVroegHulp},
+            {reden:'meldingMaken', percentage: percentMelding},
+            {reden: 'praatjeMaken', percentage: percentPraatje}
+        ]};
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
 
     //return the cleanedObject
     return cleanedObject;
 }
-
-console.log('policecontacted', policeContacted);
-console.log('icontacted', iContacted);
-
-// function prepareTooltipPieDataPoliceContacted(data){
-//     data.forEach(element => {
-//         origin = element.herkomst;
-//     });
-
-//     pieObject = {origin: origin, percentage: data.length / data * 100};
-// }
-
-// function prepareTooltipPieDataIContacted(data, gevolg){
-
-//     pieObject = {gevolg: gevolg, percentage: data.length / iContacted * 100};
-// }
 
 //function that prepares data for a piechart, data still needs to be pushed in one array where this function gets called
 function preparePieData(data, total){
@@ -585,3 +614,127 @@ button5.addEventListener('click', function() {
     button4.classList.replace('active', 'inactive');
     button5.classList.replace('inactive', 'active');
 });
+
+function renderConsequenceChart(){
+
+    const data = [
+        {
+            day: 'Nederlands',
+            apples: 3
+        },
+        {
+            day: 'Westers',
+            apples: 10
+        },
+        {
+            day: 'niet-Westers',
+            apples: 15
+        }
+    ];
+
+    //select the svg element in index.html
+    const svg = d3.select('.people');
+    //sets height and width to height and width of svg element
+    const width = +svg.attr('width');
+    const height = +svg.attr('height');
+    //sets x and y values to the values of amount and origin
+    const xValue = d => d.apples;
+    const yValue = d => d.day;
+    const margin = { top: 40, right: 30, bottom: 150, left: 120 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    //makes an ordinal color scale for each type
+    // const color = d3.scaleOrdinal()
+    //     .domain(['hasjpijpen', 'tabakspijpen', 'waterpijpen', 'pijpen (rookgerei)', 'opiumpijpen' ])
+    //     .range([ '#FF0047', '#FF8600', '#6663D5', '#FFF800', '#29FF3E']);
+    // const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
+        
+    //sets the xScale with the values from d.amount
+    const xScale = d3.scaleLinear()
+        .domain([0, d3.max(data, xValue)])
+        .range([0, innerWidth])
+        .nice();
+
+    //for plotting the dots on the yaxis
+    const yScale = d3.scaleBand()
+        .domain(data.map(yValue))
+        .range([innerHeight, 0])
+        .padding(0.7);
+            
+    const g = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+    //sets the y axis
+    g.append('g')
+        .call(d3.axisLeft(yScale)
+            .ticks(data.length)
+            .tickSize(-innerWidth))
+        .select('.domain')
+        .remove()
+        .append('text')
+        .attr('fill', 'black');
+      
+    //sets the bottom axis
+    g.append('g')
+        .call(d3.axisBottom(xScale)
+            .tickSize(-innerHeight))
+        .attr('transform', `translate(0, ${innerHeight})`)
+              
+        .append('text')
+        .attr('y', 60)
+        .attr('x', innerWidth / 2)
+        .attr('fill', 'white')
+        .text('Aantal keer');
+
+    //draw the circles on the chart
+    drawCircles();
+    //draw the legend 
+    // drawLegend();
+        
+    //initialize select button, and fire update function when changed
+    // d3.select('#selectButton')
+    //     .on('change', selectionChanged);
+
+
+    //Resource: https://jsfiddle.net/2xyjf4nu/1/
+    //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
+    function drawCircles(){
+        // g.selectAll('circle')
+        // .data(data)
+        // .enter()
+        //     .append('circle')
+        //         .attr('cy', d => yScale(yValue(d)))
+        //         .attr('cx', d => xScale(d3.range(0, xValue(d))))
+        //         .attr('r', 0)
+        //         .classed('classnaam', true)
+        //         // .style('fill', d => { return color(d.type) } )
+        //         .on('mousemove', function(d){
+        //             tooltip
+        //             .style('left', d3.event.pageX - 50 + 'px')
+        //             .style('top', d3.event.pageY - 80 + 'px')
+        //             .style('display', 'inline-block')
+        //             .html((d.day) + '<br>' +d.apples +': ' + (d.apples));
+        //             })
+        //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
+        //             .attr('r', 15)
+                    
+        g.append('g')
+            .selectAll('g')
+            .data(data)
+            .join('g')
+            .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
+        // .attr('fill', d => color(d.key))
+        // .attr('stroke', d => color(d.key))
+            .style('opacity', 1)
+            .selectAll('circles')
+            .data(d => d3.range(0, d.apples))
+            .join('circle')
+            // .style('opacity', .5)
+            .attr('class', 'cirlce')
+        //.attr("x", (d, i) => x(d.data.name))
+            .attr('cx', d => xScale(d))
+        // .attr('cy', d =>  console.log(yScale(d)))
+            .attr('r', 10);
+                    
+    }
+} 
