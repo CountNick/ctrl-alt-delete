@@ -1,5 +1,6 @@
 export default function renderStackedBars(data, pieData){
 
+    console.log('pieData: ', pieData);
     console.log('data: ', data);
 
     let stack = d3.stack()
@@ -33,7 +34,7 @@ export default function renderStackedBars(data, pieData){
 
     const tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-55, 0])
+        .offset([-350, 0])
         .html(d => {
             
             //console.log(d[1] - d[0] == d.data.iContactedPolice)
@@ -136,7 +137,7 @@ export default function renderStackedBars(data, pieData){
         // .attr('fill', d => console.log('hoooi', d[0]))
         .on('mouseover', function(d) {
             //chart in tooltip 
-            
+            console.log(d)
             //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
             //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
             tip.show(d, this);
@@ -164,7 +165,7 @@ export default function renderStackedBars(data, pieData){
             //     .duration(1000);
             const pie = d3.pie()
                 .sort(null)
-                .value(d => d.percentage);
+                .value(d => d);
             const width = 200;
             const height = 200;
             function test() {
@@ -175,13 +176,13 @@ export default function renderStackedBars(data, pieData){
             const arc = d3.arc()
                 .innerRadius(0)
                 .outerRadius(Math.min(width, height) / 2 - 1);
-            const arcs = pie(pieData);
+            const arcs = pie(d.data.pieData);
             const svg = d3.select('#tipSVG')
                 .append('svg')
                 .attr('viewBox', [-width / 2, -height / 2, width, height]);
         
             // console.log('arcs: ', arcs);
-            console.log('aegefsffs', pieData);
+            // console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
                 .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3' ]);
         
@@ -193,10 +194,10 @@ export default function renderStackedBars(data, pieData){
                 .data(arcs)
                 .join('path')
                 .attr('fill', d => color(d.data.origin))
-                .attr('d', arc)
-                .append('title')
-                .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
-                .style('text-anchor', 'middle');
+                .attr('d', arc).transition().duration(1000)
+                // .append('title')
+                // .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
+                // .style('text-anchor', 'middle');
         
             svg.append('g')
                 .attr('font-family', 'sans-serif')
@@ -206,14 +207,16 @@ export default function renderStackedBars(data, pieData){
                 .data(arcs)
                 .join('text')
                 .attr('transform', d => `translate(${arcLabel.centroid(d)})`)
-                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
-                    .attr('x', 0)
-                    .attr('y', '0.7em')
-                    .attr('fill-opacity', 0.7)
-                    .text(d => d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%'));
+                
+                // .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
+                //     .attr('x', 0)
+                //     .attr('y', '0.7em')
+                //     .attr('fill-opacity', 0.7)
+                //     .text(d => d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%'));
         
-            return svg.node();
         })
+        
+
         .on('mouseout', tip.hide)
 
     //g.selectAll("rect")
