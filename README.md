@@ -123,4 +123,4 @@ Open the `index.html` file in a browser.
 
 ## License
 
-[MIT](https://github.com/StefanGerrits2/ctrl-alt-delete/blob/master/LICENSE.txt) © Nick Meijer, Nikita van Leeuwen and Stefan Gerrits
+[MIT](https://github.com/StefanGerrits2/ctrl-alt-delete/blob/master/LICENSE.txt) © [Nick Meijer](https://github.com/CountNick), [Nikita van Leeuwen](https://nikitavanleeuwen.wixsite.com/portfolio-cv) and [Stefan Gerrits](https://github.com/StefanGerrits2)

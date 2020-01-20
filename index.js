@@ -15,7 +15,7 @@ d3.tsv('./rawData4.txt')
 //function for data transformation
 function transformData(data){
     
-    // console.log('original data: ', data);
+    console.log('original data: ', data);
     
     //make new array with modified objects
     const cleanedObjects = data.map(object => {
@@ -42,7 +42,8 @@ function transformData(data){
             controleVerkeerdStraat: object.polben_Verkeerdstraat,
             controleVerkeerdVerkeer: object.polben_Verkeerdverkeer,
             controlePraatjeMaken: object.polben_Praatje,
-            controleAnders: object.polben_Anders
+            controleAnders: object.polben_Anders,
+            redenZelfContact: object.waarom_zelfben
         };
     });
 
@@ -88,7 +89,7 @@ function splitIntoArrays(data){
             return object;
         }      
     });
-    
+    console.log('lolololllooololo: ', originNederlandsAnswerYes);
     //make a new array for respondents with a dutch / western origin
     const originWestersAnswerYes = answerYes.filter(object => {
 
@@ -128,7 +129,7 @@ function splitIntoArrays(data){
 
     renderPieChart(pieData);
     renderStackedBars(complete, pieData);
-    // renderConsequenceChart();
+    renderConsequenceChart();
 
     // console.log(transformStringToNumber(originNederlandsAnswerYes));
     // console.log(transformStringToNumber(originNietWestersAnswerYes));
@@ -158,7 +159,7 @@ function splitIntoArrays(data){
     // groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
     // groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
 
-    console.log('groupedBarData', groupedBarData);
+    // console.log('groupedBarData', groupedBarData);
 
     renderGroupedBarChart(groupedBarData);
 
@@ -206,9 +207,9 @@ function prepareGroupedBarData(data) {
     let luisterObject = {stelling: 'luister', [origin]: totalLuister / luisterArray.length};
     let rechtvaardigObject = {stelling: 'rechtvaardig', [origin]: totalRechtvaardig / rechtvaardigArray.length};
     
-    console.log(beleefdObject);
-    console.log(luisterObject);
-    console.log(rechtvaardigObject);
+    // console.log(beleefdObject);
+    // console.log(luisterObject);
+    // console.log(rechtvaardigObject);
     
     const complete = [];
 
@@ -228,11 +229,31 @@ const iContacted = [];
 function prepareNormalisedStackData(data, answerYes){
     //empty variable to store object.herkomst in, this makes the function reusable
     let origin;
-    
     data.forEach(element => {
         //give origin the value of object.herkomst
         origin = element.herkomst;
     });
+
+    let controleOnStreet = data.filter(d => d.controleStraat != 0 && d.controleStraat != 99999);
+    let controleInTraffic = data.filter(d => d.controleVerkeer != 0 && d.controleVerkeer != 99999);
+    let wrongOnStreet = data.filter(d => d.controleVerkeerdStraat != 0 && d.controleVerkeerdStraat != 99999);
+    let wrongInTraffic = data.filter(d => d.controleVerkeerdVerkeer != 0 && d.controleVerkeerdVerkeer != 99999);
+    let smallTalk = data.filter(d => d.controlePraatjeMaken != 0 && d.controlePraatjeMaken != 99999);
+    let controleDifferent = data.filter(d => d.controleAnders != 0 && d.controleAnders != 99999);
+
+    
+    const totalControl = controleOnStreet.length + controleInTraffic.length + wrongOnStreet.length + wrongInTraffic.length + smallTalk.length + controleDifferent.length;
+
+    let percentControle = (controleOnStreet.length + controleInTraffic.length) / totalControl * 100;
+    // let percentControleTraffic = controleInTraffic.length / totalControl * 100;
+    // let percentWrongOnStreet = wrongOnStreet.length / totalControl * 100;
+    let percentWrong = (wrongOnStreet.length + wrongInTraffic.length) / totalControl * 100;
+    // let percentWrongInTraffic = wrongInTraffic.length / totalControl * 100;
+    let percentSmallTalk = smallTalk.length / totalControl * 100;
+    let percentDifferent = controleDifferent.length / totalControl * 100;
+
+
+
     //map over the data given as a parameter to this function
     data.map(object => {
         //if police initiated contact push to policeContacted
@@ -244,30 +265,62 @@ function prepareNormalisedStackData(data, answerYes){
         }
     });
 
+    let zelfContact = iContacted.filter(d => d.redenZelfContact != 999999 && d.redenZelfContact != 'De respondent heeft deze vraag niet beantwoord' && d.redenZelfContact != 'Ik ging niet naar de politie toe');
+
+    const anders = [];
+    const slachtofferAangifte = [];
+    const vroegHulp = [];
+    const meldingMaken = [];
+    const praatjeMaken = [];
+
+    zelfContact.filter(d => {
+        
+        if(d.redenZelfContact == 'Anders, namelijk…') anders.push(d);
+
+        if(d.redenZelfContact == 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte') slachtofferAangifte.push(d);
+        
+        if(d.redenZelfContact == 'Ik vroeg de politie om hulp, advies of informatie') vroegHulp.push(d);
+        
+        if(d.redenZelfContact == 'Ik had iets gezien dat niet mag en maakte hiervan melding') meldingMaken.push(d);
+        
+        if(d.redenZelfContact == 'Ik maakte een praatje met een agent') praatjeMaken.push(d);
+    
+    });
+
+    
+    let percentAnders = anders.length / zelfContact.length * 100;
+    let percentSlacht =  slachtofferAangifte.length / zelfContact.length * 100;
+    let percentVroegHulp = vroegHulp.length / zelfContact.length * 100;
+    let percentMelding =  meldingMaken.length / zelfContact.length * 100;
+    let percentPraatje = praatjeMaken.length / zelfContact.length * 100;
+    
+
     //
-    let cleanedObject = {origin: origin, policeContactedMe: policeContacted.length / answerYes.length * 100, iContactedPolice: iContacted.length / answerYes.length * 100, amountIContactedPolice: iContacted.length, amountPoliceContactedMe: policeContacted.length};
+    let cleanedObject = {
+        origin: origin,
+        policeContactedMe: policeContacted.length / answerYes.length * 100,
+        iContactedPolice: iContacted.length / answerYes.length * 100,
+        amountIContactedPolice: iContacted.length,
+        amountPoliceContactedMe: policeContacted.length,
+        pieData: [
+            {reden: 'Voor een controle', percentage: percentControle},
+            {reden: 'Omdat ik (volgens de politie) iets verkeerd deed', percentage: percentWrong},
+            {reden: 'De politie kwam naar mij toe om gewoon een praatje te maken', percentage: percentSmallTalk},
+            {reden: 'Anders', percentage: percentDifferent}
+        ],
+        pieData2: [
+            {reden: 'Anders', percentage: percentAnders},
+            {reden: 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', percentage: percentSlacht},
+            {reden: 'Ik vroeg de politie om hulp, advies of informatie', percentage: percentVroegHulp},
+            {reden:'Ik had iets gezien dat niet mag en maakte hiervan een melding', percentage: percentMelding},
+            {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje}
+        ]};
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
 
     //return the cleanedObject
     return cleanedObject;
 }
-
-console.log('policecontacted', policeContacted);
-console.log('icontacted', iContacted);
-
-// function prepareTooltipPieDataPoliceContacted(data){
-//     data.forEach(element => {
-//         origin = element.herkomst;
-//     });
-
-//     pieObject = {origin: origin, percentage: data.length / data * 100};
-// }
-
-// function prepareTooltipPieDataIContacted(data, gevolg){
-
-//     pieObject = {gevolg: gevolg, percentage: data.length / iContacted * 100};
-// }
 
 //function that prepares data for a piechart, data still needs to be pushed in one array where this function gets called
 function preparePieData(data, total){
@@ -288,6 +341,173 @@ function preparePieData(data, total){
     //return the newly made pieObject
     return pieObject;
 }
+
+//transform strings to numbers
+function transformStringToNumber(data){
+
+    data.map(object => {
+
+        if( object.beleefd == 'Helemaal mee oneens'){
+            object.beleefd = 1;
+        } else if(object.beleefd == 'Mee oneens'){
+            object.beleefd = 2;
+        } else if(object.beleefd == 'Niet mee eens en niet mee oneens'){
+            object.beleefd = 3;
+        } else if(object.beleefd == 'Mee eens'){
+            object.beleefd = 4;
+        } else if(object.beleefd == 'Helemaal mee eens'){
+            object.beleefd = 5;
+        } 
+
+        if( object.luister == 'Helemaal mee oneens'){
+            object.luister = 1;
+        } else if(object.luister == 'Mee oneens'){
+            object.luister = 2;
+        } else if(object.luister == 'Niet mee eens en niet mee oneens'){
+            object.luister = 3;
+        } else if(object.luister == 'Mee eens'){
+            object.luister = 4;
+        } else if(object.luister == 'Helemaal mee eens'){
+            object.luister = 5;
+        }
+
+        if( object.rechtvaardig == 'Helemaal mee oneens'){
+            object.rechtvaardig = 1;
+        } else if(object.rechtvaardig == 'Mee oneens'){
+            object.rechtvaardig = 2;
+        } else if(object.rechtvaardig == 'Niet mee eens en niet mee oneens'){
+            object.rechtvaardig = 3;
+        } else if(object.rechtvaardig == 'Mee eens'){
+            object.rechtvaardig = 4;
+        } else if(object.rechtvaardig == 'Helemaal mee eens'){
+            object.rechtvaardig = 5;
+        }
+    });
+    return data;
+}
+
+const button1 = document.getElementById('button-step1');
+const button2 = document.getElementById('button-step2');
+const button3 = document.getElementById('button-step3');
+const button4 = document.getElementById('button-step4');
+const button5 = document.getElementById('button-step5');
+
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
+const step4 = document.getElementById('step4');
+const step5 = document.getElementById('step5');
+
+const filterButton = document.getElementById('selectButton');
+let image = document.getElementById('gevolg');
+let title = document.getElementById('gevolgTitle');
+
+console.log('img', image);
+console.log('title', title);
+
+console.log(filterButton);
+
+filterButton.addEventListener('change', function() {
+    console.log('het werkt!', this.value);
+
+    if (this.value == 'arrest'){
+        title.textContent = 'Gevolg: Arrestatie';
+        image.src = 'public/images/gevolgen/arrestatie.png';
+    }
+    else if (this.value == 'bekeuring'){
+        title.textContent = 'Gevolg: Bekeuring';
+        image.src = 'public/images/gevolgen/bekeuring.png';
+    }
+    else if (this.value == 'anders'){
+        title.textContent = 'Gevolg: Anders';
+        image.src = 'public/images/gevolgen/anders.png';
+    }
+    else if (this.value == 'niets'){
+        title.textContent = 'Gevolg: niets';
+        image.src = 'public/images/gevolgen/niets.png';
+    }
+
+});
+
+button1.addEventListener('click', function() {
+    step1.classList.replace('hidden', 'visible');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('inactive', 'active');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
+});
+
+button2.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('hidden', 'visible');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('inactive', 'active');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
+});
+
+button3.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('hidden', 'visible');
+    step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('visible', 'hidden');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('inactive', 'active');
+    button4.classList.replace('active', 'inactive');
+    button5.classList.replace('active', 'inactive');
+});
+
+button4.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('hidden', 'visible');
+    step5.classList.replace('visible', 'hidden');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('inactive', 'active');
+    button5.classList.replace('active', 'inactive');
+});
+
+button5.addEventListener('click', function() {
+    step1.classList.replace('visible', 'hidden');
+    step2.classList.replace('visible', 'hidden');
+    step3.classList.replace('visible', 'hidden');
+    step4.classList.replace('visible', 'hidden');
+    step5.classList.replace('hidden', 'visible');
+
+    window.scrollTo(0, 1000);
+
+    button1.classList.replace('active', 'inactive');
+    button2.classList.replace('active', 'inactive');
+    button3.classList.replace('active', 'inactive');
+    button4.classList.replace('active', 'inactive');
+    button5.classList.replace('inactive', 'active');
+});
 
 function renderConsequenceChart(){
 
@@ -396,14 +616,14 @@ function renderConsequenceChart(){
             .selectAll('g')
             .data(data)
             .join('g')
-            .attr('transform', d => `translate(0, ${yScale(yValue(d))})`)
+            .attr('transform', (d) => `translate(0, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key))
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
             .data(d => d3.range(0, d.apples))
             .join('circle')
-            .style('opacity', .5)
+            // .style('opacity', .5)
             .attr('class', 'cirlce')
         //.attr("x", (d, i) => x(d.data.name))
             .attr('cx', d => xScale(d))
@@ -412,170 +632,3 @@ function renderConsequenceChart(){
                     
     }
 } 
-
-//transform strings to numbers
-function transformStringToNumber(data){
-
-    data.map(object => {
-
-        if( object.beleefd == 'Helemaal mee oneens'){
-            object.beleefd = 1;
-        } else if(object.beleefd == 'Mee oneens'){
-            object.beleefd = 2;
-        } else if(object.beleefd == 'Niet mee eens en niet mee oneens'){
-            object.beleefd = 3;
-        } else if(object.beleefd == 'Mee eens'){
-            object.beleefd = 4;
-        } else if(object.beleefd == 'Helemaal mee eens'){
-            object.beleefd = 5;
-        } 
-
-        if( object.luister == 'Helemaal mee oneens'){
-            object.luister = 1;
-        } else if(object.luister == 'Mee oneens'){
-            object.luister = 2;
-        } else if(object.luister == 'Niet mee eens en niet mee oneens'){
-            object.luister = 3;
-        } else if(object.luister == 'Mee eens'){
-            object.luister = 4;
-        } else if(object.luister == 'Helemaal mee eens'){
-            object.luister = 5;
-        }
-
-        if( object.rechtvaardig == 'Helemaal mee oneens'){
-            object.rechtvaardig = 1;
-        } else if(object.rechtvaardig == 'Mee oneens'){
-            object.rechtvaardig = 2;
-        } else if(object.rechtvaardig == 'Niet mee eens en niet mee oneens'){
-            object.rechtvaardig = 3;
-        } else if(object.rechtvaardig == 'Mee eens'){
-            object.rechtvaardig = 4;
-        } else if(object.rechtvaardig == 'Helemaal mee eens'){
-            object.rechtvaardig = 5;
-        }
-    });
-    return data;
-}
-
-const button1 = document.getElementById('button-step1');
-const button2 = document.getElementById('button-step2');
-const button3 = document.getElementById('button-step3');
-const button4 = document.getElementById('button-step4');
-const button5 = document.getElementById('button-step5');
-
-const step1 = document.getElementById('step1');
-const step2 = document.getElementById('step2');
-const step3 = document.getElementById('step3');
-const step4 = document.getElementById('step4');
-const step5 = document.getElementById('step5');
-
-const filterButton = document.getElementById('selectButton');
-let image = document.getElementById('gevolg');
-let title = document.getElementById('gevolgTitle')
-
-console.log('img', image)
-console.log('title', title)
-
-console.log(filterButton);
-
-filterButton.addEventListener('change', function() {
-    console.log('het werkt!', this.value)
-
-    if (this.value == 'arrest'){
-        title.textContent = 'Gevolg: Arrestatie';
-        image.src = 'public/images/gevolgen/arrestatie.png';
-    }
-    else if (this.value == 'bekeuring'){
-        title.textContent = 'Gevolg: Bekeuring';
-        image.src = 'public/images/gevolgen/bekeuring.png';
-    }
-    else if (this.value == 'anders'){
-        title.textContent = 'Gevolg: Anders';
-        image.src = 'public/images/gevolgen/anders.png';
-    }
-    else if (this.value == 'niets'){
-        title.textContent = 'Gevolg: niets';
-        image.src = 'public/images/gevolgen/niets.png';
-    }
-
-});
-
-button1.addEventListener('click', function() {
-    step1.classList.replace('hidden', 'visible');
-    step2.classList.replace('visible', 'hidden');
-    step3.classList.replace('visible', 'hidden');
-    step4.classList.replace('visible', 'hidden');
-    step5.classList.replace('visible', 'hidden');
-
-    window.scrollTo(0, 1000);
-
-    button1.classList.replace('inactive', 'active');
-    button2.classList.replace('active', 'inactive');
-    button3.classList.replace('active', 'inactive');
-    button4.classList.replace('active', 'inactive');
-    button5.classList.replace('active', 'inactive');
-});
-
-button2.addEventListener('click', function() {
-    step1.classList.replace('visible', 'hidden');
-    step2.classList.replace('hidden', 'visible');
-    step3.classList.replace('visible', 'hidden');
-    step4.classList.replace('visible', 'hidden');
-    step5.classList.replace('visible', 'hidden');
-
-    window.scrollTo(0, 1000);
-
-    button1.classList.replace('active', 'inactive');
-    button2.classList.replace('inactive', 'active');
-    button3.classList.replace('active', 'inactive');
-    button4.classList.replace('active', 'inactive');
-    button5.classList.replace('active', 'inactive');
-});
-
-button3.addEventListener('click', function() {
-    step1.classList.replace('visible', 'hidden');
-    step2.classList.replace('visible', 'hidden');
-    step3.classList.replace('hidden', 'visible');
-    step4.classList.replace('visible', 'hidden');
-    step5.classList.replace('visible', 'hidden');
-
-    window.scrollTo(0, 1000);
-
-    button1.classList.replace('active', 'inactive');
-    button2.classList.replace('active', 'inactive');
-    button3.classList.replace('inactive', 'active');
-    button4.classList.replace('active', 'inactive');
-    button5.classList.replace('active', 'inactive');
-});
-
-button4.addEventListener('click', function() {
-    step1.classList.replace('visible', 'hidden');
-    step2.classList.replace('visible', 'hidden');
-    step3.classList.replace('visible', 'hidden');
-    step4.classList.replace('hidden', 'visible');
-    step5.classList.replace('visible', 'hidden');
-
-    window.scrollTo(0, 1000);
-
-    button1.classList.replace('active', 'inactive');
-    button2.classList.replace('active', 'inactive');
-    button3.classList.replace('active', 'inactive');
-    button4.classList.replace('inactive', 'active');
-    button5.classList.replace('active', 'inactive');
-});
-
-button5.addEventListener('click', function() {
-    step1.classList.replace('visible', 'hidden');
-    step2.classList.replace('visible', 'hidden');
-    step3.classList.replace('visible', 'hidden');
-    step4.classList.replace('visible', 'hidden');
-    step5.classList.replace('hidden', 'visible');
-
-    window.scrollTo(0, 1000);
-
-    button1.classList.replace('active', 'inactive');
-    button2.classList.replace('active', 'inactive');
-    button3.classList.replace('active', 'inactive');
-    button4.classList.replace('active', 'inactive');
-    button5.classList.replace('inactive', 'active');
-});
