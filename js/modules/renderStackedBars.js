@@ -137,35 +137,22 @@ export default function renderStackedBars(data, pieData){
         // .attr('fill', d => console.log('hoooi', d[0]))
         .on('mouseover', function(d) {
             //chart in tooltip 
+            
             console.log(d)
+
+            let data;
+
+            if (d[0]){ data = d.data.pieData;}
+            else if(d[1]){ data = d.data.pieData2;}
+
             //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
             //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
             tip.show(d, this);
             // console.log('rararara: ', d.data);
 
-            // let tipSVG = d3.select('#tipDiv')
-            //     .append('svg')
-            //     .attr('width', 200)
-            //     .attr('height', 50);
-      
-            // tipSVG.append('rect')
-            //     .attr('fill', 'steelblue')
-            //     .attr('y', 10)
-            //     .attr('width', 0)
-            //     .attr('height', 30)
-            //     .transition()
-            //     .duration(1000)
-            //     .attr('width', d.data.amountPoliceContactedMe);
-
-            // tipSVG.append('text')
-            //     .text(d.data.amountPoliceContactedMe)
-            //     .attr('x', 10)
-            //     .attr('y', 30)
-            //     .transition()
-            //     .duration(1000);
             const pie = d3.pie()
                 .sort(null)
-                .value(d => d);
+                .value(d => d.percentage);
             const width = 200;
             const height = 200;
             function test() {
@@ -176,7 +163,7 @@ export default function renderStackedBars(data, pieData){
             const arc = d3.arc()
                 .innerRadius(0)
                 .outerRadius(Math.min(width, height) / 2 - 1);
-            const arcs = pie(d.data.pieData);
+            const arcs = pie(data);
             const svg = d3.select('#tipSVG')
                 .append('svg')
                 .attr('viewBox', [-width / 2, -height / 2, width, height]);
@@ -184,7 +171,7 @@ export default function renderStackedBars(data, pieData){
             // console.log('arcs: ', arcs);
             // console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
-                .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3' ]);
+                .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3', 'white' ]);
         
             svg.append('g')
                 .attr('stroke', 'black')
@@ -193,8 +180,8 @@ export default function renderStackedBars(data, pieData){
                 .selectAll('path')
                 .data(arcs)
                 .join('path')
-                .attr('fill', d => color(d.data.origin))
-                .attr('d', arc).transition().duration(1000)
+                .attr('fill', d => color(d.data.reden))
+                .attr('d', arc).transition().duration(1000);
                 // .append('title')
                 // .text(d => d.data.origin + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
                 // .style('text-anchor', 'middle');
