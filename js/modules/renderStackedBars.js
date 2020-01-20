@@ -27,8 +27,6 @@ export default function renderStackedBars(data, pieData){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
 
-    
-    
     const yValue = d => d.origin;
 
     const tip = d3.tip()
@@ -140,7 +138,7 @@ export default function renderStackedBars(data, pieData){
             //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
             //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
             tip.show(d, this);
-            // console.log('rararara: ', d.data);
+            console.log('rararara: ', d);
 
             // let tipSVG = d3.select('#tipDiv')
             //     .append('svg')
@@ -181,7 +179,7 @@ export default function renderStackedBars(data, pieData){
                 .attr('viewBox', [-width / 2, -height / 2, width, height]);
         
             // console.log('arcs: ', arcs);
-            console.log('aegefsffs', pieData);
+            // console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
                 .range(['#494CA2', '#8186d5', '#c6cbef', '#a3a3a3' ]);
         
