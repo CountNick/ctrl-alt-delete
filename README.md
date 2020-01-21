@@ -11,11 +11,11 @@
 
 ## Screenshots
 
-### Landing page
-![1](https://user-images.githubusercontent.com/45566396/72608412-e4e36300-3922-11ea-803e-f77c802f0690.png)
+### Landing screen
+![1 2](https://user-images.githubusercontent.com/45566396/72811001-0adc7080-3c5f-11ea-861f-07173c74171c.png)
 
-### Theme screens
-![2](https://user-images.githubusercontent.com/45566396/72608582-4572a000-3923-11ea-8c09-6d9de5056ae3.png)
+### Visualisation screens
+![2 1](https://user-images.githubusercontent.com/45566396/72811101-39f2e200-3c5f-11ea-8a3f-300fc7d8dc0b.png)
 
 ### Description
 
