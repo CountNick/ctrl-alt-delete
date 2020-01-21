@@ -2,7 +2,7 @@
 
 # General information
 
-* [Controle Alt Delete](https://controlealtdelete.nl/) Gave us the opportunity to make a data visualisation about a survey they did on ethnic profiling in Amsterdam.
+* [Controle Alt Delete](https://controlealtdelete.nl/) Gave us the opportunity to make a data visualisation about a survey they did in Amsterdam. The goal of the survey was to get insight about ethnich profiling in Amsterdam
 
 ### Full documentation
 
@@ -19,8 +19,9 @@
 
 ### Description
 
-This project shows datavisualisations based on some questions that were asked to respondents that live in Amsterdam about the police. We have devided the respondents into 3 groups:
-* People who are dutch (without any migration background)
+This project shows datavisualisations based on some survey questions that were asked to respondents that live in Amsterdam about the police. We devided the respondents into 3 groups:
+
+* People with a dutch background (without any migration background)
 * People with a non-Western migration background
 * People with a Western migration background
 
@@ -28,12 +29,12 @@ We focus on the average trust grades in the police on a scale from 1-10 per grou
 
 ## Features
 
-* Pie chart rendered with d3 about the distrubution who had contact with the police in the last 12 months
-* Stacked bar chart rendered with d3 about the type of contact with the police
+* [Pie chart](https://github.com/StefanGerrits2/ctrl-alt-delete/blob/master/js/modules/renderPieChart.js) rendered with d3 about the distrubution who had contact with the police in the last 12 months
+* [Stacked bar chart](https://github.com/StefanGerrits2/ctrl-alt-delete/blob/master/js/modules/renderStackedBars.js) rendered with d3 about the type of contact with the police
     * with interaction in tooltip on hover, a pie chart will be rendered to show the distribution about the causes of the contact wit the police
-* Motion design gifs 
-    * with interaction when filtering between consequences for having contact with the police
-* Grouped bar chart rendered with d3
+* [Dot matrix]() rendered with d3
+    * Users are able to select one of the consequences from the dropdown menu, the dots will reorganise
+* [Grouped bar chart](https://github.com/StefanGerrits2/ctrl-alt-delete/blob/master/js/modules/renderGroupedBars.js) rendered with d3
 
 ## Data we used
 
@@ -43,25 +44,27 @@ We received the data we needed from the respondents from Controle Alt Delete in 
 
 ## Data cleaning and transforming
 
-To be able to use the data in d3, we needed to clean the data first. This includes:
-* Deleting records we can't use
+To be able to use the data in d3, we needed to clean the data first. This meant:
+* Only returning neccessary values
 * Deviding the data into the 3 groups we mentioned earlier
 * Deviding this data into 2 groups (contact or no contact with police in the last 12 months)
 
-We did this so we have clean groups from the dataset we could re-use when transforming the data.
+We opted for this approach, because we could re-use these groups in more complex data transformation functions. These more complex data transformations can be found in the transformation directory in [the modules directory]()
 
-The next step is to transform the data so we could use it in d3. This includes:
+These more complex data transformations included:
 
-* Change ordinal values to numbers
-* Calculating percentages and averages with these numbers
-* Creating new objects with our transformed data
+* [Change ordinal values to numbers]()
+* [Calculating percentages and averages with these numbers]()
+* [Creating new objects with our transformed data]()
 
 ## Frameworks and libraries
 
 * We didn't use any frameworks because we felt like this wasn't needed for this project. We simply used plain Javascript.
 * We did use some libraries;
-    * d3.v5.min.js
+    * d3.v5.min.js 
+        * to render the data visualisations
     * d3-tip.js version 0.9.1
+        * To realize popups(tool tips) triggered on some of the hovers
 
 ## d3 examples
 
@@ -78,8 +81,8 @@ The next step is to transform the data so we could use it in d3. This includes:
 ![project-structure](https://user-images.githubusercontent.com/45566396/72612976-98058980-392e-11ea-8267-c5e6b050d0ed.png)
 
 We have devided our project in multiple folders, these ones are:
-* Modules - to create files to keep structure and overview in our project
-* Public - this containes the fonts, images and css
+* [Modules](https://github.com/StefanGerrits2/ctrl-alt-delete/tree/master/js/modules) - to create files to keep structure and overview in our project
+* [Public](https://github.com/StefanGerrits2/ctrl-alt-delete/tree/master/public) - this containes the fonts, images and css
 
 In **index.js** we import all our modules.
 
@@ -114,6 +117,12 @@ Open the `index.html` file in a browser.
 
 * [MDN](https://developer.mozilla.org/nl/) - Main source for javascript code.
 * [d3](https://d3js.org/) - To use examples for d3
+    * [Grouped bar chart example](https://observablehq.com/@d3/grouped-bar-chart) by Mike Bostock
+    * [Stacked bar chart example](https://observablehq.com/@d3/stacked-bar-chart) by Mike Bostock
+    * [Normalised stacked bar chart example](https://observablehq.com/@d3/stacked-normalized-horizontal-bar) by Mike Bostock
+    * [Pie chart example](https://observablehq.com/@d3/pie-chart) by Mike Bostock
+    * [Dot matrix](https://jsfiddle.net/5Lmjogqh/1/) by Gerardo Furtado, found in [this stackOVerflow post](https://stackoverflow.com/questions/53318554/d3-grouped-dot-matrix-with-2-rows-each-groups)
+
 * [Controle Alt Delete](https://controlealtdelete.nl/) - For general information and inspiration
 * [Andy Kirk - Data Visualisation](https://www.bol.com/nl/f/data-visualisation/9200000037335441/) - To understand and use how you can create good data visualisations
 
