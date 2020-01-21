@@ -309,11 +309,11 @@ function prepareNormalisedStackData(data, answerYes){
             {reden: 'Anders', percentage: percentDifferent}
         ],
         pieData2: [
-            {reden: 'Anders', percentage: percentAnders},
             {reden: 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', percentage: percentSlacht},
             {reden: 'Ik vroeg de politie om hulp, advies of informatie', percentage: percentVroegHulp},
             {reden:'Ik had iets gezien dat niet mag en maakte hiervan een melding', percentage: percentMelding},
-            {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje}
+            {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje},
+            {reden: 'Anders', percentage: percentAnders}
         ]};
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
