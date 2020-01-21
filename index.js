@@ -402,32 +402,32 @@ const filterButton = document.getElementById('selectButton');
 let image = document.getElementById('gevolg');
 let title = document.getElementById('gevolgTitle');
 
-console.log('img', image);
-console.log('title', title);
+// console.log('img', image);
+// console.log('title', title);
 
-console.log(filterButton);
+// console.log(filterButton);
 
-filterButton.addEventListener('change', function() {
-    console.log('het werkt!', this.value);
+// filterButton.addEventListener('change', function() {
+//     console.log('het werkt!', this.value);
 
-    if (this.value == 'arrest'){
-        title.textContent = 'Gevolg: Arrestatie';
-        image.src = 'public/images/gevolgen/arrestatie.png';
-    }
-    else if (this.value == 'bekeuring'){
-        title.textContent = 'Gevolg: Bekeuring';
-        image.src = 'public/images/gevolgen/bekeuring.png';
-    }
-    else if (this.value == 'anders'){
-        title.textContent = 'Gevolg: Anders';
-        image.src = 'public/images/gevolgen/anders.png';
-    }
-    else if (this.value == 'niets'){
-        title.textContent = 'Gevolg: niets';
-        image.src = 'public/images/gevolgen/niets.png';
-    }
+//     if (this.value == 'arrest'){
+//         title.textContent = 'Gevolg: Arrestatie';
+//         image.src = 'public/images/gevolgen/arrestatie.png';
+//     }
+//     else if (this.value == 'bekeuring'){
+//         title.textContent = 'Gevolg: Bekeuring';
+//         image.src = 'public/images/gevolgen/bekeuring.png';
+//     }
+//     else if (this.value == 'anders'){
+//         title.textContent = 'Gevolg: Anders';
+//         image.src = 'public/images/gevolgen/anders.png';
+//     }
+//     else if (this.value == 'niets'){
+//         title.textContent = 'Gevolg: niets';
+//         image.src = 'public/images/gevolgen/niets.png';
+//     }
 
-});
+// });
 
 button1.addEventListener('click', function() {
     step1.classList.replace('hidden', 'visible');
@@ -557,6 +557,15 @@ function renderConsequenceChart(){
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
+
+            //initialize select button, and fire update function when changed
+            d3.select('#selectButton')
+            .on('change', selectionChanged);
+
+            function selectionChanged(){
+                console.log(this.value)
+            }
+
     //sets the y axis
     g.append('g')
         .call(d3.axisLeft(yScale)
@@ -612,6 +621,8 @@ function renderConsequenceChart(){
         //             })
         //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
         //             .attr('r', 15)
+
+
 
 
         g.append('g')
