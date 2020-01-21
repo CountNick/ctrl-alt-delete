@@ -147,6 +147,7 @@ h2 {
 
 .yellow {
     color: #FFF33D;
+    font-family: Rubik-bold;
 }
 
 .blue {
@@ -167,14 +168,10 @@ h2 {
 }
 
 /* Pie chart */
-.pie {
-    margin-left: 10em;
-}
-
 .chart-with-legend__container {
-    position: absolute;
-    right: 4em;
     display: flex;
+    position: absolute;
+    right: 3%;
 }
 
 .pie__container {
@@ -190,6 +187,7 @@ h2 {
 .first-sentence {
     margin-left: 3em;
     font-family: Roboto-light;
+    max-width: 24em;
 }
 
 .pie g path:hover {
@@ -205,14 +203,10 @@ h2 {
 }
 
 /* Bar chart */
-#stacked-bar {
-    /* margin-left: 3em; */
-    min-width: 290px;
-}
-
 #bar__container {
     display: flex;
     flex-direction: row;
+    
 }
 
 .stack g g rect:hover {
@@ -381,22 +375,35 @@ button:focus {
 .d3-tip h4{
     font-family: Rubik;
 }
+
+.dynamic-legend {
+    width: 32em;
+}
+
+.dynamic-legend__container {
+    margin-left: 1em;
+}
+
+#tipSVG {
+    width: 25em;
+}
+
   
 /* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
+/* .d3-tip:after {
     box-sizing: border-box;
     display: inline;
     font-size: 10px;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
+    color: red;
     content: "\25BC";
     position: absolute;
     text-align: center;
-  }
+} */
   
 /* Style northward tooltips differently */
 .d3-tip.n:after {
-    margin: -1px 0 0 0;
+    margin: 100px 0 0 0;
     top: 100%;
     left: 0;
 }
@@ -417,10 +424,14 @@ circle{
     width: 90%;
 }
 
-@media only screen and (max-width: 320px){
-    
+@media screen and (max-width: 320px){
 }
 
-@media only screen and (min-width: 600px){
-
+@media screen and (max-width: 600px){
+    #introduction__container {
+        width: 80%;
+    }
+    #top__container, #bottom__container {
+        width: 100%;
+    }
 }

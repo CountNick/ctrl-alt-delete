@@ -49,6 +49,7 @@ export default function renderPieChart(data) {
             .attr('y', '0.7em')
             .attr('fill-opacity', 0.7)
             .text(d => d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%'));
+           
 
     return svg.node();
 }

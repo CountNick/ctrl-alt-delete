@@ -1,5 +1,6 @@
 import renderStackedBars from './js/modules/renderStackedBars.js';
 import renderPieChart from './js/modules/renderPieChart.js';
+import renderGroupedBarChart from './js/modules/renderGroupedBars.js';
 
 d3.tsv('./rawData4.txt')
     .then(data => {
@@ -88,7 +89,7 @@ function splitIntoArrays(data){
             return object;
         }      
     });
-    console.log('lolololllooololo: ', originNederlandsAnswerYes)
+    console.log('lolololllooololo: ', originNederlandsAnswerYes);
     //make a new array for respondents with a dutch / western origin
     const originWestersAnswerYes = answerYes.filter(object => {
 
@@ -233,12 +234,12 @@ function prepareNormalisedStackData(data, answerYes){
         origin = element.herkomst;
     });
 
-    let controleOnStreet = data.filter(d => d.controleStraat != 0 && d.controleStraat != 99999)
-    let controleInTraffic = data.filter(d => d.controleVerkeer != 0 && d.controleVerkeer != 99999)
-    let wrongOnStreet = data.filter(d => d.controleVerkeerdStraat != 0 && d.controleVerkeerdStraat != 99999)
-    let wrongInTraffic = data.filter(d => d.controleVerkeerdVerkeer != 0 && d.controleVerkeerdVerkeer != 99999)
-    let smallTalk = data.filter(d => d.controlePraatjeMaken != 0 && d.controlePraatjeMaken != 99999)
-    let controleDifferent = data.filter(d => d.controleAnders != 0 && d.controleAnders != 99999)
+    let controleOnStreet = data.filter(d => d.controleStraat != 0 && d.controleStraat != 99999);
+    let controleInTraffic = data.filter(d => d.controleVerkeer != 0 && d.controleVerkeer != 99999);
+    let wrongOnStreet = data.filter(d => d.controleVerkeerdStraat != 0 && d.controleVerkeerdStraat != 99999);
+    let wrongInTraffic = data.filter(d => d.controleVerkeerdVerkeer != 0 && d.controleVerkeerdVerkeer != 99999);
+    let smallTalk = data.filter(d => d.controlePraatjeMaken != 0 && d.controlePraatjeMaken != 99999);
+    let controleDifferent = data.filter(d => d.controleAnders != 0 && d.controleAnders != 99999);
 
     
     const totalControl = controleOnStreet.length + controleInTraffic.length + wrongOnStreet.length + wrongInTraffic.length + smallTalk.length + controleDifferent.length;
@@ -287,11 +288,11 @@ function prepareNormalisedStackData(data, answerYes){
     });
 
     
-    let percentAnders = anders.length / zelfContact.length * 100
-    let percentSlacht =  slachtofferAangifte.length / zelfContact.length * 100
-    let percentVroegHulp = vroegHulp.length / zelfContact.length * 100
-    let percentMelding =  meldingMaken.length / zelfContact.length * 100
-    let percentPraatje = praatjeMaken.length / zelfContact.length * 100
+    let percentAnders = anders.length / zelfContact.length * 100;
+    let percentSlacht =  slachtofferAangifte.length / zelfContact.length * 100;
+    let percentVroegHulp = vroegHulp.length / zelfContact.length * 100;
+    let percentMelding =  meldingMaken.length / zelfContact.length * 100;
+    let percentPraatje = praatjeMaken.length / zelfContact.length * 100;
     
 
     //
@@ -302,17 +303,17 @@ function prepareNormalisedStackData(data, answerYes){
         amountIContactedPolice: iContacted.length,
         amountPoliceContactedMe: policeContacted.length,
         pieData: [
-            {reden: 'gecontroleerd', percentage: percentControle},
-            {reden: 'deedIetsFout', percentage: percentWrong},
-            {reden: 'praatjeMaken', percentage: percentSmallTalk},
-            {reden: 'anders', percentage: percentDifferent}
+            {reden: 'Voor een controle', percentage: percentControle},
+            {reden: 'Omdat ik (volgens de politie) iets verkeerd deed', percentage: percentWrong},
+            {reden: 'De politie kwam naar mij toe om gewoon een praatje te maken', percentage: percentSmallTalk},
+            {reden: 'Anders', percentage: percentDifferent}
         ],
         pieData2: [
-            {reden: 'anders', percentage: percentAnders},
-            {reden: 'slachtoffer', percentage: percentSlacht},
-            {reden: 'vroegHulp', percentage: percentVroegHulp},
-            {reden:'meldingMaken', percentage: percentMelding},
-            {reden: 'praatjeMaken', percentage: percentPraatje}
+            {reden: 'Anders', percentage: percentAnders},
+            {reden: 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', percentage: percentSlacht},
+            {reden: 'Ik vroeg de politie om hulp, advies of informatie', percentage: percentVroegHulp},
+            {reden:'Ik had iets gezien dat niet mag en maakte hiervan een melding', percentage: percentMelding},
+            {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje}
         ]};
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
@@ -385,113 +386,6 @@ function transformStringToNumber(data){
     return data;
 }
 
-function renderGroupedBarChart(data) {
-
-
-    const svg = d3.select('.groupedBars');
-
-    const width = +svg.attr('width');
-    const height = +svg.attr('height');
-    //const yValue = d => d.origin;
-    const margin = { top: 40, right: 30, bottom: 150, left: 100 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
-
-    svg.attr('viewBox', [0, 0, width, height]);
-
-    const keys = ['Nederlands', 'Westers', 'niet-Westers'];
-    const groupKey = 'stelling';
-
-    const formatXScale = d3.format(',.0f');
-
-    const y0 = d3.scaleBand()
-        .domain(data.map(d => d[groupKey]))
-        .rangeRound([0, innerHeight ])
-        .paddingInner(0.1);
-
-
-    const y1 = d3.scaleBand()
-        .domain(keys)
-        .rangeRound([0, y0.bandwidth()])
-        .padding(0.07);
-
-
-    const xScale = d3.scaleLinear()
-        .domain([0, 5]).nice()
-    // .domain([d3.max(data, d => d3.max(keys, key => d[key])), 0]).nice()
-        .range([0, innerWidth])
-        .nice();
-
-    // console.log('schalX', xScale.domain())
-
-    // const yScale = d3.scaleBand()
-    //     .domain(data.map(yValue))
-    //     .range([0, innerHeight])
-    //     .padding(0.3);
-
-    const g = svg.append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-    //append a new group for the y axis and set it on the left side
-    g.append('g')
-        .style('font-size', '1rem')
-        .call(d3.axisLeft(y0)
-            .tickSize('0'));
-    // .append('text')
-    // .style('font-size', '1rem')
-    // .style('transform', 'rotate(-90deg)')
-    // .attr('y', innerHeight / 2)
-    // // .attr('x', 500)
-    // .attr('fill', 'white')
-        
-    // .text('Nederlanders');
-
-    //append a new group for the x axis and set it at as the bottom axis
-    g.append('g')
-        .style('font-size', '1rem')
-        .call(d3.axisBottom(xScale)
-            .tickSize(-innerHeight)
-            .tickValues([0, 1, 2, 3, 4, 5]))
-        .style('stroke-dasharray', ('3, 3'))
-        .attr('transform', `translate(0, ${innerHeight})`)
-        .append('text')
-        .style('font-size', '1rem')
-        .attr('y', 40)
-        .attr('x', innerWidth / 2)
-        .attr('fill', 'white')
-        .text('Gemiddelde score');
-
-    //makes an ordinal color scale for each type
-    const color = d3.scaleOrdinal()
-        .range([ '#494CA2', '#8186d5', '#c6cbef']);
-    
-    // g.call(tip);
-
-    g.append('g')
-        .selectAll('g')
-        .data(data)
-        .join('g')
-        .attr('transform', d => `translate(0,${y0(d[groupKey])})`)
-    // .attr('fill', d => color(d.key))
-    // .attr('stroke', d => color(d.key))
-    // .style('opacity', 1)
-        .selectAll('rect')
-        .data(d => keys.map(key => ({key, value: d[key]})))
-        .join('rect')
-    // .style('fill', 'purple')
-    // .attr('class', 'bar')
-    //.attr("x", (d, i) => x(d.data.name))
-        .attr('y', d => y1(d.key))
-        .attr('x', d => xScale(d))
-        .attr('height', y1.bandwidth())
-        .attr('width', d => xScale(d.value) - xScale(0))
-        .attr('fill', d => color(d.key));
-
-}
-
-
-
-
 const button1 = document.getElementById('button-step1');
 const button2 = document.getElementById('button-step2');
 const button3 = document.getElementById('button-step3');
@@ -506,15 +400,15 @@ const step5 = document.getElementById('step5');
 
 const filterButton = document.getElementById('selectButton');
 let image = document.getElementById('gevolg');
-let title = document.getElementById('gevolgTitle')
+let title = document.getElementById('gevolgTitle');
 
-console.log('img', image)
-console.log('title', title)
+console.log('img', image);
+console.log('title', title);
 
 console.log(filterButton);
 
 filterButton.addEventListener('change', function() {
-    console.log('het werkt!', this.value)
+    console.log('het werkt!', this.value);
 
     if (this.value == 'arrest'){
         title.textContent = 'Gevolg: Arrestatie';
@@ -731,8 +625,13 @@ function renderConsequenceChart(){
             .selectAll('g')
             .data(data)
             .join('g')
+<<<<<<< HEAD
             .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
+=======
+            .attr('transform', (d) => `translate(0, ${yScale(yValue(d))})`)
+        // .attr('fill', d => color(d.key))
+>>>>>>> 926cb5f685c3ad593957b75386ca718fb045f17b
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
