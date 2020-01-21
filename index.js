@@ -2,7 +2,7 @@ import renderStackedBars from './js/modules/renderStackedBars.js';
 import renderPieChart from './js/modules/renderPieChart.js';
 import renderGroupedBarChart from './js/modules/renderGroupedBars.js';
 
-d3.tsv('./rawData4.txt')
+d3.tsv('./rawData5.txt')
     .then(data => {
         //return the data
         return data;
