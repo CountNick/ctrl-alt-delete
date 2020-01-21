@@ -167,6 +167,23 @@ h2 {
     font-size: 2em;
 }
 
+.count {
+    position: absolute;
+    top: -1em;
+    right: 0;
+    font-family: Roboto-medium;
+    text-align: center;
+    
+    padding: 1em 1.5em;
+}
+
+.count-number {
+    color: #FFF33D;
+    font-family: Rubik-bold;
+    font-size: 2em;
+    margin-top: .3em;
+}
+
 /* Pie chart */
 .chart-with-legend__container {
     display: flex;
@@ -363,6 +380,7 @@ button:focus {
 /* Hide and show content */
 .visible {
     display: block;
+    position: relative;
     /* display: flex;
     justify-items: center;
     flex-direction: column; */
