@@ -558,13 +558,13 @@ function renderConsequenceChart(){
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 
-            //initialize select button, and fire update function when changed
-            d3.select('#selectButton')
-            .on('change', selectionChanged);
+    //initialize select button, and fire update function when changed
+    d3.select('#selectButton')
+        .on('change', selectionChanged);
 
-            function selectionChanged(){
-                console.log(this.value)
-            }
+    function selectionChanged(){
+        console.log(this.value);
+    }
 
     //sets the y axis
     g.append('g')
