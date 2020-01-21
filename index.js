@@ -643,6 +643,8 @@ function renderConsequenceChart(){
     const margin = { top: 40, right: 30, bottom: 150, left: 120 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
+
+    const groupKey = 'origin';
     //makes an ordinal color scale for each type
     // const color = d3.scaleOrdinal()
     //     .domain(['hasjpijpen', 'tabakspijpen', 'waterpijpen', 'pijpen (rookgerei)', 'opiumpijpen' ])
@@ -696,6 +698,8 @@ function renderConsequenceChart(){
     //     .on('change', selectionChanged);
 
 
+
+
     //Resource: https://jsfiddle.net/2xyjf4nu/1/
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
     function drawCircles(){
@@ -717,13 +721,18 @@ function renderConsequenceChart(){
         //             })
         //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
         //             .attr('r', 15)
-                    
+
+        const ROWS = 10;
+        const COLUMNS = Math.ceil(data.length / ROWS)
+    
+        console.log('collem', COLUMNS)
+                    //KIJK NAAR cy!!!!!!!!!!!!!!
         g.append('g')
             .selectAll('g')
             .data(data)
             .join('g')
             .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
-        // .attr('fill', d => color(d.key))
+        // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
@@ -732,7 +741,10 @@ function renderConsequenceChart(){
             // .style('opacity', .5)
             .attr('class', 'cirlce')
         //.attr("x", (d, i) => x(d.data.name))
-            .attr('cx', d => xScale(d))
+            .attr('cx', (d, i) => xScale(i % 10))
+            .attr('cy', (d, i) => Math.floor(d * 2))
+
+            // .attr('cx', (d,i) => console.log(Math.floor(xScale(d) * i % 20)))
         // .attr('cy', d =>  console.log(yScale(d)))
             .attr('r', 10);
                     
