@@ -15,7 +15,7 @@
 ![1 2](https://user-images.githubusercontent.com/45566396/72811001-0adc7080-3c5f-11ea-861f-07173c74171c.png)
 
 ### Visualisation screens
-![2 1](https://user-images.githubusercontent.com/45566396/72811101-39f2e200-3c5f-11ea-8a3f-300fc7d8dc0b.png)
+![image](https://user-images.githubusercontent.com/45566396/72818382-aecc1900-3c6b-11ea-9104-e790d68d333d.png)
 
 ### Description
 
