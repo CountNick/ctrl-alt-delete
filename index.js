@@ -538,12 +538,9 @@ function renderConsequenceChart(){
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    const groupKey = 'origin';
-    //makes an ordinal color scale for each type
-    // const color = d3.scaleOrdinal()
-    //     .domain(['hasjpijpen', 'tabakspijpen', 'waterpijpen', 'pijpen (rookgerei)', 'opiumpijpen' ])
-    //     .range([ '#FF0047', '#FF8600', '#6663D5', '#FFF800', '#29FF3E']);
-    // const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
+    const color = d3.scaleOrdinal()
+    // .domain('Nederlands', 'niet-Westers', 'Westers')
+        .range([ '#494CA2', '#8186d5', '#c6cbef']);
         
     //sets the xScale with the values from d.amount
     const xScale = d3.scaleLinear()
@@ -621,6 +618,7 @@ function renderConsequenceChart(){
             .selectAll('g')
             .data(data)
             .join('g')
+            .attr('fill', d =>  color(d.day))
             .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
         // .attr('stroke', d => color(d.key))
@@ -634,6 +632,7 @@ function renderConsequenceChart(){
             //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
             .attr('cx', (d, i) => xScale(~~(d / 2)))
             .attr('cy', (d, i) => i % 2 ? 24 : 0)
+            // .style('fill', d => color(d))
 
             // .attr('cx', (d,i) => console.log(Math.floor(xScale(d) * i % 20)))
         // .attr('cy', d =>  console.log(yScale(d)))
