@@ -118,8 +118,8 @@ function splitIntoArrays(data){
     const total = answerNo.length + answerYes.length;
     
     complete.push(prepareNormalisedStackData(originNederlandsAnswerYes, answerYes));
-    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
     complete.push(prepareNormalisedStackData(originWestersAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
 
     //fill the pieData array with each origin and it's corresponding value in percentage
     pieData.push(preparePieData(originNederlandsAnswerYes, total));
@@ -558,13 +558,13 @@ function renderConsequenceChart(){
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 
-            //initialize select button, and fire update function when changed
-            d3.select('#selectButton')
-            .on('change', selectionChanged);
+    //initialize select button, and fire update function when changed
+    d3.select('#selectButton')
+        .on('change', selectionChanged);
 
-            function selectionChanged(){
-                console.log(this.value)
-            }
+    function selectionChanged(){
+        console.log(this.value);
+    }
 
     //sets the y axis
     g.append('g')
