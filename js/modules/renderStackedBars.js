@@ -32,7 +32,7 @@ export default function renderStackedBars(data, pieData){
 
     const tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-350, 0])
+        .offset([200, 400])
         .html(d => {
             
             //console.log(d[1] - d[0] == d.data.iContactedPolice)

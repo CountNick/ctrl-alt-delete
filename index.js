@@ -616,22 +616,13 @@ function renderConsequenceChart(){
         //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
         //             .attr('r', 15)
 
-        const ROWS = 10;
-        const COLUMNS = Math.ceil(data.length / ROWS)
-    
-        console.log('collem', COLUMNS)
-                    //KIJK NAAR cy!!!!!!!!!!!!!!
+
         g.append('g')
             .selectAll('g')
             .data(data)
             .join('g')
-<<<<<<< HEAD
             .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
-=======
-            .attr('transform', (d) => `translate(0, ${yScale(yValue(d))})`)
-        // .attr('fill', d => color(d.key))
->>>>>>> 926cb5f685c3ad593957b75386ca718fb045f17b
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
@@ -639,9 +630,10 @@ function renderConsequenceChart(){
             .join('circle')
             // .style('opacity', .5)
             .attr('class', 'cirlce')
-        //.attr("x", (d, i) => x(d.data.name))
-            .attr('cx', (d, i) => xScale(i % 10))
-            .attr('cy', (d, i) => Math.floor(d * 2))
+
+            //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
+            .attr('cx', (d, i) => xScale(~~(d / 2)))
+            .attr('cy', (d, i) => i % 2 ? 24 : 0)
 
             // .attr('cx', (d,i) => console.log(Math.floor(xScale(d) * i % 20)))
         // .attr('cy', d =>  console.log(yScale(d)))
