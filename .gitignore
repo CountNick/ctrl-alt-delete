@@ -1,1 +1,9 @@
 .DS_Store
+node_modules
+.eslintrc.json
+rawData.txt
+rawData2.txt
+rawData2.txt
+rawData3.txt
+rawData4.txt
+06_1_Studenten_data_Amsterdam_waardelabels.xlsx
