@@ -513,16 +513,19 @@ function renderConsequenceChart(){
 
     const data = [
         {
-            day: 'Nederlands',
-            apples: 3
+            origin: 'Nederlands',
+            boetes: 3,
+            arrest: 6
         },
         {
-            day: 'Westers',
-            apples: 10
+            origin: 'Westers',
+            boetes: 30,
+            arrest: 5
         },
         {
-            day: 'niet-Westers',
-            apples: 15
+            origin: 'niet-Westers',
+            boetes: 15,
+            arrest: 8
         }
     ];
 
@@ -532,8 +535,8 @@ function renderConsequenceChart(){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
     //sets x and y values to the values of amount and origin
-    const xValue = d => d.apples;
-    const yValue = d => d.day;
+    const xValue = d => d.boetes;
+    const yValue = d => d.origin;
     const margin = { top: 40, right: 30, bottom: 150, left: 120 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -629,16 +632,17 @@ function renderConsequenceChart(){
             .selectAll('g')
             .data(data)
             .join('g')
-            .attr('fill', d =>  color(d.day))
+            .attr('class', 'balls')
+
+            .attr('fill', d =>  color(d.origin))
             .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
-            .data(d => d3.range(0, d.apples))
+            .data(d => d3.range(0, d.arrest))
             .join('circle')
             // .style('opacity', .5)
-            .attr('class', 'cirlce')
 
             //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
             .attr('cx', (d, i) => xScale(~~(d / 2)))

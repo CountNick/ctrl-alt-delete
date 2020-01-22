@@ -39,7 +39,7 @@ export default function renderStackedBars(data, pieData){
             //console.log(data);
             // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
 
-            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>' + transformToPercent((d[1] - d[0])) + '</span><div class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
+            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Percentage:</strong> <span style=\'color:red\'>' + transformToPercent((d[1] - d[0])) + '</span><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
             //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
             // return renderPieChart(d);
 
