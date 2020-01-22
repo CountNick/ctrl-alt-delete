@@ -513,16 +513,19 @@ function renderConsequenceChart(){
 
     const data = [
         {
-            day: 'Nederlands',
-            apples: 3
+            origin: 'Nederlands',
+            boetes: 3,
+            arrest: 6
         },
         {
-            day: 'Westers',
-            apples: 10
+            origin: 'Westers',
+            boetes: 30,
+            arrest: 5
         },
         {
-            day: 'niet-Westers',
-            apples: 15
+            origin: 'niet-Westers',
+            boetes: 15,
+            arrest: 8
         }
     ];
 
@@ -532,8 +535,8 @@ function renderConsequenceChart(){
     const width = +svg.attr('width');
     const height = +svg.attr('height');
     //sets x and y values to the values of amount and origin
-    const xValue = d => d.apples;
-    const yValue = d => d.day;
+    const xValue = d => d.boetes;
+    const yValue = d => d.origin;
     const margin = { top: 40, right: 30, bottom: 150, left: 120 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -563,7 +566,91 @@ function renderConsequenceChart(){
             .on('change', selectionChanged);
 
             function selectionChanged(){
-                console.log(this.value)
+                // console.log('d.' + this.value)
+                // let dataFilter2 = []
+                // let dataFilter = data.filter(d => {
+                //     // console.log('hallo', d.boetes)
+                //     if(this.value == 'boetes') dataFilter2.push(d.boetes);
+                    
+                // })
+
+                let dataFilter = data.map(d => {
+                    console.log(d)
+                    
+                    if(this.value == 'boetes') return ''
+
+                })
+                console.log(data)
+
+            // console.log('ggg', selectionChanged())
+            
+            // const circle = g.selectAll('circle').data(dataFilter)
+
+            let groups = d3.selectAll('.balls');
+            let circles = groups.selectAll('circle').data(dataFilter2);
+
+            console.log('circles: ', circles)
+
+            // console.log('circlo:', circles)
+
+            // console.log('groups', groups)
+
+            // console.log('olaa', circle)
+            // console.log('circles: ', circles)
+
+            circles.join(
+                enter => {
+                    
+                    enter.append('circle')
+                                     
+                    
+                    .attr('cx', (d, i) => xScale(~~(d / 2)))
+                    .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    .attr('r', 15);
+
+                    console.log('enta: ', enter)   
+
+                    
+                    
+                    // .join('circle')
+                    // .attr('cx', (d, i) => xScale(~~(d / 2)))
+                    // .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    // .attr('r', 15)
+                },
+                update => {
+                    
+                    update
+                    // .data(circle)
+                    // .join('circle')
+                    .attr('cx', (d, i) => xScale(~~(d / 2)))
+                    .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    .attr('r', 15)
+
+                    console.log('update:', update)
+                }
+            )
+
+            // circles.select('circle')
+            // .append('g')
+            // .data(data)
+            // .attr('fill', d => color(d.origin))
+            // .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
+            
+            // .join('circle')
+            // .attr('cx', (d, i) => xScale(~~(d / 2)))
+            // .attr('cy', (d, i) => i % 2 ? 24 : 0)
+            // .attr('r', 15)
+
+            // circle
+            // .data(dataFilter)
+            // .enter()
+            //     .select('circle')
+            //     .attr('cx', (d, i) => xScale(~~(d / 2)))
+            //     .attr('cy', (d, i) => i % 2 ? 24 : 0)
+            //     .attr('r', 15)
+
+
+            // circle.remove()
             }
 
     //sets the y axis
@@ -629,16 +716,17 @@ function renderConsequenceChart(){
             .selectAll('g')
             .data(data)
             .join('g')
-            .attr('fill', d =>  color(d.day))
+            .attr('class', 'balls')
+
+            .attr('fill', d =>  color(d.origin))
             .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
-            .data(d => d3.range(0, d.apples))
+            .data(d => d3.range(0, d.arrest))
             .join('circle')
             // .style('opacity', .5)
-            .attr('class', 'cirlce')
 
             //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
             .attr('cx', (d, i) => xScale(~~(d / 2)))
