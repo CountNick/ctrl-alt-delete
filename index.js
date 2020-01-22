@@ -566,7 +566,99 @@ function renderConsequenceChart(){
         .on('change', selectionChanged);
 
     function selectionChanged(){
-        console.log(this.value);
+        // console.log('d.' + this.value)
+        // let dataFilter2 = []
+        // let dataFilter = data.filter(d => {
+        //     // console.log('hallo', d.boetes)
+        //     if(this.value == 'boetes') dataFilter2.push(d.boetes);
+                    
+        // })
+        let active;
+        let dataFilter = data.map(d => {
+            // console.log(d)
+                    
+            if(this.value == 'boetes') return active = d => d3.range(0, d.boetes);
+            if(this.value == 'arrest') return active = d => d3.range(0, d.arrest);
+
+        });
+        console.log('DF', dataFilter);
+                
+        // console.log('ggg', selectionChanged())
+            
+        // const circle = g.selectAll('circle').data(dataFilter)
+
+        let groups = d3.selectAll('.balls');
+        let circles = groups.selectAll('circle').data(active);
+
+        // console.log('circles: ', circles)
+
+        // console.log('circlo:', circles)
+
+        // console.log('groups', groups)
+
+        // console.log('olaa', circle)
+        // console.log('circles: ', circles)
+
+        const t = svg.transition()
+            .duration(750);
+
+        circles.join(
+            enter => {
+                    
+                enter.append('circle')
+                                     
+                    
+                    .attr('cx', (d, i) => xScale(~~(d / 2)))
+                    .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    .attr('r', 10)
+                    .call(enter => enter.transition(t));
+
+                console.log('enta: ', enter);   
+
+                    
+                    
+                // .join('circle')
+                // .attr('cx', (d, i) => xScale(~~(d / 2)))
+                // .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                // .attr('r', 15)
+            },
+            update => {
+                    
+                update
+                    // .data(circle)
+                    // .join('circle')
+                    .attr('cx', (d, i) => xScale(~~(d / 2)))
+                    .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    .attr('r', 10)
+                    .call(enter => enter.transition(t));
+
+
+
+                console.log('update:', update);
+            }
+        );
+
+        // circles.select('circle')
+        // .append('g')
+        // .data(data)
+        // .attr('fill', d => color(d.origin))
+        // .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
+            
+        // .join('circle')
+        // .attr('cx', (d, i) => xScale(~~(d / 2)))
+        // .attr('cy', (d, i) => i % 2 ? 24 : 0)
+        // .attr('r', 15)
+
+        // circle
+        // .data(dataFilter)
+        // .enter()
+        //     .select('circle')
+        //     .attr('cx', (d, i) => xScale(~~(d / 2)))
+        //     .attr('cy', (d, i) => i % 2 ? 24 : 0)
+        //     .attr('r', 15)
+
+
+        // circle.remove()
     }
 
     //sets the y axis
