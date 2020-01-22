@@ -618,11 +618,12 @@ function renderConsequenceChart(){
                 enter => {
                     
                     enter.append('circle')
-                                     
+                    .transition().duration(1000)         
                     .attr('r', 0)
+                    
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    .transition().duration(1000)
+                    // .transition().duration(1000)
                     .attr('r', 10)
                     
 
@@ -640,10 +641,10 @@ function renderConsequenceChart(){
                     update
                     // .data(circle)
                     // .join('circle')
-                    
+                    .attr('r', 0)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    // .transition().duration(1000)
+                    .transition().duration(1000)
                     .attr('r', 10)
 
                     
@@ -701,7 +702,7 @@ function renderConsequenceChart(){
     //     .on('change', selectionChanged);
 
 
-
+    
 
     //Resource: https://jsfiddle.net/2xyjf4nu/1/
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
