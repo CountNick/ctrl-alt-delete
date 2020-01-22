@@ -515,17 +515,26 @@ function renderConsequenceChart(){
         {
             origin: 'Nederlands',
             boetes: 3,
-            arrest: 6
+            arrest: 6,
+            beukeuring: 20,
+            anders: 4,
+            niets: 7
         },
         {
             origin: 'Westers',
             boetes: 30,
-            arrest: 5
+            arrest: 5,
+            beukeuring: 5,
+            anders: 20,
+            niets: 10
         },
         {
             origin: 'niet-Westers',
             boetes: 15,
-            arrest: 8
+            arrest: 8,
+            beukeuring: 14,
+            anders: 20,
+            niets: 30
         }
     ];
 
@@ -579,6 +588,9 @@ function renderConsequenceChart(){
                     
                     if(this.value == 'boetes') return active = d => d3.range(0, d.boetes);
                     if(this.value == 'arrest') return active = d => d3.range(0, d.arrest);
+                    if(this.value == 'bekeuring') return active = d => d3.range(0, d.beukeuring);
+                    if(this.value == 'anders') return active = d => d3.range(0, d.anders);
+                    if(this.value == 'niets') return active = d => d3.range(0, d.niets);
 
                 })
                 console.log('DF', dataFilter)
@@ -607,11 +619,12 @@ function renderConsequenceChart(){
                     
                     enter.append('circle')
                                      
-                    
+                    .attr('r', 0)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    .transition().duration(1000)
                     .attr('r', 10)
-                    .call(enter => enter.transition(t))
+                    
 
                     console.log('enta: ', enter)   
 
@@ -627,27 +640,23 @@ function renderConsequenceChart(){
                     update
                     // .data(circle)
                     // .join('circle')
+                    
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    // .transition().duration(1000)
                     .attr('r', 10)
-                    .call(enter => enter.transition(t))
 
-
+                    
 
                     console.log('update:', update)
                 }
             )
 
-            // circles.select('circle')
-            // .append('g')
-            // .data(data)
-            // .attr('fill', d => color(d.origin))
-            // .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
-            
-            // .join('circle')
+            // circles
+            // .transition().duration(1000)
             // .attr('cx', (d, i) => xScale(~~(d / 2)))
             // .attr('cy', (d, i) => i % 2 ? 24 : 0)
-            // .attr('r', 15)
+        
 
             // circle
             // .data(dataFilter)
@@ -663,18 +672,17 @@ function renderConsequenceChart(){
 
     //sets the y axis
     g.append('g')
-        .call(d3.axisLeft(yScale)
-            .ticks(data.length)
-            .tickSize(-innerWidth))
+        .call(d3.axisLeft(yScale))
         .select('.domain')
+        .remove()
+        .select('stroke')
         .remove()
         .append('text')
         .attr('fill', 'black');
       
     //sets the bottom axis
     g.append('g')
-        .call(d3.axisBottom(xScale)
-            .tickSize(-innerHeight))
+        
         .attr('transform', `translate(0, ${innerHeight})`)
               
         .append('text')
@@ -698,28 +706,7 @@ function renderConsequenceChart(){
     //Resource: https://jsfiddle.net/2xyjf4nu/1/
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
     function drawCircles(){
-        // g.selectAll('circle')
-        // .data(data)
-        // .enter()
-        //     .append('circle')
-        //         .attr('cy', d => yScale(yValue(d)))
-        //         .attr('cx', d => xScale(d3.range(0, xValue(d))))
-        //         .attr('r', 0)
-        //         .classed('classnaam', true)
-        //         // .style('fill', d => { return color(d.type) } )
-        //         .on('mousemove', function(d){
-        //             tooltip
-        //             .style('left', d3.event.pageX - 50 + 'px')
-        //             .style('top', d3.event.pageY - 80 + 'px')
-        //             .style('display', 'inline-block')
-        //             .html((d.day) + '<br>' +d.apples +': ' + (d.apples));
-        //             })
-        //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
-        //             .attr('r', 15)
-
-
-
-
+        
         g.append('g')
             .selectAll('g')
             .data(data)
@@ -727,7 +714,7 @@ function renderConsequenceChart(){
             .attr('class', 'balls')
 
             .attr('fill', d =>  color(d.origin))
-            .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
+            .attr('transform', (d, i) => `translate(10, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
