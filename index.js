@@ -573,23 +573,24 @@ function renderConsequenceChart(){
                 //     if(this.value == 'boetes') dataFilter2.push(d.boetes);
                     
                 // })
-
+                let active;
                 let dataFilter = data.map(d => {
-                    console.log(d)
+                    // console.log(d)
                     
-                    if(this.value == 'boetes') return ''
+                    if(this.value == 'boetes') return active = d => d3.range(0, d.boetes);
+                    if(this.value == 'arrest') return active = d => d3.range(0, d.arrest);
 
                 })
-                console.log(data)
-
+                console.log('DF', dataFilter)
+                
             // console.log('ggg', selectionChanged())
             
             // const circle = g.selectAll('circle').data(dataFilter)
 
             let groups = d3.selectAll('.balls');
-            let circles = groups.selectAll('circle').data(dataFilter2);
+            let circles = groups.selectAll('circle').data(active)
 
-            console.log('circles: ', circles)
+            // console.log('circles: ', circles)
 
             // console.log('circlo:', circles)
 
@@ -597,6 +598,9 @@ function renderConsequenceChart(){
 
             // console.log('olaa', circle)
             // console.log('circles: ', circles)
+
+            const t = svg.transition()
+            .duration(750);
 
             circles.join(
                 enter => {
@@ -606,7 +610,8 @@ function renderConsequenceChart(){
                     
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    .attr('r', 15);
+                    .attr('r', 10)
+                    .call(enter => enter.transition(t))
 
                     console.log('enta: ', enter)   
 
@@ -624,7 +629,10 @@ function renderConsequenceChart(){
                     // .join('circle')
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    .attr('r', 15)
+                    .attr('r', 10)
+                    .call(enter => enter.transition(t))
+
+
 
                     console.log('update:', update)
                 }
