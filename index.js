@@ -599,24 +599,18 @@ function renderConsequenceChart(){
         // console.log('olaa', circle)
         // console.log('circles: ', circles)
 
-        const t = svg.transition()
-            .duration(750);
-
         circles.join(
             enter => {
                     
-                enter.append('circle')
-                                     
-                    
+                enter.append('circle')                 
+                    .attr('r', 0)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    .attr('r', 10)
-                    .call(enter => enter.transition(t));
+                    .transition().duration(1000)
+                    .attr('r', 10);
 
                 console.log('enta: ', enter);   
 
-                    
-                    
                 // .join('circle')
                 // .attr('cx', (d, i) => xScale(~~(d / 2)))
                 // .attr('cy', (d, i) => i % 2 ? 24 : 0)
@@ -628,11 +622,7 @@ function renderConsequenceChart(){
                     // .data(circle)
                     // .join('circle')
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
-                    .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    .attr('r', 10)
-                    .call(enter => enter.transition(t));
-
-
+                    .attr('cy', (d, i) => i % 2 ? 24 : 0);
 
                 console.log('update:', update);
             }
@@ -663,9 +653,9 @@ function renderConsequenceChart(){
 
     //sets the y axis
     g.append('g')
-        .call(d3.axisLeft(yScale)
-            .ticks(data.length)
-            .tickSize(-innerWidth))
+        .call(d3.axisLeft(yScale))
+    // .ticks(data.length)
+    // .tickSize(-innerWidth))
         .select('.domain')
         .remove()
         .append('text')
@@ -673,10 +663,9 @@ function renderConsequenceChart(){
       
     //sets the bottom axis
     g.append('g')
-        .call(d3.axisBottom(xScale)
-            .tickSize(-innerHeight))
+        // .call(d3.axisBottom(xScale)
+        //     .tickSize(-innerHeight))
         .attr('transform', `translate(0, ${innerHeight})`)
-              
         .append('text')
         .attr('y', 60)
         .attr('x', innerWidth / 2)
@@ -692,34 +681,9 @@ function renderConsequenceChart(){
     // d3.select('#selectButton')
     //     .on('change', selectionChanged);
 
-
-
-
     //Resource: https://jsfiddle.net/2xyjf4nu/1/
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
     function drawCircles(){
-        // g.selectAll('circle')
-        // .data(data)
-        // .enter()
-        //     .append('circle')
-        //         .attr('cy', d => yScale(yValue(d)))
-        //         .attr('cx', d => xScale(d3.range(0, xValue(d))))
-        //         .attr('r', 0)
-        //         .classed('classnaam', true)
-        //         // .style('fill', d => { return color(d.type) } )
-        //         .on('mousemove', function(d){
-        //             tooltip
-        //             .style('left', d3.event.pageX - 50 + 'px')
-        //             .style('top', d3.event.pageY - 80 + 'px')
-        //             .style('display', 'inline-block')
-        //             .html((d.day) + '<br>' +d.apples +': ' + (d.apples));
-        //             })
-        //             .on('mouseout', function(){ tooltip.style('display', 'none');}).transition().duration(1000)
-        //             .attr('r', 15)
-
-
-
-
         g.append('g')
             .selectAll('g')
             .data(data)

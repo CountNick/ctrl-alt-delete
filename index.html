@@ -92,20 +92,30 @@
                 </div>
                 <div id="step4" class="hidden">
                     <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Gevolgen laatste contact</h2></div>
-                    <h4>Filter op gevolg: </h4>
-                    <select id="selectButton">
-                            <option value="niets">Niets</option>
-                            <option value="boetes">Boete</option>
-                            <option value="arrest">Arrestatie</option>
-                            <option value="bekeuring">Bekeuring</option>
-                            <option value="anders">Anders</option>
-                    </select>
+                    <div id="filter">
+                        <h4>Filter op gevolg: </h4>
+                        <div id="custom-select">
+                            <select id="selectButton">
+                                <option value="niets">Niets</option>
+                                <option value="boetes">Boete</option>
+                                <option value="arrest">Arrestatie</option>
+                                <option value="bekeuring">Bekeuring</option>
+                                <option value="anders">Anders</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <!-- <h1 id = 'gevolgTitle'>Gevolg: </h1> -->
 
                     <!-- <img id = "gevolg" class = "gevolg" src="public/images/gevolgen/niets.png" alt=""> -->
 
-                    <svg class="people" width ="960" height ="400"></svg>
+                    <div class="chart-with-legend__container">
+                        <svg class="people" width ="960" height ="400"></svg>
+                        <ul class="legend">
+                            <h2 class="legend-title">Legenda</h2>
+                            <div class="dot__container"><span class="dot"></span>= 1 keer</div>
+                        </ul>
+                    </div>
                 </div>
                 <div id="step5" class="hidden">
                     <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Hoe verliep het laatste contact met de politie?</h2></div>

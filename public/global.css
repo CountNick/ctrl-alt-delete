@@ -52,6 +52,10 @@ body {
     background-size: contain;
 }
 
+.people g g g line {
+    display: none;
+}
+
 #top {
     height: 100vh;
 }
@@ -76,6 +80,45 @@ body {
 .sub-title {
     font-family: Rubik-regular;
     color: white;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: .5em;
+}
+
+#filter {
+    margin-left: 4em;
+    font-family: Roboto-light;
+}
+
+#filter h4 {
+    font-family: Roboto-medium;
+}
+
+select {
+    padding: 1em 1.5em;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+option {
+    padding: 10em;
+}
+
+select:focus {
+    outline: none;
+}
+
+.dot__container {
+    display: flex;
+    align-items: center;
 }
 
 /* Top content */
