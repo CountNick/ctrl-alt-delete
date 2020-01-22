@@ -2,7 +2,7 @@ import renderStackedBars from './js/modules/renderStackedBars.js';
 import renderPieChart from './js/modules/renderPieChart.js';
 import renderGroupedBarChart from './js/modules/renderGroupedBars.js';
 
-d3.tsv('./rawData4.txt')
+d3.tsv('./rawData5.txt')
     .then(data => {
         //return the data
         return data;
@@ -118,8 +118,8 @@ function splitIntoArrays(data){
     const total = answerNo.length + answerYes.length;
     
     complete.push(prepareNormalisedStackData(originNederlandsAnswerYes, answerYes));
-    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
     complete.push(prepareNormalisedStackData(originWestersAnswerYes, answerYes));
+    complete.push(prepareNormalisedStackData(originNietWestersAnswerYes, answerYes));
 
     //fill the pieData array with each origin and it's corresponding value in percentage
     pieData.push(preparePieData(originNederlandsAnswerYes, total));
@@ -309,11 +309,11 @@ function prepareNormalisedStackData(data, answerYes){
             {reden: 'Anders', percentage: percentDifferent}
         ],
         pieData2: [
-            {reden: 'Anders', percentage: percentAnders},
             {reden: 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', percentage: percentSlacht},
             {reden: 'Ik vroeg de politie om hulp, advies of informatie', percentage: percentVroegHulp},
             {reden:'Ik had iets gezien dat niet mag en maakte hiervan een melding', percentage: percentMelding},
-            {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje}
+            {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje},
+            {reden: 'Anders', percentage: percentAnders}
         ]};
     // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
     // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
@@ -570,21 +570,14 @@ function renderConsequenceChart(){
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 
-            //initialize select button, and fire update function when changed
-            d3.select('#selectButton')
-            .on('change', selectionChanged);
+    //initialize select button, and fire update function when changed
+    d3.select('#selectButton')
+        .on('change', selectionChanged);
 
-            function selectionChanged(){
-                // console.log('d.' + this.value)
-                // let dataFilter2 = []
-                // let dataFilter = data.filter(d => {
-                //     // console.log('hallo', d.boetes)
-                //     if(this.value == 'boetes') dataFilter2.push(d.boetes);
-                    
-                // })
-                let active;
-                let dataFilter = data.map(d => {
-                    // console.log(d)
+    function selectionChanged(){
+
+        let active;
+        let dataFilter = data.map(d => {
                     
                     if(this.value == 'boetes') return active = d => d3.range(0, d.boetes);
                     if(this.value == 'arrest') return active = d => d3.range(0, d.arrest);
@@ -592,27 +585,20 @@ function renderConsequenceChart(){
                     if(this.value == 'anders') return active = d => d3.range(0, d.anders);
                     if(this.value == 'niets') return active = d => d3.range(0, d.niets);
 
-                })
-                console.log('DF', dataFilter)
-                
-            // console.log('ggg', selectionChanged())
-            
-            // const circle = g.selectAll('circle').data(dataFilter)
+        });
+        console.log('DF', dataFilter);
 
-            let groups = d3.selectAll('.balls');
-            let circles = groups.selectAll('circle').data(active)
+        let groups = d3.selectAll('.balls');
+        let circles = groups.selectAll('circle').data(active);
 
-            // console.log('circles: ', circles)
+        // console.log('circles: ', circles)
 
-            // console.log('circlo:', circles)
+        // console.log('circlo:', circles)
 
-            // console.log('groups', groups)
+        // console.log('groups', groups)
 
-            // console.log('olaa', circle)
-            // console.log('circles: ', circles)
-
-            const t = svg.transition()
-            .duration(750);
+        // console.log('olaa', circle)
+        // console.log('circles: ', circles)
 
             circles.join(
                 enter => {
@@ -620,56 +606,46 @@ function renderConsequenceChart(){
                     enter.append('circle')
                     .transition().duration(1000)         
                     .attr('r', 0)
-                    
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
                     // .transition().duration(1000)
                     .attr('r', 10)
                     
 
-                    console.log('enta: ', enter)   
+                console.log('enta: ', enter);   
 
+                // .join('circle')
+                // .attr('cx', (d, i) => xScale(~~(d / 2)))
+                // .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                // .attr('r', 15)
+            },
+            update => {
                     
-                    
-                    // .join('circle')
-                    // .attr('cx', (d, i) => xScale(~~(d / 2)))
-                    // .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    // .attr('r', 15)
-                },
-                update => {
-                    
-                    update
+                update
                     // .data(circle)
                     // .join('circle')
+                    .transition().duration(1000)
                     .attr('r', 0)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    .transition().duration(1000)
+                    
                     .attr('r', 10)
 
                     
 
                     console.log('update:', update)
+                },
+            exit => {
+                    exit
+                    .transition().duration(1000)
+                    .attr('r', 10)
+                    .attr('cx', (d, i) => xScale(~~(d / 2)))
+                    .attr('cy', (d, i) => i % 2 ? 24 : 0)
+                    
+                    .attr('r', 0)
                 }
             )
-
-            // circles
-            // .transition().duration(1000)
-            // .attr('cx', (d, i) => xScale(~~(d / 2)))
-            // .attr('cy', (d, i) => i % 2 ? 24 : 0)
-        
-
-            // circle
-            // .data(dataFilter)
-            // .enter()
-            //     .select('circle')
-            //     .attr('cx', (d, i) => xScale(~~(d / 2)))
-            //     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-            //     .attr('r', 15)
-
-
-            // circle.remove()
-            }
+    }
 
     //sets the y axis
     g.append('g')
@@ -685,7 +661,6 @@ function renderConsequenceChart(){
     g.append('g')
         
         .attr('transform', `translate(0, ${innerHeight})`)
-              
         .append('text')
         .attr('y', 60)
         .attr('x', innerWidth / 2)
@@ -722,7 +697,6 @@ function renderConsequenceChart(){
             .selectAll('circles')
             .data(d => d3.range(0, d.arrest))
             .join('circle')
-            // .style('opacity', .5)
 
             //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
             .attr('cx', (d, i) => xScale(~~(d / 2)))

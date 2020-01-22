@@ -38,15 +38,15 @@
         <div id="bottom">
             <div id="visualisations__container">
                 <div id="step1" class="visible">
-                    <h2 class="title">Onderverdeling respondenten contact met de politie</h2>
+                    <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Onderverdeling respondenten contact met de politie</h2></div>
                     <div class="pie__container">
                         <div>
                             <div class="first-sentence"><span>In de afgelopen<span class="yellow"> 12 MAANDEN </span>heeft</span></div>
                             <div class="step-1-numbers">
                                 <p><span class="big-number grey">63%<br>
-                                </span> van de respondenten <span class="big-text grey">GEEN CONTACT</span> gehad met de politie</p> 
-                                <p><span class="big-number orange">37%<br>
-                                </span> van de respondenten <span class="big-text orange">WEL CONTACT</span> gehad met de politie</p>
+                                </span> van de respondenten <span class="big-text grey">GEEN CONTACT</span> gehad met de politie, dit zijn er <span class="grey">1104</span></p> 
+                                <p><span class="big-number steelblue">37%<br>
+                                </span> van de respondenten <span class="big-text steelblue">WEL CONTACT</span> gehad met de politie, dit zijn er <span class="steelblue">693</span></p>
                             </div>
                         </div>
                         <div class="chart-with-legend__container">
@@ -62,7 +62,8 @@
                     </div>
                 </div>
                 <div id="step2" class="hidden">
-                    <h2 class="title">Gemiddeld vertrouwen in de politie van mensen die contact hebben gehad</h2>
+                    <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Gemiddeld vertrouwen in de politie</h2></div>
+                    <p class="first-sentence">Over deze <span class="yellow">693</span> respondenten die <span class="yellow">contact</span> hebben gehad met de politie, zijn de dit gemiddelde cijfers van het vertrouwen in de politie per groep.</p>
                     <div id="trust__container">
                         <div class="trust-grade__container">
                             <h3 class="NL">Nederlandse respondenten</h3>
@@ -79,8 +80,8 @@
                     </div>
                 </div>
                 <div id="step3" class="hidden">
-                    <h2 class="title">Soorten laatste contact met de politie per groep</h2>
-                    <p class="first-sentence">Over de <span class="yellow">693</span> respondenten die wel contact hebben gehad met de politie, is dit de onderverdeling of de politie met de respondenent opnam, of andersom.</p>
+                    <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Soorten laatste contact met de politie per groep</h2></div>
+                    <p class="first-sentence">Over deze <span class="yellow">693</span> respondenten die <span class="yellow">contact</span> hebben gehad met de politie, is dit de onderverdeling of de politie met de respondent opnam, of andersom. Ook kan je hoveren over een groep om de onderverdeling te zien wat de aanleidingen daarvan waren.</p>
                     <div id="bar__container">
                         <svg width="700" height="400" class = "stack" id="stacked-bar"></svg>
                         <div class="step2-legend">
@@ -90,24 +91,35 @@
                     </div>
                 </div>
                 <div id="step4" class="hidden">
-                    <h2 class="title">Gevolgen laatste contact</h2>
-                    <h4>Filter op gevolg: </h4>
-                    <select id="selectButton">
-                            <option value="niets">Niets</option>
-                            <option value="boetes">Boete</option>
-                            <option value="arrest">Arrestatie</option>
-                            <option value="bekeuring">Bekeuring</option>
-                            <option value="anders">Anders</option>
-                    </select>
+                    <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Gevolgen laatste contact</h2></div>
+                    <div id="filter">
+                        <h4>Filter op gevolg: </h4>
+                        <div id="custom-select">
+                            <select id="selectButton">
+                                <option value="niets">Niets</option>
+                                <option value="boetes">Boete</option>
+                                <option value="arrest">Arrestatie</option>
+                                <option value="bekeuring">Bekeuring</option>
+                                <option value="anders">Anders</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <!-- <h1 id = 'gevolgTitle'>Gevolg: </h1> -->
 
                     <!-- <img id = "gevolg" class = "gevolg" src="public/images/gevolgen/niets.png" alt=""> -->
 
-                    <svg class="people" width ="960" height ="400"></svg>
+                    <div class="chart-with-legend__container">
+                        <svg class="people" width ="960" height ="400"></svg>
+                        <ul class="legend">
+                            <h2 class="legend-title">Legenda</h2>
+                            <div class="dot__container"><span class="dot"></span>= 1 keer</div>
+                        </ul>
+                    </div>
                 </div>
                 <div id="step5" class="hidden">
-                    <h2 class="title">Hoe verliep het laatste contact met de politie?</h2>
+                    <div class="title__container"><img class="colors-horizontal" src="./public/images/colors-horizontal.svg" alt=""><h2 class="title">Hoe verliep het laatste contact met de politie?</h2></div>
+                    <p class="first-sentence">Aan deze <span class="yellow">693</span> mensen zijn ook verschillende stellingen gevraagd over hoe de politie handelde. Dit zijn de gemiddelde scores van deze 3 groepen per stelling.</p>
                     <div class="chart-with-legend__container">
                         <svg width="700" height="400" class = "groupedBars"></svg>
                         <ul class="legend">

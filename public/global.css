@@ -82,6 +82,45 @@ body {
     color: white;
 }
 
+.dot {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: .5em;
+}
+
+#filter {
+    margin-left: 4em;
+    font-family: Roboto-light;
+}
+
+#filter h4 {
+    font-family: Roboto-medium;
+}
+
+select {
+    padding: 1em 1.5em;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+option {
+    padding: 10em;
+}
+
+select:focus {
+    outline: none;
+}
+
+.dot__container {
+    display: flex;
+    align-items: center;
+}
+
 /* Top content */
 #top-top {
     display: flex;
@@ -121,7 +160,7 @@ h2 {
 
 .title {
     text-align: left;
-    margin-left: 2em;
+    margin-left: .6em;
     width: 30em;
     font-family: Roboto-regular;
 }
@@ -174,31 +213,35 @@ h2 {
 /* Pie chart */
 .chart-with-legend__container {
     display: flex;
-    position: absolute;
-    right: 3%;
+    margin-left: 4em;
+}
+
+.tooltip-flex {
+    display: flex;
 }
 
 .pie__container {
     display: flex;
+    margin-top: 1em;
 }
 
 .pie__container p {
     font-family: Roboto-light;
-    margin-left: 3em;
+    margin-left: 4em;
     width: 9.5em;
 }
 
 .first-sentence {
-    margin-left: 3em;
+    margin-left: 4em;
     font-family: Roboto-light;
-    max-width: 24em;
+    max-width: 35%;
 }
 
 .pie g path:hover {
     opacity: 0.9
 }
 
-.orange {
+.steelblue {
     color: #8186d5;
 }
 
@@ -210,7 +253,7 @@ h2 {
 #bar__container {
     display: flex;
     flex-direction: row;
-    
+    margin-left: 4em;
 }
 
 .stack g g rect:hover {
@@ -219,12 +262,10 @@ h2 {
 
 /* Trust grades */
 #trust__container {
-    margin: 0em auto;
     width: 60%;
     font-family: Roboto-regular;
-    padding: .5em 1.5em;
     display: flex;
-    justify-content: space-between
+    margin: 3em 0em 0em 4em;
 }
 
 #trust-grades__container {
@@ -234,7 +275,6 @@ h2 {
 .trust-grade__container {
     color: white;
     max-width: 25%;
-    text-align: center;
 }
 
 .trust-grade__container h3 {
@@ -318,6 +358,15 @@ text {
     cursor: default;
 }
 
+.colors-horizontal {
+    width: 3em;
+}
+
+.title__container {
+    display: flex;
+    align-items: center;
+}
+
 /* Buttons */
 button:focus {
     outline :0;
@@ -329,7 +378,7 @@ button:focus {
     justify-content: space-between;
     width: 84%;
     margin: 0em auto;
-    margin-top: 4.5em;
+    margin-top: 10em;
 }
 
 .navigation-button {
