@@ -175,22 +175,10 @@ export default function renderStackedBars(data, pieData){
                 .attr('class', 'pie')
                 .selectAll('path')
                 .data(arcs)
-                .join('path').transition().duration(1000)
+                .join('path')
                 .attr('fill', d => color(d.data.reden))
-                .attr('d', arc)
-                .call(path => path.transition().duration(1000));
-
-                  
-      
-      
-      
-
-                // .transition().duration(1000)
-
-                
-            // .append('title');
-            // .text(d => d.data.percentage + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
-            // .style('text-anchor', 'middle');
+                .attr('d', arc);
+                // .call(path => path.transition().duration(1000));
         
             svg.append('g')
                 .attr('font-family', 'sans-serif')
