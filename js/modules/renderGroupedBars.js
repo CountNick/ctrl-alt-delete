@@ -35,16 +35,8 @@ export default function renderGroupedBarChart(data) {
 
     const xScale = d3.scaleLinear()
         .domain([0, 5]).nice()
-    // .domain([d3.max(data, d => d3.max(keys, key => d[key])), 0]).nice()
         .range([0, innerWidth])
         .nice();
-
-    // console.log('schalX', xScale.domain())
-
-    // const yScale = d3.scaleBand()
-    //     .domain(data.map(yValue))
-    //     .range([0, innerHeight])
-    //     .padding(0.3);
 
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
@@ -54,16 +46,7 @@ export default function renderGroupedBarChart(data) {
         .style('font-size', '1rem')
         .call(d3.axisLeft(y0)
             .tickSize('0'));
-    // .append('text')
-    // .style('font-size', '1rem')
-    // .style('transform', 'rotate(-90deg)')
-    // .attr('y', innerHeight / 2)
-    // // .attr('x', 500)
-    // .attr('fill', 'white')
-        
-    // .text('Nederlanders');
 
-    //append a new group for the x axis and set it at as the bottom axis
     g.append('g')
         .style('font-size', '1rem')
         .call(d3.axisBottom(xScale)
@@ -89,15 +72,9 @@ export default function renderGroupedBarChart(data) {
         .data(data)
         .join('g')
         .attr('transform', d => `translate(0,${y0(d[groupKey])})`)
-    // .attr('fill', d => color(d.key))
-    // .attr('stroke', d => color(d.key))
-    // .style('opacity', 1)
         .selectAll('rect')
         .data(d => keys.map(key => ({key, value: d[key]})))
         .join('rect')
-    // .style('fill', 'purple')
-    // .attr('class', 'bar')
-    //.attr("x", (d, i) => x(d.data.name))
         .attr('y', d => y1(d.key))
         .attr('x', d => xScale(d))
         .attr('height', y1.bandwidth())

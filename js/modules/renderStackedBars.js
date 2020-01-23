@@ -33,19 +33,8 @@ export default function renderStackedBars(data, pieData){
     const tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([100, 500])
-        .html(d => {
-            
-            //console.log(d[1] - d[0] == d.data.iContactedPolice)
-            //console.log(data);
-            // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
-
-            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
-            //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
-            // return renderPieChart(d);
-
+        .html(d => {return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
         });
-        // .append('svg')
-        // .attr('width', 350);
 
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
     const innerWidth = width - margin.left - margin.right;
@@ -72,14 +61,6 @@ export default function renderStackedBars(data, pieData){
         .style('font-size', '1rem')
         .call(d3.axisLeft(yScale)
             .tickSize('0'));
-    // .append('text')
-    // .style('font-size', '1rem')
-    // .style('transform', 'rotate(-90deg)')
-    // .attr('y', innerHeight / 2)
-    // // .attr('x', 500)
-    // .attr('fill', 'white')
-            
-    // .text('Nederlanders');
 
     //append a new group for the x axis and set it at as the bottom axis
     g.append('g')
@@ -97,11 +78,7 @@ export default function renderStackedBars(data, pieData){
         .text('Percentage');
 
     //makes an ordinal color scale for each type
-    // const color = d3.scaleOrdinal()
-    //     .range([ '#FFF33D', '#0048FF', ]);
-    //makes an ordinal color scale for each type
     const color = d3.scaleOrdinal()
-    // .domain('Nederlands', 'niet-Westers', 'Westers')
         .range([ '#494CA2', '#8186d5', '#c6cbef']);
         
     g.call(tip);
@@ -110,29 +87,19 @@ export default function renderStackedBars(data, pieData){
         .selectAll('g')
         .data(series)
         .join('g')
-        // .attr('fill', d => color(d.key))
-        // .attr('stroke', d => color(d.key))
-        // .attr('fill', d => {if (d.index == 0) return color(d)})
-        // .attr('stroke', d => {if (d.index == 1) return color(d)})
         .style('opacity', 1)
         .selectAll('rect')
         .data(d => d)
         .join('rect')
-        // .style('opacity', .5)
+
         .attr('class', d => d.data.origin)
-    //.attr("x", (d, i) => x(d.data.name))
         .attr('y', d => yScale(d.data.origin))
         .attr('x', d => xScale(d[0]))
         .attr('height', yScale.bandwidth())
         .attr('width', d => xScale(d[1]) - xScale(d[0]))
-        // .attr('fill', d => console.log('fillieee', d[1] - d[0]))
-        // .attr('stroke', d => {if (d[0]) return color(d)})
         .attr('fill', d => {if (d[1] == d[1] - d[0]) return color(d);})
         .attr('stroke', d => {if (d[1]) return color(d);})
         .attr('stroke-width', '3')
-        // .attr('stroke', d => console.log('strook', d))
-        // .attr('fill', d => {if (d[1]) return color(d)})
-        // .attr('fill', d => console.log('hoooi', d[0]))
         .on('mouseover', function(d) {
             //chart in tooltip 
             
@@ -164,9 +131,6 @@ export default function renderStackedBars(data, pieData){
             const arcs = pie(data);
             const svg = d3.select('#tipSVG')
                 .attr('viewBox', [-width / 2, -height / 2, width, height]);
-        
-            // console.log('arcs: ', arcs);
-            // console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
                 .domain(['Anders', 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', 'Ik vroeg de politie om hulp, advies of informatie', 'Ik had iets gezien dat niet mag en maakte hiervan een melding', 'Ik maakte een praatje met de agent', 'De politie kwam naar mij toe om gewoon een praatje te maken', 'Voor een controle', 'Omdat ik (volgens de politie) iets verkeerd deed'])
                 .range(['#8fff9a', '#e6ff8f', '#ffd68f', '#ff8fb3', '#9c8fff', '#9c8fff', '#b689cd', '#cd8998']);
@@ -180,9 +144,6 @@ export default function renderStackedBars(data, pieData){
                 .join('path')
                 .attr('fill', d => color(d.data.reden))
                 .attr('d', arc).transition().duration(1000);
-            // .append('title');
-            // .text(d => d.data.percentage + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
-            // .style('text-anchor', 'middle');
         
             svg.append('g')
                 .attr('font-family', 'sans-serif')
@@ -210,7 +171,6 @@ export default function renderStackedBars(data, pieData){
                 .attr('fill', d => {return color(d.reden);});
         })
         
-
         .on('mouseout', tip.hide)
 
     //g.selectAll("rect")
@@ -236,12 +196,5 @@ export default function renderStackedBars(data, pieData){
         .attr('y', innerHeight / 2 +70)
         .attr('width', 18)
         .attr('height', 18)
-        .style('fill', color);
-
-    // function selectionChanged(){
-    //change by click on radio button
-    //chenge the normalised bars to stacked bars
-    //stacked bars should have numbers 
-    //x axis should have these numbers on axis
-    // }     
+        .style('fill', color);   
 }

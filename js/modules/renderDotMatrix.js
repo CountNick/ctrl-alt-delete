@@ -1,5 +1,4 @@
 export default function renderDotMatrix(){
-
     const data = [
         {
             origin: 'Nederlands',
@@ -40,7 +39,6 @@ export default function renderDotMatrix(){
     const innerHeight = height - margin.top - margin.bottom;
 
     const color = d3.scaleOrdinal()
-    // .domain('Nederlands', 'niet-Westers', 'Westers')
         .range([ '#494CA2', '#8186d5', '#c6cbef']);
         
     //sets the xScale with the values from d.amount
@@ -80,15 +78,6 @@ export default function renderDotMatrix(){
         let groups = d3.selectAll('.balls');
         let circles = groups.selectAll('circle').data(active);
 
-        // console.log('circles: ', circles)
-
-        // console.log('circlo:', circles)
-
-        // console.log('groups', groups)
-
-        // console.log('olaa', circle)
-        // console.log('circles: ', circles)
-
         circles.join(
             enter => {
                     
@@ -97,32 +86,16 @@ export default function renderDotMatrix(){
                     .attr('r', 0)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    // .transition().duration(1000)
                     .attr('r', 10);
-                    
-
-                console.log('enta: ', enter);   
-
-                // .join('circle')
-                // .attr('cx', (d, i) => xScale(~~(d / 2)))
-                // .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                // .attr('r', 15)
             },
             update => {
                     
                 update
-                    // .data(circle)
-                    // .join('circle')
                     .transition().duration(1000)
                     .attr('r', 0)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    
                     .attr('r', 10);
-
-                    
-
-                console.log('update:', update);
             },
             exit => {
                 exit
@@ -130,7 +103,6 @@ export default function renderDotMatrix(){
                     .attr('r', 10)
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
-                    
                     .attr('r', 0);
             }
         );
@@ -160,15 +132,6 @@ export default function renderDotMatrix(){
 
     //draw the circles on the chart
     drawCircles();
-    //draw the legend 
-    // drawLegend();
-        
-    //initialize select button, and fire update function when changed
-    // d3.select('#selectButton')
-    //     .on('change', selectionChanged);
-
-
-    
 
     //Resource: https://jsfiddle.net/2xyjf4nu/1/
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
@@ -183,8 +146,6 @@ export default function renderDotMatrix(){
 
             .attr('fill', d =>  color(d.origin))
             .attr('transform', (d, i) => `translate(10, ${yScale(yValue(d))})`)
-        // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
-        // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
             .selectAll('circles')
             .data(d => d3.range(0, d.waarschuwing))
@@ -193,17 +154,6 @@ export default function renderDotMatrix(){
             //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
             .attr('cx', (d, i) => xScale(~~(d / 2)))
             .attr('cy', (d, i) => i % 2 ? 24 : 0)
-            // .style('fill', d => color(d))
-
-            // .attr('cx', (d,i) => console.log(Math.floor(xScale(d) * i % 20)))
-        // .attr('cy', d =>  console.log(yScale(d)))
-            .attr('r', 10)
-            .on('mouseover', function(d){
-                console.log('fd', this);
-                
-            });
-        // .on('mouseout', tip.hide);
-
-                    
+            .attr('r', 10);          
     }
 } 
