@@ -423,12 +423,36 @@ button:focus {
     outline-offset: .2rem;
 }
 
+.inactive:hover {
+    background-color: rgb(251, 243, 123);
+    outline: .2rem solid rgb(251, 243, 123);
+}
+
 /* Hide and show content */
 .visible {
     display: block;
+    position: relative;
     /* display: flex;
     justify-items: center;
     flex-direction: column; */
+}
+
+.count__container {
+    position: absolute;
+    padding: 1em;
+    top: -1em;
+    right: 0em;
+    text-align: center;
+}
+
+.count-text {
+    font-family: Roboto-medium;
+    margin: 0em auto;
+}
+
+.count-number {
+    margin: .5em auto 0em auto;
+    font-size: 1.5em;
 }
 
 .hidden {
