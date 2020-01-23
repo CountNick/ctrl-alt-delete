@@ -34,12 +34,12 @@ export default function renderStackedBars(data, pieData){
         .attr('class', 'd3-tip')
         .offset([100, 500])
         .html(d => {
-            
+            console.log(d)
             //console.log(d[1] - d[0] == d.data.iContactedPolice)
             //console.log(data);
             // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
 
-            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
+            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Het totaal van deze 2 groepen: '+ (d.data.amountPoliceContactedMe + d.data.amountIContactedPolice) +'</strong><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
             //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
             // return renderPieChart(d);
 
@@ -167,7 +167,7 @@ export default function renderStackedBars(data, pieData){
             // console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
                 .domain(['Anders', 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', 'Ik vroeg de politie om hulp, advies of informatie', 'Ik had iets gezien dat niet mag en maakte hiervan een melding', 'Ik maakte een praatje met de agent', 'De politie kwam naar mij toe om gewoon een praatje te maken', 'Voor een controle', 'Omdat ik (volgens de politie) iets verkeerd deed'])
-                .range(['#8fff9a', '#e6ff8f', '#ffd68f', '#ff8fb3', '#9c8fff', '#9c8fff', '#0048ff', '#fc3e46']);
+                .range(['#8fff9a', '#e6ff8f', '#ffd68f', '#ff8fb3', '#9c8fff', '#9c8fff', '#b689cd', '#cd8998']);
         
             svg.append('g')
                 .attr('stroke', 'black')
@@ -176,9 +176,10 @@ export default function renderStackedBars(data, pieData){
                 .selectAll('path')
                 .data(arcs)
                 .join('path')
-                .attr('path', d =>  d.endAngle + d.startAngle).transition().duration(1000)
                 .attr('fill', d => color(d.data.reden))
                 .attr('d', arc);
+
+                
 
                 
                 // .transition().duration(1000)
