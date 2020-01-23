@@ -29,7 +29,7 @@ export default function renderGroupedBarChart(data) {
     const y1 = d3.scaleBand()
         .domain(keys)
         .rangeRound([0, y0.bandwidth()])
-        .padding(0.07);
+        .padding(0.10);
 
     console.log('y1', y1.domain());
 
