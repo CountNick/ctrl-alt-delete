@@ -52,6 +52,19 @@ body {
     background-size: contain;
 }
 
+.people g g g line {
+    display: none
+}
+
+text {
+    font-family: Roboto-light;
+    font-size: 1em;
+}
+
+.people g g text {
+    font-size: 1.5em;
+}
+
 #top {
     height: 100vh;
 }
@@ -76,6 +89,47 @@ body {
 .sub-title {
     font-family: Rubik-regular;
     color: white;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: .5em;
+}
+
+#filter {
+    font-family: Roboto-light;
+    width: 10em;
+    margin-right: 2em;
+    margin-top: 3em;
+}
+
+#filter h4 {
+    font-family: Roboto-medium;
+}
+
+select {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+option {
+    padding: 10em;
+}
+
+select:focus {
+    outline: none;
+}
+
+.dot__container {
+    display: flex;
+    align-items: center;
 }
 
 /* Top content */
@@ -167,27 +221,11 @@ h2 {
     font-size: 2em;
 }
 
-.count {
-    position: absolute;
-    top: -1em;
-    right: 0;
-    font-family: Roboto-medium;
-    text-align: center;
-    
-    padding: 1em 1.5em;
-}
-
-.count-number {
-    color: #FFF33D;
-    font-family: Rubik-bold;
-    font-size: 2em;
-    margin-top: .3em;
-}
-
 /* Pie chart */
 .chart-with-legend__container {
     display: flex;
     margin-left: 4em;
+    margin-top: 
 }
 
 .tooltip-flex {
@@ -209,6 +247,10 @@ h2 {
     margin-left: 4em;
     font-family: Roboto-light;
     max-width: 35%;
+}
+
+.special-first-sentence {
+    max-width: 20em;
 }
 
 .pie g path:hover {
@@ -287,6 +329,10 @@ h2 {
     list-style: none;
     font-family: Roboto-medium;
     margin: 0;
+}
+
+.special-legend {
+    margin-right: 6em;
 }
 
 .li-1, .li-2 {
@@ -380,7 +426,6 @@ button:focus {
 /* Hide and show content */
 .visible {
     display: block;
-    position: relative;
     /* display: flex;
     justify-items: center;
     flex-direction: column; */
@@ -443,7 +488,6 @@ button:focus {
 rect:hover{
     opacity: 1;
 }
-
 
 .gevolg{
     width: 90%;
