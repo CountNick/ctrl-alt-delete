@@ -33,7 +33,16 @@ export default function renderStackedBars(data, pieData){
     const tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([100, 500])
-        .html(d => {return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
+        .html(d => {
+            console.log(d)
+            //console.log(d[1] - d[0] == d.data.iContactedPolice)
+            //console.log(data);
+            // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
+
+            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Het totaal van deze 2 groepen: '+ (d.data.amountPoliceContactedMe + d.data.amountIContactedPolice) +'</strong><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
+            //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
+            // return renderPieChart(d);
+
         });
 
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
@@ -102,8 +111,6 @@ export default function renderStackedBars(data, pieData){
         .attr('stroke-width', '3')
         .on('mouseover', function(d) {
             //chart in tooltip 
-            
-            console.log(d);
 
             let data;
            
@@ -113,7 +120,7 @@ export default function renderStackedBars(data, pieData){
             //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
             //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
             tip.show(d, this);
-            console.log('rararara: ', d);
+            // console.log('rararara: ', d);
 
             const pie = d3.pie()
                 .sort(null)
@@ -150,11 +157,12 @@ export default function renderStackedBars(data, pieData){
                 .attr('font-size', 12)
                 .attr('text-anchor', 'middle')
                 .selectAll('text')
+                
                 .data(arcs)
                 .join('text')
                 .attr('transform', d => `translate(${arcLabel.centroid(d)})`)
                 
-                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
+                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan').transition().duration(1000)
                     .attr('x', 0)
                     .attr('y', '0.7em')
                     .attr('fill-opacity', 0.7)
