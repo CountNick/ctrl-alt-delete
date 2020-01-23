@@ -53,7 +53,12 @@ body {
 }
 
 .people g g g line {
-    display: none;
+    display: none
+}
+
+.people g g g text {
+    font-family: Roboto-light;
+    font-size: 1.5em;
 }
 
 #top {
@@ -468,6 +473,8 @@ button:focus {
 rect:hover{
     opacity: 1;
 }
+
+
 
 
 .gevolg{

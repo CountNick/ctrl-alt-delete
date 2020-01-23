@@ -515,17 +515,26 @@ function renderConsequenceChart(){
         {
             origin: 'Nederlands',
             boetes: 3,
-            arrest: 6
+            arrest: 6,
+            beukeuring: 20,
+            anders: 4,
+            niets: 7
         },
         {
             origin: 'Westers',
             boetes: 30,
-            arrest: 5
+            arrest: 5,
+            beukeuring: 5,
+            anders: 20,
+            niets: 10
         },
         {
             origin: 'niet-Westers',
             boetes: 15,
-            arrest: 8
+            arrest: 8,
+            beukeuring: 14,
+            anders: 20,
+            niets: 30
         }
     ];
 
@@ -579,6 +588,9 @@ function renderConsequenceChart(){
                     
             if(this.value == 'boetes') return active = d => d3.range(0, d.boetes);
             if(this.value == 'arrest') return active = d => d3.range(0, d.arrest);
+            if(this.value == 'bekeuring') return active = d => d3.range(0, d.beukeuring);
+            if(this.value == 'anders') return active = d => d3.range(0, d.anders);
+            if(this.value == 'niets') return active = d => d3.range(0, d.niets);
 
         });
         console.log('DF', dataFilter);
@@ -608,6 +620,7 @@ function renderConsequenceChart(){
                     .attr('cy', (d, i) => i % 2 ? 24 : 0)
                     .transition().duration(1000)
                     .attr('r', 10);
+                    
 
                 console.log('enta: ', enter);   
 
@@ -619,8 +632,9 @@ function renderConsequenceChart(){
             update => {
                     
                 update
-                    // .data(circle)
-                    // .join('circle')
+                // .data(circle)
+                // .join('circle')
+                    
                     .attr('cx', (d, i) => xScale(~~(d / 2)))
                     .attr('cy', (d, i) => i % 2 ? 24 : 0);
 
@@ -658,8 +672,11 @@ function renderConsequenceChart(){
     // .tickSize(-innerWidth))
         .select('.domain')
         .remove()
+        .select('stroke')
+        .remove()
         .append('text')
-        .attr('fill', 'black');
+        .attr('fill', 'black')
+        
       
     //sets the bottom axis
     g.append('g')
@@ -670,7 +687,8 @@ function renderConsequenceChart(){
         .attr('y', 60)
         .attr('x', innerWidth / 2)
         .attr('fill', 'white')
-        .text('Aantal keer');
+        .text('Aantal keer')
+        .attr('font-family', 'Roboto-medium');
 
     //draw the circles on the chart
     drawCircles();
@@ -691,7 +709,7 @@ function renderConsequenceChart(){
             .attr('class', 'balls')
 
             .attr('fill', d =>  color(d.origin))
-            .attr('transform', (d, i) => `translate(0, ${yScale(yValue(d))})`)
+            .attr('transform', (d, i) => `translate(10, ${yScale(yValue(d))})`)
         // .attr('fill', d => color(d.key)).attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
         // .attr('stroke', d => color(d.key))
             .style('opacity', 1)
