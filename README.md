@@ -78,10 +78,11 @@ These more complex data transformations included:
 
 ## Project structure
 
-![project-structure](https://user-images.githubusercontent.com/45566396/72612976-98058980-392e-11ea-8267-c5e6b050d0ed.png)
+![image](https://user-images.githubusercontent.com/45566396/72982650-d3e19880-3ddf-11ea-9336-8d8b8797b0a3.png)
 
 We have devided our project in multiple folders, these ones are:
 * [Modules](https://github.com/StefanGerrits2/ctrl-alt-delete/tree/master/js/modules) - to create files to keep structure and overview in our project
+    * Inside this folder we have another folder called transformData that contains files to transform our data
 * [Public](https://github.com/StefanGerrits2/ctrl-alt-delete/tree/master/public) - this containes the fonts, images and css
 
 In **index.js** we import all our modules.

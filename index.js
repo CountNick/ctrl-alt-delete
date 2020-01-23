@@ -173,9 +173,9 @@ const step3 = document.getElementById('step3');
 const step4 = document.getElementById('step4');
 const step5 = document.getElementById('step5');
 
-const filterButton = document.getElementById('selectButton');
-let image = document.getElementById('gevolg');
-let title = document.getElementById('gevolgTitle');
+// const filterButton = document.getElementById('selectButton');
+// let image = document.getElementById('gevolg');
+// let title = document.getElementById('gevolgTitle');
 
 // console.log('img', image);
 // console.log('title', title);
