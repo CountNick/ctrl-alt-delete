@@ -169,7 +169,7 @@ export default function renderStackedBars(data, pieData){
             // console.log('aegefsffs', pieData);
             const color = d3.scaleOrdinal()
                 .domain(['Anders', 'Ik was slachtoffer van een misdaad of delict en deed hiervan aangifte', 'Ik vroeg de politie om hulp, advies of informatie', 'Ik had iets gezien dat niet mag en maakte hiervan een melding', 'Ik maakte een praatje met de agent', 'De politie kwam naar mij toe om gewoon een praatje te maken', 'Voor een controle', 'Omdat ik (volgens de politie) iets verkeerd deed'])
-                .range(['#8fff9a', '#e6ff8f', '#ffd68f', '#ff8fb3', '#9c8fff', '#9c8fff', '#0048ff', '#fc3e46']);
+                .range(['#8fff9a', '#e6ff8f', '#ffd68f', '#ff8fb3', '#9c8fff', '#9c8fff', '#b689cd', '#cd8998']);
         
             svg.append('g')
                 .attr('stroke', 'black')
