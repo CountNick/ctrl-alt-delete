@@ -147,13 +147,6 @@ function splitIntoArrays(data){
     groupedBarData.push(Object.assign(luister, nl[1], w[1], nW[1]));
     groupedBarData.push(Object.assign(rechtvaardig, nl[2], w[2], nW[2]));
 
-    //console.log('groupie', groupedBarData)
-
-    // Grouped barchart
-    // groupedBarData.push(prepareGroupedBarData(groupedbarDataNederlands));
-    // groupedBarData.push(prepareGroupedBarData(groupedbarDataNietWesters));
-    // groupedBarData.push(prepareGroupedBarData(groupedbarDataWesters));
-
     //render each graph with it's corresponding data
     renderPieChart(pieData);
     renderStackedBars(complete);
@@ -174,8 +167,6 @@ const step4 = document.getElementById('step4');
 const step5 = document.getElementById('step5');
 
 const filterButton = document.getElementById('selectButton');
-let image = document.getElementById('gevolg');
-let title = document.getElementById('gevolgTitle');
 
 // console.log('img', image);
 // console.log('title', title);
