@@ -488,6 +488,10 @@ button:focus {
     width: 25em;
 }
 
+#stacked-bar{
+    min-width: 300px;
+}
+
   
 /* Creates a small triangle extender for the tooltip */
 /* .d3-tip:after {
@@ -547,7 +551,7 @@ rect:hover{
     }
 
     .title{
-        margin-left: 0;
+        margin-left: 4%;
         width: auto;
         font-size: 1.5rem;
     }
@@ -582,6 +586,19 @@ rect:hover{
         margin-left: auto;
     }
 
+    #trust__container{
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .first-sentence{
+        margin-left: 4%;
+        max-width: 90%;
+    }
+
+    #bar__container{
+        flex-direction: column;
+    }
 
 }
 
