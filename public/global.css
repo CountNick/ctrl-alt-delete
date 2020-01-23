@@ -56,8 +56,12 @@ body {
     display: none
 }
 
-.people g g g text {
+text {
     font-family: Roboto-light;
+    font-size: 1em;
+}
+
+.people g g text {
     font-size: 1.5em;
 }
 
@@ -97,8 +101,10 @@ body {
 }
 
 #filter {
-    margin-left: 4em;
     font-family: Roboto-light;
+    width: 10em;
+    margin-right: 2em;
+    margin-top: 3em;
 }
 
 #filter h4 {
@@ -106,7 +112,7 @@ body {
 }
 
 select {
-    padding: 1em 1.5em;
+    padding: 1em;
     color: white;
     background-color: black;
     border: 1px solid white;
@@ -219,6 +225,7 @@ h2 {
 .chart-with-legend__container {
     display: flex;
     margin-left: 4em;
+    margin-top: 
 }
 
 .tooltip-flex {
@@ -240,6 +247,10 @@ h2 {
     margin-left: 4em;
     font-family: Roboto-light;
     max-width: 35%;
+}
+
+.special-first-sentence {
+    max-width: 20em;
 }
 
 .pie g path:hover {
@@ -318,6 +329,10 @@ h2 {
     list-style: none;
     font-family: Roboto-medium;
     margin: 0;
+}
+
+.special-legend {
+    margin-right: 6em;
 }
 
 .li-1, .li-2 {
