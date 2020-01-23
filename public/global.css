@@ -178,7 +178,7 @@ h2 {
 
 #introduction__container {
     width: 50%;
-    padding: .5em 1.5em;
+    padding: .5em 1.5em 8em 1.5em;
     margin-left: 4%;
 }
 
@@ -401,7 +401,7 @@ button:focus {
     justify-content: space-between;
     width: 84%;
     margin: 0em auto;
-    margin-top: 10em;
+    margin-top: 3em;
 }
 
 .navigation-button {
