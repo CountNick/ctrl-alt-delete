@@ -50,9 +50,6 @@ function transformData(data){
             redenZelfContact: object.waarom_zelfben
         };
     });
-
-    //console.log('hiee',cleanedObjects)
-    //return the cleaned objects
     return cleanedObjects;   
 }
 
@@ -117,8 +114,6 @@ function splitIntoArrays(data){
         }
     });
 
-    // console.log('Nietwesters', originNietWesters.length / answerYes.length * 100);
-    // console.log('Nederlandsz', originNederlands.length / answerYes.length * 100);
     const total = answerNo.length + answerYes.length;
     
     complete.push(prepareNormalisedStackData(originNederlandsAnswerYes, answerYes));
@@ -165,35 +160,6 @@ const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 const step4 = document.getElementById('step4');
 const step5 = document.getElementById('step5');
-
-const filterButton = document.getElementById('selectButton');
-
-// console.log('img', image);
-// console.log('title', title);
-
-// console.log(filterButton);
-
-// filterButton.addEventListener('change', function() {
-//     console.log('het werkt!', this.value);
-
-//     if (this.value == 'arrest'){
-//         title.textContent = 'Gevolg: Arrestatie';
-//         image.src = 'public/images/gevolgen/arrestatie.png';
-//     }
-//     else if (this.value == 'bekeuring'){
-//         title.textContent = 'Gevolg: Bekeuring';
-//         image.src = 'public/images/gevolgen/bekeuring.png';
-//     }
-//     else if (this.value == 'anders'){
-//         title.textContent = 'Gevolg: Anders';
-//         image.src = 'public/images/gevolgen/anders.png';
-//     }
-//     else if (this.value == 'niets'){
-//         title.textContent = 'Gevolg: niets';
-//         image.src = 'public/images/gevolgen/niets.png';
-//     }
-
-// });
 
 button1.addEventListener('click', function() {
     step1.classList.replace('hidden', 'visible');

@@ -93,9 +93,5 @@ export default function prepareNormalisedStackData(data, answerYes){
             {reden: 'Ik maakte een praatje met de agent', percentage: percentPraatje},
             {reden: 'Anders', percentage: percentAnders}
         ]};
-    // complete.push({contactZoeker: 'De politie kwam naar mij toe', [origin]: policeContacted.length / answerYes.length * 100})
-    // complete.push({contactZoeker: 'Ik ging naar de politie toe', [origin]: iContacted.length / answerYes.length * 100})
-
-    //return the cleanedObject
     return cleanedObject;
 }

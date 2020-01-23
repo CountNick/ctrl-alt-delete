@@ -178,7 +178,7 @@ h2 {
 
 #introduction__container {
     width: 50%;
-    padding: .5em 1.5em;
+    padding: .5em 1.5em 8em 1.5em;
     margin-left: 4%;
 }
 
@@ -225,7 +225,6 @@ h2 {
 .chart-with-legend__container {
     display: flex;
     margin-left: 4em;
-    margin-top: 
 }
 
 .tooltip-flex {
@@ -247,6 +246,10 @@ h2 {
     margin-left: 4em;
     font-family: Roboto-light;
     max-width: 35%;
+}
+
+.sentence-big {
+    max-width: 50%;
 }
 
 .special-first-sentence {
@@ -398,7 +401,7 @@ button:focus {
     justify-content: space-between;
     width: 84%;
     margin: 0em auto;
-    margin-top: 10em;
+    margin-top: 3em;
 }
 
 .navigation-button {
@@ -423,12 +426,36 @@ button:focus {
     outline-offset: .2rem;
 }
 
+.inactive:hover {
+    background-color: rgb(251, 243, 123);
+    outline: .2rem solid rgb(251, 243, 123);
+}
+
 /* Hide and show content */
 .visible {
     display: block;
+    position: relative;
     /* display: flex;
     justify-items: center;
     flex-direction: column; */
+}
+
+.count__container {
+    position: absolute;
+    padding: 1em;
+    top: -1em;
+    right: 0em;
+    text-align: center;
+}
+
+.count-text {
+    font-family: Roboto-medium;
+    margin: 0em auto;
+}
+
+.count-number {
+    margin: .5em auto 0em auto;
+    font-size: 1.5em;
 }
 
 .hidden {
