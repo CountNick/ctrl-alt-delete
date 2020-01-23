@@ -489,7 +489,7 @@ button:focus {
 }
 
 #stacked-bar{
-    min-width: 300px;
+    max-width: 300px;
 }
 
   
@@ -524,7 +524,7 @@ rect:hover{
     width: 90%;
 }
 
-@media screen and (max-width: 320px){
+@media screen and (min-width: 320px){
 
     .main-title{
         font-size: 1.5rem;
@@ -536,6 +536,7 @@ rect:hover{
 
     #visualisations__container{
         width: auto;
+        height: auto;
     }
 
     #button__container{
@@ -598,7 +599,14 @@ rect:hover{
 
     #bar__container{
         flex-direction: column;
+        margin-left: auto;
     }
+
+    .step2-legend{
+        margin-top: auto;
+        margin-left: auto;
+    }
+    
 
 }
 
