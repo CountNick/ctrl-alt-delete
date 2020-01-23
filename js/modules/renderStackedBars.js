@@ -135,8 +135,6 @@ export default function renderStackedBars(data, pieData){
         // .attr('fill', d => console.log('hoooi', d[0]))
         .on('mouseover', function(d) {
             //chart in tooltip 
-            
-            console.log(d);
 
             let data;
            
@@ -146,7 +144,7 @@ export default function renderStackedBars(data, pieData){
             //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
             //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
             tip.show(d, this);
-            console.log('rararara: ', d);
+            // console.log('rararara: ', d);
 
             const pie = d3.pie()
                 .sort(null)
@@ -178,8 +176,14 @@ export default function renderStackedBars(data, pieData){
                 .selectAll('path')
                 .data(arcs)
                 .join('path')
+                .attr('path', d =>  d.endAngle + d.startAngle).transition().duration(1000)
                 .attr('fill', d => color(d.data.reden))
-                .attr('d', arc).transition().duration(1000);
+                .attr('d', arc);
+
+                
+                // .transition().duration(1000)
+
+                
             // .append('title');
             // .text(d => d.data.percentage + ': ' + d.data.percentage.toLocaleString(undefined, { maximumFractionDigits: 1 }) + '%')
             // .style('text-anchor', 'middle');
@@ -189,11 +193,12 @@ export default function renderStackedBars(data, pieData){
                 .attr('font-size', 12)
                 .attr('text-anchor', 'middle')
                 .selectAll('text')
+                
                 .data(arcs)
                 .join('text')
                 .attr('transform', d => `translate(${arcLabel.centroid(d)})`)
                 
-                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
+                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan').transition().duration(1000)
                     .attr('x', 0)
                     .attr('y', '0.7em')
                     .attr('fill-opacity', 0.7)
