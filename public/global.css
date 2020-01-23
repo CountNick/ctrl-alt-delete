@@ -521,6 +521,68 @@ rect:hover{
 }
 
 @media screen and (max-width: 320px){
+
+    .main-title{
+        font-size: 1.5rem;
+    }
+
+    #introduction__container{
+        padding: 0 1rem 0 0 ;
+    }
+
+    #visualisations__container{
+        width: auto;
+    }
+
+    #button__container{
+        /* display: flex; */
+        flex-direction: column;
+        justify-content: space-between;
+
+    }
+
+    .title__container{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title{
+        margin-left: 0;
+        width: auto;
+        font-size: 1.5rem;
+    }
+
+    .step-1-numbers{
+        flex-direction: column;
+    }
+
+    .pie__container{
+        flex-direction: column;
+    }
+
+    .pie__container p{
+        margin-left: auto;
+        flex-direction: column;
+        width: auto;
+    }
+
+    .first-sentence{
+        margin-left: auto;
+    }
+
+    .big-number{
+        font-size: 1.5rem;
+    }
+    .big-text{
+        font-size: 1.5rem;
+    }
+
+    .chart-with-legend__container{
+        flex-direction: column;
+        margin-left: auto;
+    }
+
+
 }
 
 @media screen and (max-width: 600px){
@@ -529,5 +591,21 @@ rect:hover{
     }
     #top__container, #bottom__container {
         width: 100%;
+    }
+
+    #bottom{
+        
+    }
+
+
+
+    .title{
+        
+    }
+
+    #button__container{
+        /* display: flex; */
+        /* flex-direction: column; */
+
     }
 }
