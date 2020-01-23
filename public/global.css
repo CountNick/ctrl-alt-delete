@@ -58,10 +58,10 @@ body {
 
 text {
     font-family: Roboto-light;
-    font-size: 1em;
+    
 }
 
-.people g g text {
+.people g g g text {
     font-size: 1.5em;
 }
 
