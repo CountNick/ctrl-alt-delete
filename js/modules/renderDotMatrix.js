@@ -38,6 +38,8 @@ export default function renderDotMatrix(){
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
+    svg.attr('viewBox', [0, 0, width, height]);
+
     const color = d3.scaleOrdinal()
         .range([ '#494CA2', '#8186d5', '#c6cbef']);
         

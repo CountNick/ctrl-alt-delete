@@ -488,10 +488,6 @@ button:focus {
     width: 25em;
 }
 
-#stacked-bar{
-    max-width: 300px;
-}
-
   
 /* Creates a small triangle extender for the tooltip */
 /* .d3-tip:after {
@@ -524,7 +520,27 @@ rect:hover{
     width: 90%;
 }
 
-@media screen and (min-width: 320px){
+
+
+
+@media screen and (max-width: 400px){
+
+    #stacked-bar{
+        max-width: 300px;
+    }
+
+    .groupedBars{
+        max-width: 300px;
+        margin-top: -7rem;
+    }
+
+    .people{
+        max-width: 300px;
+    }
+
+    .pie{
+        max-width: 300px;
+    }
 
     .main-title{
         font-size: 1.5rem;
@@ -532,17 +548,22 @@ rect:hover{
 
     #introduction__container{
         padding: 0 1rem 0 0 ;
+        width: auto;
     }
 
     #visualisations__container{
         width: auto;
         height: auto;
+        position: static;
+        padding-top: 12rem;
     }
 
     #button__container{
         /* display: flex; */
         flex-direction: column;
         justify-content: space-between;
+        width: auto;
+        margin-top: auto;
 
     }
 
@@ -566,9 +587,8 @@ rect:hover{
     }
 
     .pie__container p{
-        margin-left: auto;
+        margin-left: 2%;
         flex-direction: column;
-        width: auto;
     }
 
     .first-sentence{
@@ -606,31 +626,43 @@ rect:hover{
         margin-top: auto;
         margin-left: auto;
     }
+
+    .navigation-button{
+        width: auto;
+    }
+
+    #top__container{
+        margin: auto;
+        width: auto;
+    }
+
+    .legend-icon{
+        width: 20%;
+    }
+
+    .step2-legend{
+        margin-top: -9rem;
+    }
+
+    #stacked-bar{
+        margin-top: -7rem;
+    }
+
+    .count__container{
+        padding: 0;
+        /* top: -1rem; */
+        right: 2%;
+    }
+
+    #filter{
+        margin-top: auto;
+        margin-right: auto;
+    }
+
+    .legend{
+        /* margin-top: -9rem; */
+        padding-bottom: 2rem;
+    }
     
 
-}
-
-@media screen and (max-width: 600px){
-    #introduction__container {
-        width: 80%;
-    }
-    #top__container, #bottom__container {
-        width: 100%;
-    }
-
-    #bottom{
-        
-    }
-
-
-
-    .title{
-        
-    }
-
-    #button__container{
-        /* display: flex; */
-        /* flex-direction: column; */
-
-    }
 }
