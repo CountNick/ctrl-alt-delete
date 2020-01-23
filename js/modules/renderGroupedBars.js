@@ -103,5 +103,4 @@ export default function renderGroupedBarChart(data) {
         .attr('height', y1.bandwidth())
         .attr('width', d => xScale(d.value) - xScale(0))
         .attr('fill', d => color(d.key));
-
 }

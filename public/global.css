@@ -248,6 +248,10 @@ h2 {
     max-width: 35%;
 }
 
+.sentence-big {
+    max-width: 50%;
+}
+
 .special-first-sentence {
     max-width: 20em;
 }
