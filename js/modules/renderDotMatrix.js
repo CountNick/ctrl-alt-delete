@@ -174,7 +174,21 @@ export default function renderDotMatrix(){
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
     function drawCircles(){
         
-        
+        const tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([100, 0])
+        .html(d => {
+            console.log(d)
+            //console.log(d[1] - d[0] == d.data.iContactedPolice)
+            //console.log(data);
+            // if(d[1] - d[0] == d.data.iContactedPolice ) console.log('dit wil je:', d)
+
+            return '<h4>' + d + ' op de 100' + '</h4>';
+            //return '<svg class= "tipPie" width = "350" height= "350"></svg>'
+            // return renderPieChart(d);
+
+        });
+        g.call(tip)
         g.append('g')
             .selectAll('g')
             .data(data)
@@ -198,11 +212,8 @@ export default function renderDotMatrix(){
             // .attr('cx', (d,i) => console.log(Math.floor(xScale(d) * i % 20)))
         // .attr('cy', d =>  console.log(yScale(d)))
             .attr('r', 10)
-            .on('mouseover', function(d){
-                console.log('fd', this);
-                
-            });
-        // .on('mouseout', tip.hide);
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
 
                     
     }

@@ -175,13 +175,16 @@ export default function renderStackedBars(data, pieData){
                 .attr('class', 'pie')
                 .selectAll('path')
                 .data(arcs)
-                .join('path')
+                .join('path').transition().duration(1000)
                 .attr('fill', d => color(d.data.reden))
-                .attr('d', arc);
+                .attr('d', arc)
+                .call(path => path.transition().duration(1000));
 
-                
+                  
+      
+      
+      
 
-                
                 // .transition().duration(1000)
 
                 
