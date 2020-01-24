@@ -520,8 +520,13 @@ rect:hover{
     width: 90%;
 }
 
+.people g g g text {
+    font-size: 1.75em;
+}
 
-
+.people g g text {
+    font-size: 1.3em;
+}
 
 @media screen and (max-width: 400px){
 
