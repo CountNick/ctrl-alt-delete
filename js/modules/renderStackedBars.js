@@ -18,7 +18,8 @@ export default function renderStackedBars(data){
     const tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([100, 500])
-        .html(d => {return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
+        .html(d => {
+            return '<h2> Soorten aanleidingen contact met de politie</h2>  <h4>Nederlander met ' + d.data.origin + 'e' + ' migratieachtergrond</h4><strong>Het totaal van deze 2 groepen: '+ (d.data.amountPoliceContactedMe + d.data.amountIContactedPolice) +'</strong><p>Van deze ' + transformToPercent((d[1] - d[0])) + ' waren dit de aanleidingen: </p><div style=\'display: flex\' class="tooltip-flex"><div><svg id="tipSVG"></svg></div><div class="dynamic-legend__container"><h3>Legenda</h3><svg class="dynamic-legend"></svg></div></div>';
         });
 
     const margin = { top: 40, right: 30, bottom: 150, left: 100 };
@@ -130,11 +131,12 @@ export default function renderStackedBars(data){
                 .attr('font-size', 12)
                 .attr('text-anchor', 'middle')
                 .selectAll('text')
+                
                 .data(arcs)
                 .join('text')
                 .attr('transform', d => `translate(${arcLabel.centroid(d)})`)
                 
-                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
+                .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan').transition().duration(1000)
                     .attr('x', 0)
                     .attr('y', '0.7em')
                     .attr('fill-opacity', 0.7)
@@ -168,7 +170,7 @@ export default function renderStackedBars(data){
         .enter().append('g')
         .attr('class', 'legend')
         .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
-        
+
     legend.append('rect')
         .attr('x', 630 + innerWidth /3)
         .attr('y', innerHeight / 2 +70)

@@ -38,6 +38,8 @@ export default function renderDotMatrix(){
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
+    svg.attr('viewBox', [0, 0, width, height]);
+
     const color = d3.scaleOrdinal()
         .range([ '#494CA2', '#8186d5', '#c6cbef']);
         
@@ -133,7 +135,13 @@ export default function renderDotMatrix(){
     //function that draws all circles with the data, this function gets invoked when renderGraph gets invoked
     function drawCircles(){
         
-        
+        const tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([100, 0])
+            .html(d => {
+                return '<h4>' + d + ' op de 100' + '</h4>';
+            });
+        g.call(tip);
         g.append('g')
             .selectAll('g')
             .data(data)
@@ -150,6 +158,14 @@ export default function renderDotMatrix(){
             //resource for placement: https://jsfiddle.net/5Lmjogqh/1/, https://bl.ocks.org/gabrielflorit/raw/867b3ef4cbc98dc3f55f92aa55ce1013/
             .attr('cx', (d, i) => xScale(~~(d / 2)))
             .attr('cy', (d, i) => i % 2 ? 24 : 0)
-            .attr('r', 10);          
+            // .style('fill', d => color(d))
+
+            // .attr('cx', (d,i) => console.log(Math.floor(xScale(d) * i % 20)))
+        // .attr('cy', d =>  console.log(yScale(d)))
+            .attr('r', 10)
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+
+                    
     }
 } 

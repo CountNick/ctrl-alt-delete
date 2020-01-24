@@ -520,14 +520,147 @@ rect:hover{
     width: 90%;
 }
 
-@media screen and (max-width: 320px){
-}
 
-@media screen and (max-width: 600px){
-    #introduction__container {
-        width: 80%;
+
+
+@media screen and (max-width: 400px){
+
+    #stacked-bar{
+        max-width: 300px;
     }
-    #top__container, #bottom__container {
-        width: 100%;
+
+    .groupedBars{
+        max-width: 300px;
+        margin-top: -7rem;
+    }
+
+    .people{
+        max-width: 300px;
+    }
+
+    .pie{
+        max-width: 300px;
+    }
+
+    .main-title{
+        font-size: 1.5rem;
+    }
+
+    #introduction__container{
+        padding: 0 1rem 0 0 ;
+        width: auto;
+    }
+
+    #visualisations__container{
+        width: auto;
+        height: auto;
+        position: static;
+        padding-top: 12rem;
+    }
+
+    #button__container{
+        /* display: flex; */
+        flex-direction: column;
+        justify-content: space-between;
+        width: auto;
+        margin-top: auto;
+
+    }
+
+    .title__container{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title{
+        margin-left: 4%;
+        width: auto;
+        font-size: 1.5rem;
+    }
+
+    .step-1-numbers{
+        flex-direction: column;
+    }
+
+    .pie__container{
+        flex-direction: column;
+    }
+
+    .pie__container p{
+        margin-left: 2%;
+        flex-direction: column;
+    }
+
+    .first-sentence{
+        margin-left: auto;
+    }
+
+    .big-number{
+        font-size: 1.5rem;
+    }
+    .big-text{
+        font-size: 1.5rem;
+    }
+
+    .chart-with-legend__container{
+        flex-direction: column;
+        margin-left: auto;
+    }
+
+    #trust__container{
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .first-sentence{
+        margin-left: 4%;
+        max-width: 90%;
+    }
+
+    #bar__container{
+        flex-direction: column;
+        margin-left: auto;
+    }
+
+    .step2-legend{
+        margin-top: auto;
+        margin-left: auto;
+    }
+
+    .navigation-button{
+        width: auto;
+    }
+
+    #top__container{
+        margin: auto;
+        width: auto;
+    }
+
+    .legend-icon{
+        width: 20%;
+    }
+
+    .step2-legend{
+        margin-top: -9rem;
+    }
+
+    #stacked-bar{
+        margin-top: -7rem;
+    }
+
+    .count__container{
+        padding: 0;
+        /* top: -1rem; */
+        right: 2%;
+    }
+
+    #filter{
+        margin-top: auto;
+        margin-right: auto;
+    }
+
+    .legend{
+        /* margin-top: -9rem; */
+        padding-bottom: 2rem;
     }
 }
