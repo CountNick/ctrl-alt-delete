@@ -1,27 +1,12 @@
-export default function renderStackedBars(data, pieData){
-
-    console.log('pieData: ', pieData);
-    console.log('data: ', data);
-
+export default function renderStackedBars(data){
     let stack = d3.stack()
         .keys(['iContactedPolice', 'policeContactedMe'])
         .order(d3.stackOrderAscending)
         .offset(d3.stackOffsetExpand);
 
-    let stack2 = d3.stack()
-        .keys(['amountIContactedPolice', 'amountPoliceContactedMe'])
-        .order(d3.stackOrderAscending)
-        .offset(d3.stackOffsetNone);
-
     let series = stack(data);
 
-    let series2 = stack2(data);
-
     let transformToPercent = d3.format('.0%');
-
-    console.log('series: ', series);
-
-    console.log('series 2: ', series2);
 
     const svg = d3.select('.stack');
 
@@ -101,10 +86,6 @@ export default function renderStackedBars(data, pieData){
         .attr('stroke', d => {if (d[1]) return color(d);})
         .attr('stroke-width', '3')
         .on('mouseover', function(d) {
-            //chart in tooltip 
-            
-            console.log(d);
-
             let data;
            
             if (d[0]){ data = d.data.pieData; }
@@ -113,7 +94,6 @@ export default function renderStackedBars(data, pieData){
             //resource for data passing: https://github.com/caged/d3-tip/issues/231 comment by inovux
             //used this example: https://stackoverflow.com/questions/43904643/add-chart-to-tooltip-in-d3
             tip.show(d, this);
-            console.log('rararara: ', d);
 
             const pie = d3.pie()
                 .sort(null)
@@ -187,10 +167,8 @@ export default function renderStackedBars(data, pieData){
         .data(color.domain())
         .enter().append('g')
         .attr('class', 'legend')
-        .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; })
-        .on('mouseenter', d => {
-            console.log(d);
-        });
+        .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
+        
     legend.append('rect')
         .attr('x', 630 + innerWidth /3)
         .attr('y', innerHeight / 2 +70)

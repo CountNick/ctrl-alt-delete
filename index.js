@@ -19,8 +19,6 @@ d3.tsv('./rawData5.txt')
 //function for data transformation
 function transformData(data){
     
-    console.log('original data: ', data);
-    
     //make new array with modified objects
     const cleanedObjects = data.map(object => {
         //only return neccessary pairs 
@@ -90,7 +88,6 @@ function splitIntoArrays(data){
             return object;
         }      
     });
-    console.log('lolololllooololo: ', originNederlandsAnswerYes);
     //make a new array for respondents with a dutch / western origin
     const originWestersAnswerYes = answerYes.filter(object => {
 

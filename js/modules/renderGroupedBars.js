@@ -1,7 +1,4 @@
 export default function renderGroupedBarChart(data) {
-
-    console.log('groupie: ', data);
-
     const svg = d3.select('.groupedBars');
 
     const width = +svg.attr('width');
@@ -24,14 +21,10 @@ export default function renderGroupedBarChart(data) {
         .rangeRound([0, innerHeight ])
         .paddingInner(0.1);
 
-    console.log('y0: ', y0.domain());
-
     const y1 = d3.scaleBand()
         .domain(keys)
         .rangeRound([0, y0.bandwidth()])
         .padding(0.10);
-
-    console.log('y1', y1.domain());
 
     const xScale = d3.scaleLinear()
         .domain([0, 5]).nice()

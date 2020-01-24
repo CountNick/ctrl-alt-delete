@@ -56,7 +56,6 @@ export default function renderDotMatrix(){
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-
     //initialize select button, and fire update function when changed
     d3.select('#selectButton')
         .on('change', selectionChanged);
@@ -64,17 +63,14 @@ export default function renderDotMatrix(){
     function selectionChanged(){
 
         let active;
-        let dataFilter = data.map(d => {
-                    
+        data.map(d => { 
             if(this.value == 'waarschuwing') return active = d => d3.range(0, d.waarschuwing);
             if(this.value == 'arrest') return active = d => d3.range(0, d.arrest);
             if(this.value == 'bekeuring') return active = d => d3.range(0, d.bekeuring);
             if(this.value == 'anders') return active = d => d3.range(0, d.anders);
             if(this.value == 'niets') return active = d => d3.range(0, d.niets);
-
         });
-        console.log('DF', dataFilter);
-
+        
         let groups = d3.selectAll('.balls');
         let circles = groups.selectAll('circle').data(active);
 
